@@ -2,11 +2,20 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Admin\AuthController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::prefix('admin')->group(function () {
 
-// Dòng quan trọng nhất
-Route::apiResource('users', UserController::class);
+    Route::post('login', [AuthController::class, 'login']);
+
+    Route::middleware('auth:sanctum')->group(function () {
+        
+        Route::post('logout', [AuthController::class, 'logout']);
+
+        Route::get('profile', function (Request $request) {
+            return $request->user();
+        });
+        
+    });
+});
+
