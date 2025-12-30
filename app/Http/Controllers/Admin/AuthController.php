@@ -23,7 +23,7 @@ class AuthController extends Controller
     {
         // Validate dữ liệu đầu vào
         $request->validate([
-            'username' => 'required|string', // Dùng username theo thiết kế 
+            'username' => 'required|string',
             'password' => 'required|string',
         ]);
 
