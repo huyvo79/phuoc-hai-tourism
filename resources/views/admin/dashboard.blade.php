@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
@@ -17,16 +17,20 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    {{-- Custom CSS (Nếu chưa có file này thì giao diện có thể bị vỡ nhẹ, nhưng không ảnh hưởng logic) --}}
+    {{-- Custom CSS --}}
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    {{-- 1. BẮT BUỘC PHẢI CÓ STYLE CỦA LIVEWIRE --}}
+    @livewireStyles
 
+    {{-- 2. CSS SỬA LỖI GIAO DIỆN POWERGRID (Thêm trực tiếp tại đây để ưu tiên cao nhất) --}}
+    
 </head>
 
 <body>
     <div class="container-fluid">
         <div class="row">
+            {{-- SIDEBAR --}}
             <div class="col-md-2 sidebar p-0">
                 <div class="sidebar-brand text-center py-4">
                     <a href="{{ route('admin.dashboard') }}" class="text-decoration-none">
@@ -67,7 +71,8 @@
                     <hr style="border-color: #4b545c; margin: 10px 15px;">
 
                     <li class="category-title">
-                        <a href="#">
+                        <a href="{{ route('admin.users.index') }}"
+                            class="{{ request()->routeIs('admin.users.index') ? 'text-white' : '' }}">
                             <i class="fas fa-users-cog"></i> Tài khoản Admin
                         </a>
                     </li>
@@ -97,34 +102,8 @@
                 </div>
             </div>
 
+            {{-- MAIN CONTENT --}}
             <div class="col-md-10 content-section bg-white">
-                @if(session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                @endif
-
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Tổng quan</h1>
-                </div>
-
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Xin chào, {{ $user->name }}!</h5>
-                        <p class="card-text">Bạn đã đăng nhập thành công vào hệ thống quản trị.</p>
-                        <p>Thông tin tài khoản hiện tại:</p>
-                        <ul>
-                            <li><strong>ID:</strong> {{ $user->id }}</li>
-                            <li><strong>Username:</strong> {{ $user->username }}</li>
-                            <li><strong>Ngày tạo:</strong> {{ $user->created_at }}</li>
-                        </ul>
-                    </div>
-                </div>
-
                 @yield('content')
             </div>
         </div>
@@ -134,6 +113,10 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {{-- 3. BẮT BUỘC PHẢI CÓ SCRIPT CỦA LIVEWIRE --}}
+    @livewireScripts
 
     @stack('scripts')
 </body>
