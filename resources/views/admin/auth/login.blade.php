@@ -14,25 +14,17 @@
             <h4>QUẢN TRỊ VIÊN</h4>
         </div>
         <div class="card-body">
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+            <div id="error-alert" class="alert alert-danger d-none"></div>
 
-            <form action="{{ route('admin.login.submit') }}" method="POST">
-                @csrf <div class="mb-3">
+            <form id="loginForm">
+                <div class="mb-3">
                     <label for="username" class="form-label">Tên đăng nhập</label>
-                    <input type="text" class="form-control" id="username" name="username" value="{{ old('username') }}" required autofocus>
+                    <input type="text" class="form-control" id="username" required autofocus>
                 </div>
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Mật khẩu</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <input type="password" class="form-control" id="password" required>
                 </div>
 
                 <div class="d-grid">
@@ -45,6 +37,51 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault(); // Chặn form load lại trang
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const errorAlert = document.getElementById('error-alert');
+
+        // Reset thông báo lỗi
+        errorAlert.classList.add('d-none');
+        errorAlert.innerText = '';
+
+        try {
+            // 1. Gọi API Login
+            const response = await fetch('/api/admin/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // 2. Đăng nhập thành công
+                // Lưu Token vào localStorage để dùng cho các request sau
+                localStorage.setItem('admin_token', data.data.access_token);
+                
+                // Chuyển hướng sang Dashboard
+                window.location.href = '/admin/dashboard';
+            } else {
+                // 3. Đăng nhập thất bại -> Hiện lỗi
+                errorAlert.innerText = data.message || 'Đăng nhập thất bại';
+                errorAlert.classList.remove('d-none');
+            }
+        } catch (error) {
+            console.error('Lỗi:', error);
+            errorAlert.innerText = 'Có lỗi xảy ra, vui lòng thử lại.';
+            errorAlert.classList.remove('d-none');
+        }
+    });
+</script>
 
 </body>
 </html>
