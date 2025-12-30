@@ -13,16 +13,8 @@
     {{-- Bootstrap & Icons --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 
-    {{-- CSS Livewire (Nên đặt ở head) --}}
-    @livewireStyles
-
-    <style>
-        /* Ẩn body mặc định để tránh nháy giao diện khi chưa check token */
-        body {
-            display: none;
-        }
-    </style>
 </head>
 
 <body>
@@ -87,9 +79,6 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    {{-- 2. Script của Livewire (Đặt độc lập) --}}
-    @livewireScripts
 
     {{-- 3. Script Logic Tùy chỉnh --}}
     <script>
