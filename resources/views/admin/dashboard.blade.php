@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html lang="vi">
+<<<<<<< HEAD
+=======
+
+>>>>>>> minh-nhut/crud-user
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,25 +16,12 @@
     {{-- Bootstrap & Icons --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <style>
-        body { font-family: sans-serif; background: #f5f7fa; }
-        .sidebar { min-height: 100vh; background: #343a40; color: #fff; padding-top: 20px; }
-        .sidebar a { color: #adb5bd; text-decoration: none; display: block; padding: 10px 20px; }
-        .sidebar a:hover { color: #fff; background: #495057; }
-        .sidebar i { margin-right: 10px; width: 20px; text-align: center; }
-        .sidebar-avatar { padding: 20px; text-align: center; border-top: 1px solid #4b545c; margin-top: 20px; }
-        .user-avatar img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid #6c757d; }
-        .user-info { margin-top: 10px; }
-        .user-name { display: block; font-weight: bold; color: #fff; }
-        .user-role { display: block; font-size: 0.8em; color: #adb5bd; }
-        body { display: none; } 
-    </style>
 </head>
 
 <body>
     <div class="container-fluid">
         <div class="row">
+            {{-- SIDEBAR --}}
             <div class="col-md-2 sidebar p-0">
                 <div class="sidebar-brand text-center py-4">
                     <h4 class="text-white font-weight-bold mb-0">PHƯỚC HẢI</h4>
@@ -44,10 +35,18 @@
                     <li><a href="#"><i class="fas fa-map-marked-alt"></i> Địa điểm / Bài viết</a></li>
                     
                     <hr style="border-color: #4b545c; margin: 10px 15px;">
+<<<<<<< HEAD
                     
                     <li>
                         <a href="#" id="logoutBtn" class="text-danger">
                             <i class="fa fa-sign-out-alt"></i> Đăng xuất
+=======
+
+                    <li class="category-title">
+                        <a href="{{ route('admin.users.index') }}"
+                            class="{{ request()->routeIs('admin.users.index') ? 'text-white' : '' }}">
+                            <i class="fas fa-users-cog"></i> Tài khoản Admin
+>>>>>>> minh-nhut/crud-user
                         </a>
                     </li>
                 </ul>
@@ -63,6 +62,7 @@
                 </div>
             </div>
 
+<<<<<<< HEAD
             <div class="col-md-10 bg-white p-4">
                 <h2 class="border-bottom pb-2 mb-3">Tổng quan</h2>
                 
@@ -77,10 +77,16 @@
                         </ul>
                     </div>
                 </div>
+=======
+            {{-- MAIN CONTENT --}}
+            <div class="col-md-10 content-section bg-white">
+                @yield('content')
+>>>>>>> minh-nhut/crud-user
             </div>
         </div>
     </div>
 
+<<<<<<< HEAD
     {{-- Script Xử lý Logic --}}
     <script>
         const token = localStorage.getItem('admin_token');
@@ -90,6 +96,16 @@
             document.body.style.display = 'block'; 
             loadUserProfile();
         }
+=======
+    {{-- JS --}}
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {{-- 3. BẮT BUỘC PHẢI CÓ SCRIPT CỦA LIVEWIRE --}}
+    @livewireScripts
+>>>>>>> minh-nhut/crud-user
 
         // 2. Hàm gọi API lấy thông tin User
         async function loadUserProfile() {
