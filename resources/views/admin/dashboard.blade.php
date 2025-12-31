@@ -8,16 +8,7 @@
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        .sidebar-link:hover {
-            background: rgba(139, 92, 246, 0.2);
-        }
-
-        .sidebar-link.active {
-            background: linear-gradient(90deg, rgba(139, 92, 246, 0.3), transparent);
-            border-left: 3px solid #8b5cf6;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/dashboard.css">
 </head>
 
 <body class="bg-slate-900 text-white">
