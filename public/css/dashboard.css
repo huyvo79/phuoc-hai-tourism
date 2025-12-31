@@ -1,78 +1,8 @@
-body {
-    font-family: 'Roboto', sans-serif;
-    background: #f5f7fa;
+.sidebar-link:hover {
+    background: rgba(139, 92, 246, 0.2);
 }
 
-.sidebar {
-    min-height: 100vh;
-    background: #343a40;
-    color: #fff;
-    padding-top: 20px;
-}
-
-.sidebar a {
-    color: #adb5bd;
-    text-decoration: none;
-    display: block;
-    padding: 10px 20px;
-}
-
-.sidebar a:hover {
-    color: #fff;
-    background: #495057;
-}
-
-.sidebar i {
-    margin-right: 10px;
-    width: 20px;
-    text-align: center;
-}
-
-.sidebar-avatar {
-    padding: 20px;
-    text-align: center;
-    border-top: 1px solid #4b545c;
-    margin-top: 20px;
-}
-
-.user-avatar img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #6c757d;
-}
-
-.user-info {
-    margin-top: 10px;
-}
-
-.user-name {
-    display: block;
-    font-weight: bold;
-    color: #fff;
-}
-
-.user-role {
-    display: block;
-    font-size: 0.8em;
-    color: #adb5bd;
-}
-
-.content-section {
-    padding: 30px;
-}
-
-.logout-btn {
-    background: none;
-    border: none;
-    color: #adb5bd;
-    width: 100%;
-    text-align: left;
-    padding: 10px 20px;
-}
-
-.logout-btn:hover {
-    color: #fff;
-    background: #c82333;
+.sidebar-link.active {
+    background: linear-gradient(90deg, rgba(139, 92, 246, 0.3), transparent);
+    border-left: 3px solid #8b5cf6;
 }
