@@ -1,87 +1,145 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng nhập Admin - Phước Hải</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body class="bg-light">
 
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-    <div class="card shadow-sm" style="width: 400px;">
-        <div class="card-header text-center bg-primary text-white">
-            <h4>QUẢN TRỊ VIÊN</h4>
+<body
+    class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
+    <div
+        class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920')] bg-cover bg-center opacity-20">
+    </div>
+
+    <div class="relative w-full max-w-md">
+        <div
+            class="absolute -inset-1 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 rounded-2xl blur-lg opacity-75 animate-pulse">
         </div>
-        <div class="card-body">
-            <div id="error-alert" class="alert alert-danger d-none"></div>
 
-            <form id="loginForm">
-                <div class="mb-3">
-                    <label for="username" class="form-label">Tên đăng nhập</label>
-                    <input type="text" class="form-control" id="username" required autofocus>
+        <div
+            class="relative bg-slate-900/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 overflow-hidden">
+            <div class="bg-gradient-to-r from-purple-600 to-blue-600 p-6 text-center">
+                <div
+                    class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 backdrop-blur-sm">
+                    <i class="fas fa-user-shield text-3xl text-white"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-white tracking-wide">QUẢN TRỊ VIÊN</h1>
+                <p class="text-purple-200 text-sm mt-1">Du lịch Phước Hải</p>
+            </div>
+
+            <div class="p-8">
+                <div id="error-alert"
+                    class="hidden mb-6 p-4 bg-red-500/20 border border-red-500/50 rounded-xl text-red-300 text-sm flex items-center gap-3">
+                    <i class="fas fa-exclamation-circle text-lg"></i>
+                    <span id="error-message"></span>
                 </div>
 
-                <div class="mb-3">
-                    <label for="password" class="form-label">Mật khẩu</label>
-                    <input type="password" class="form-control" id="password" required>
-                </div>
+                <form id="loginForm" class="space-y-6">
+                    <div class="space-y-2">
+                        <label for="username" class="block text-sm font-medium text-gray-300">
+                            <i class="fas fa-user mr-2 text-purple-400"></i>Tên đăng nhập
+                        </label>
+                        <input type="text" id="username" required autofocus
+                            class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300">
+                    </div>
 
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary">Đăng Nhập</button>
-                </div>
-            </form>
-        </div>
-        <div class="card-footer text-center text-muted">
-            &copy; 2025 Website Du lịch Phước Hải
+                    <div class="space-y-2">
+                        <label for="password" class="block text-sm font-medium text-gray-300">
+                            <i class="fas fa-lock mr-2 text-purple-400"></i>Mật khẩu
+                        </label>
+                        <div class="relative">
+                            <input type="password" id="password" required
+                                class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 pr-12">
+                            <button type="button" id="togglePassword"
+                                class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-purple-400 transition-colors">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submitBtn"
+                        class="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold rounded-xl shadow-lg shadow-purple-500/30 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2">
+                        <span id="btnText">Đăng Nhập</span>
+                        <i id="btnIcon" class="fas fa-arrow-right"></i>
+                        <i id="btnSpinner" class="fas fa-spinner fa-spin hidden"></i>
+                    </button>
+                </form>
+            </div>
+
+            <div class="px-8 py-4 bg-slate-800/50 border-t border-white/5 text-center">
+                <p class="text-gray-500 text-sm">© 2025 Website Du lịch Phước Hải</p>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    document.getElementById('loginForm').addEventListener('submit', async function(e) {
-        e.preventDefault(); // Chặn form load lại trang
+    <script src="/js/auth.js"></script>
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
 
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-        const errorAlert = document.getElementById('error-alert');
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.type === 'password' ? 'text' : 'password';
+            passwordInput.type = type;
+            togglePassword.innerHTML = `<i class="fas fa-eye${type === 'password' ? '' : '-slash'}"></i>`;
+        });
 
-        // Reset thông báo lỗi
-        errorAlert.classList.add('d-none');
-        errorAlert.innerText = '';
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-        try {
-            // 1. Gọi API Login
-            const response = await fetch('/api/admin/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({ username, password })
-            });
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorAlert = document.getElementById('error-alert');
+            const errorMessage = document.getElementById('error-message');
 
-            const data = await response.json();
+            errorAlert.classList.add('hidden');
+            setLoading(true);
 
-            if (response.ok) {
-                // 2. Đăng nhập thành công
-                // Lưu Token vào localStorage để dùng cho các request sau
-                localStorage.setItem('admin_token', data.data.access_token);
-                
-                // Chuyển hướng sang Dashboard
-                window.location.href = '/admin/dashboard';
-            } else {
-                // 3. Đăng nhập thất bại -> Hiện lỗi
-                errorAlert.innerText = data.message || 'Đăng nhập thất bại';
-                errorAlert.classList.remove('d-none');
+            try {
+                const data = await Auth.login(username, password);
+
+                if (data.success) {
+                    setSuccess();
+                    setTimeout(() => Auth.redirectToDashboard(), 500);
+                } else {
+                    errorMessage.innerText = data.message || 'Đăng nhập thất bại';
+                    errorAlert.classList.remove('hidden');
+                    setLoading(false);
+                }
+            } catch (error) {
+                errorMessage.innerText = 'Có lỗi xảy ra, vui lòng thử lại.';
+                errorAlert.classList.remove('hidden');
+                setLoading(false);
             }
-        } catch (error) {
-            console.error('Lỗi:', error);
-            errorAlert.innerText = 'Có lỗi xảy ra, vui lòng thử lại.';
-            errorAlert.classList.remove('d-none');
+        });
+
+        function setLoading(loading) {
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnIcon = document.getElementById('btnIcon');
+            const btnSpinner = document.getElementById('btnSpinner');
+
+            submitBtn.disabled = loading;
+            btnText.innerText = loading ? 'Đang xử lý...' : 'Đăng Nhập';
+            btnIcon.classList.toggle('hidden', loading);
+            btnSpinner.classList.toggle('hidden', !loading);
         }
-    });
-</script>
+
+        function setSuccess() {
+            const btnText = document.getElementById('btnText');
+            const btnIcon = document.getElementById('btnIcon');
+            const btnSpinner = document.getElementById('btnSpinner');
+
+            btnText.innerText = 'Thành công!';
+            btnSpinner.classList.add('hidden');
+            btnIcon.className = 'fas fa-check';
+            btnIcon.classList.remove('hidden');
+        }
+    </script>
 
 </body>
+
 </html>
