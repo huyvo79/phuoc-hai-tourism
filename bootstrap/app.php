@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Cookie\Middleware\EncryptCookies;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -12,8 +13,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->encryptCookies(except: ['token']);
+        
         $middleware->alias([
             'jwt.cookie' => \App\Http\Middleware\JwtCookieMiddleware::class,
+            'admin.auth' => \App\Http\Middleware\AdminAuthMiddleware::class,
+            'admin.guest' => \App\Http\Middleware\AdminGuestMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
