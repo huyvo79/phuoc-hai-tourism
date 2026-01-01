@@ -3,6 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Interfaces\PostRepositoryInterface;
+use App\Repositories\PostRepository;
+use App\Interfaces\PostServiceInterface;
+use App\Services\PostService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +26,12 @@ class AppServiceProvider extends ServiceProvider
             \App\Interfaces\UserRepositoryInterface::class,
             \App\Repositories\UserRepository::class
         );
+
+        // Bind Repository
+        $this->app->bind(PostRepositoryInterface::class, PostRepository::class);
+
+        // Bind Service
+        $this->app->bind(PostServiceInterface::class, PostService::class);
     }
 
     public function boot(): void
