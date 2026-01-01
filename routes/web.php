@@ -20,3 +20,4 @@ Route::prefix('admin')->group(function () {
         Route::get('users', fn() => view('crud-user.list'))->name('user.list');
     });
 });
+Route::get('/index', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
