@@ -44,7 +44,7 @@
 
                 <div class="border-t border-white/10 my-4"></div>
 
-                <a href="#"
+                <a href="{{ route('user.list') }}"
                     class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white transition-all">
                     <i class="fas fa-users-cog w-5"></i>
                     <span>Tài khoản Admin</span>
@@ -210,6 +210,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="p-8 flex-1">
+                @yield('content')
             </div>
         </main>
     </div>
