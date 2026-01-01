@@ -2,24 +2,21 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes (Chỉ dùng để hiển thị giao diện HTML)
-|--------------------------------------------------------------------------
-*/
-
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Nhóm Admin
 Route::prefix('admin')->group(function () {
     
-    Route::get('login', function () {
-        return view('admin.auth.login');
-    })->name('login'); 
+    Route::middleware('admin.guest')->group(function () {
+        Route::get('login', fn() => view('admin.auth.login'))->name('admin.login');
+    });
 
-    Route::get('dashboard', function () {
-        return view('admin.dashboard');
+    Route::middleware('admin.auth')->group(function () {
+        // Route::get('dashboard', fn() => view('layouts.dashboard'))->name('dashboard');
+
+        Route::get('dashboard', fn() => view('admin.dashboard'))->name('admin.dashboard');
+
+        Route::get('users', fn() => view('crud-user.list'))->name('user.list');
     });
 });
