@@ -36,7 +36,7 @@
                     <i class="fas fa-layer-group w-5"></i>
                     <span>Quản lý Danh mục</span>
                 </a>
-                <a href="#"
+                <a href="{{ route('posts.index') }}"
                     class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white transition-all">
                     <i class="fas fa-map-marked-alt w-5"></i>
                     <span>Địa điểm / Bài viết</span>
@@ -78,6 +78,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/auth.js"></script>
     <script src="/js/dashboard.js"></script>
+    @stack('scripts')
 </body>
 
 </html>
