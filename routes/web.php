@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('ui-index.index');
 });
 
 Route::prefix('admin')->group(function () {
@@ -20,4 +20,4 @@ Route::prefix('admin')->group(function () {
         Route::get('users', fn() => view('crud-user.list'))->name('user.list');
     });
 });
-Route::get('/index', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
+Route::get('/single', [App\Http\Controllers\IndexController::class, 'single'])->name('single');

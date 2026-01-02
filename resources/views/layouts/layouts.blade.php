@@ -24,7 +24,7 @@
 
 </head>
 
-<body>
+<body class="@yield('body_class')">
     <div id="page-loader">
         <div class="spinning-logo">
 
