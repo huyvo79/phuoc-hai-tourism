@@ -1,0 +1,135 @@
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+  }
+
+  body {
+      background: #f5f7fa;
+      color: #1e293b;
+      line-height: 1.7;
+  }
+
+  .container {
+      max-width: 1200px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 2.5fr 1fr;
+      gap: 24px;
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .content {
+      background: #fff;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  }
+
+  .content h1 {
+      font-size: 2rem;
+      margin-bottom: 16px;
+  }
+
+  .content img {
+      width: 100%;
+      border-radius: 10px;
+      margin: 20px 0;
+      object-fit: cover;
+  }
+
+  .content p {
+      margin-bottom: 16px;
+      color: #475569;
+        font-size: 1.3rem;
+  }
+
+  /* ===== SIDEBAR (LỚN HƠN) ===== */
+  .sidebar {
+      background: #ffffff;
+      padding: 32px;
+      border-radius: 16px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+  }
+
+  /* ===== RELATED ITEM (ẢNH TRÊN – CHỮ DƯỚI) ===== */
+  .sidebar .related-item {
+      display: flex;
+      flex-direction: column;
+      /* ✅ QUAN TRỌNG */
+      gap: 12px;
+      margin-bottom: 24px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+  }
+
+  .sidebar .related-item:hover {
+      transform: translateY(-4px);
+  }
+
+  /* ===== IMAGE ===== */
+  .sidebar .related-item img {
+      width: 100%;
+      /* full sidebar */
+      height: 160px;
+      object-fit: cover;
+      border-radius: 14px;
+  }
+
+  /* ===== TITLE ===== */
+  .sidebar .related-item h4 {
+      font-size: 1.15rem;
+      line-height: 1.4;
+      color: #0f766e;
+      font-weight: 500;
+  }
+
+
+  .related-item:hover {
+      transform: translateX(8px);
+  }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 768px) {
+      .container {
+          grid-template-columns: 1fr;
+      }
+
+      .content h1 {
+          font-size: 1.6rem;
+      }
+
+      .container .content p{
+            font-size: 1.2rem;
+      }
+      .sidebar .related-item img{
+        height: 220px;
+      }
+      .sidebar .related-item h4{
+        font-size: 1.5rem;
+        text-align: center;
+      }
+  }
+
+  /* ===== FIX HEADER CHO TRANG SINGLE ===== */
+  .page-single .header {
+      background: #ffffff;
+      padding: 14px 60px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, .08);
+  }
+
+  .page-single .logo,
+  .page-single .nav-menu a,
+  .page-single .search-btn {
+      color: var(--text-dark);
+  }
+
+  .page-single .menu-toggle span {
+      background: var(--text-dark);
+  }
+
+  /* Chừa chỗ cho header fixed */
+  .page-single .page-content {
+      padding-top: 100px;
+  }

@@ -20,6 +20,10 @@ class IndexController extends Controller
     {
        return view('ui-index.index');
     }
+    public function single()
+    {
+       return view('ui-single.single');
+    }
 
 
 }
