@@ -10,9 +10,9 @@
         
         {{-- Header & Button Thêm mới --}}
         <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-semibold text-white-800">Danh sách Tài khoản</h1>
+            <h1 class="text-2xl font-semibold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">Danh sách Tài khoản Admin</h1>
             <button onclick="toggleModal('addUserModal')" 
-                    class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow flex items-center gap-2 transition duration-200">
+                    class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded shadow flex items-center gap-2 transition duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                 </svg>
@@ -24,17 +24,17 @@
         <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
+                    <thead class="bg-indigo-200">
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tên đăng nhập</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Họ và Tên</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ngày tạo</th>
-                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Hành động</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-indigo-600 uppercase tracking-wider">ID</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-indigo-600 uppercase tracking-wider">Tên đăng nhập</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-indigo-600 uppercase tracking-wider">Họ và Tên</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-indigo-600 uppercase tracking-wider">Ngày tạo</th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-indigo-600 uppercase tracking-wider">Hành động</th>
                         </tr>
                     </thead>
                     {{-- QUAN TRỌNG: Để trống body, JS sẽ tự đổ dữ liệu vào đây --}}
-                    <tbody class="bg-white divide-y divide-gray-200 text-gray-700" id="userTableBody">
+                    <tbody class="bg-indigo-100 divide-y divide-gray-200 text-gray-700" id="userTableBody">
                         {{-- Dữ liệu sẽ được render từ API --}}
                     </tbody>
                 </table>
@@ -52,7 +52,7 @@
                     {{-- Method Spoofing cho Laravel --}}
                     <input type="hidden" id="edit_user_id" name="id">
 
-                    <div class="bg-blue-600 px-4 py-3 sm:px-6">
+                    <div class="bg-indigo-500 px-4 py-3 sm:px-6">
                         <h3 class="text-lg leading-6 font-medium text-white" id="modal-title">Chỉnh sửa tài khoản</h3>
                         <button type="button" class="absolute top-3 right-3 text-blue-200 hover:text-white" onclick="toggleModal('editUserModal')">
                             <span class="sr-only">Close</span>
@@ -86,7 +86,7 @@
                     </div>
 
                     <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                        <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-500 text-base font-medium text-white hover:bg-indigo-600 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
                             Lưu thay đổi
                         </button>
                         <button type="button" onclick="toggleModal('editUserModal')" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
@@ -105,7 +105,7 @@
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
             <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                 <form id="addUserForm">
-                    <div class="bg-green-600 px-4 py-3 sm:px-6">
+                    <div class="bg-indigo-500 px-4 py-3 sm:px-6">
                         <h3 class="text-lg leading-6 font-medium text-white" id="modal-title">Thêm Admin mới</h3>
                         <button type="button" class="absolute top-3 right-3 text-green-200 hover:text-white" onclick="toggleModal('addUserModal')">
                             <span class="sr-only">Close</span>
@@ -139,7 +139,7 @@
                     </div>
 
                     <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                        <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-500 text-base font-medium text-white hover:bg-indigo-600 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
                             Thêm mới
                         </button>
                         <button type="button" onclick="toggleModal('addUserModal')" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">

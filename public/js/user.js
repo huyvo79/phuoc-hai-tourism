@@ -154,20 +154,22 @@ async function updateUser() {
 ================================ */
 function confirmDelete(id) {
     Swal.fire({
-        title: 'Xóa tài khoản?',
+        title: `Bạn có chắc muốn xóa tài khoản (ID = ${id})?`, 
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
         confirmButtonText: 'Xóa',
-    }).then(async r => {
-        if (!r.isConfirmed) return;
+        cancelButtonText: 'Hủy'
+    }).then(async (result) => { 
+        if (!result.isConfirmed) return;
 
         try {
             await apiFetch(`${API_BASE}/${id}`, { method: 'DELETE' });
-            fetchUsers();
-            Swal.fire('Đã xóa', '', 'success');
+            fetchUsers(); 
+            Swal.fire('Đã xóa!', 'Tài khoản đã được xóa thành công.', 'success');
         } catch (e) {
             console.error(e);
+            Swal.fire('Lỗi!', 'Không thể xóa tài khoản này.', 'error');
         }
     });
 }
