@@ -29,20 +29,13 @@
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tên đăng nhập</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Họ và Tên</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ngày tạo</th>
                             <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Hành động</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200" id="userTableBody">
-                        {{-- Dữ liệu mẫu (sẽ được đổ bằng Laravel hoặc JS) --}}
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">admin_demo</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nguyễn Văn Demo</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <button onclick="openEditModal(1, 'admin_demo', 'Nguyễn Văn Demo')" class="text-indigo-600 hover:text-indigo-900 mr-3">Sửa</button>
-                                <button class="text-red-600 hover:text-red-900">Xóa</button>
-                            </td>
-                        </tr>
+                    {{-- QUAN TRỌNG: Để trống body, JS sẽ tự đổ dữ liệu vào đây --}}
+                    <tbody class="bg-white divide-y divide-gray-200 text-gray-700" id="userTableBody">
+                        {{-- Dữ liệu sẽ được render từ API --}}
                     </tbody>
                 </table>
             </div>
@@ -53,13 +46,10 @@
     <div id="editUserModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onclick="toggleModal('editUserModal')"></div>
-
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-
             <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <form id="editUserForm" method="POST">
-                    @csrf
-                    @method('PUT')
+                <form id="editUserForm">
+                    {{-- Method Spoofing cho Laravel --}}
                     <input type="hidden" id="edit_user_id" name="id">
 
                     <div class="bg-blue-600 px-4 py-3 sm:px-6">
@@ -74,27 +64,22 @@
 
                     <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div class="space-y-4">
-                            {{-- Tên đăng nhập --}}
                             <div>
                                 <label for="edit_username" class="block text-sm font-medium text-gray-700">Tên đăng nhập</label>
                                 <input type="text" name="username" id="edit_username" required
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2">
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2 text-gray-900">
                                 <div class="text-red-500 text-xs mt-1 error-message" id="error_edit_username"></div>
                             </div>
-
-                            {{-- Họ tên --}}
                             <div>
                                 <label for="edit_name" class="block text-sm font-medium text-gray-700">Họ và Tên hiển thị</label>
                                 <input type="text" name="name" id="edit_name" required
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2">
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2 text-gray-900">
                                 <div class="text-red-500 text-xs mt-1 error-message" id="error_edit_name"></div>
                             </div>
-
-                            {{-- Mật khẩu --}}
                             <div>
                                 <label for="edit_password" class="block text-sm font-medium text-gray-700">Mật khẩu mới</label>
                                 <input type="password" name="password" id="edit_password" placeholder="Để trống nếu không muốn thay đổi"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2">
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2 text-gray-900">
                                 <div class="text-red-500 text-xs mt-1 error-message" id="error_edit_password"></div>
                             </div>
                         </div>
@@ -118,11 +103,8 @@
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onclick="toggleModal('addUserModal')"></div>
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-
             <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <form id="addUserForm" method="POST">
-                    @csrf
-                    
+                <form id="addUserForm">
                     <div class="bg-green-600 px-4 py-3 sm:px-6">
                         <h3 class="text-lg leading-6 font-medium text-white" id="modal-title">Thêm Admin mới</h3>
                         <button type="button" class="absolute top-3 right-3 text-green-200 hover:text-white" onclick="toggleModal('addUserModal')">
@@ -135,27 +117,22 @@
 
                     <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div class="space-y-4">
-                            {{-- Tên đăng nhập --}}
                             <div>
                                 <label for="add_username" class="block text-sm font-medium text-gray-700">Tên đăng nhập <span class="text-red-500">*</span></label>
                                 <input type="text" name="username" id="add_username" required placeholder="Ví dụ: admin_phuochai"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm border p-2">
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm border p-2 text-gray-900">
                                 <div class="text-red-500 text-xs mt-1 error-message" id="error_add_username"></div>
                             </div>
-
-                            {{-- Họ tên --}}
                             <div>
                                 <label for="add_name" class="block text-sm font-medium text-gray-700">Họ và Tên <span class="text-red-500">*</span></label>
                                 <input type="text" name="name" id="add_name" required placeholder="Ví dụ: Nguyễn Văn A"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm border p-2">
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm border p-2 text-gray-900">
                                 <div class="text-red-500 text-xs mt-1 error-message" id="error_add_name"></div>
                             </div>
-
-                            {{-- Mật khẩu --}}
                             <div>
                                 <label for="add_password" class="block text-sm font-medium text-gray-700">Mật khẩu <span class="text-red-500">*</span></label>
                                 <input type="password" name="password" id="add_password" required placeholder="Nhập mật khẩu..."
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm border p-2">
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm border p-2 text-gray-900">
                                 <div class="text-red-500 text-xs mt-1 error-message" id="error_add_password"></div>
                             </div>
                         </div>
@@ -176,39 +153,6 @@
 @endsection
 
 @push('scripts')
-    {{-- Scripts xử lý Modal (Vì Tailwind không có sẵn JS như Bootstrap) --}}
-    <script>
-        // Hàm bật/tắt modal bằng cách thêm/bớt class 'hidden'
-        function toggleModal(modalID) {
-            const modal = document.getElementById(modalID);
-            if (modal) {
-                modal.classList.toggle('hidden');
-            }
-        }
-
-        // Hàm hỗ trợ điền dữ liệu vào form Edit (Mô phỏng)
-        function openEditModal(id, username, name) {
-            document.getElementById('edit_user_id').value = id;
-            document.getElementById('edit_username').value = username;
-            document.getElementById('edit_name').value = name;
-            // Reset mật khẩu
-            document.getElementById('edit_password').value = '';
-            
-            // Mở modal
-            toggleModal('editUserModal');
-        }
-
-        // Đóng modal khi nhấn ESC
-        document.onkeydown = function(evt) {
-            evt = evt || window.event;
-            if (evt.keyCode == 27) {
-                document.querySelectorAll('.fixed.inset-0.z-50:not(.hidden)').forEach((modal) => {
-                    modal.classList.add('hidden');
-                });
-            }
-        };
-    </script>
-    
-    <script src="{{ asset('js/user.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('js/user.js') }}" defer></script>
 @endpush
