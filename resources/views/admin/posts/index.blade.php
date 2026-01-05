@@ -4,12 +4,8 @@
 
 @section('content')
     <main class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        {{-- HEADER & BUTTON THÊM MỚI --}}
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-semibold text-gray-800">Danh sách Bài viết</h1>
-            
-            {{-- Thay vì mở Modal, ta chuyển hướng sang trang Create đã làm --}}
             <a href="{{ route('posts.create') }}" 
                class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow flex items-center gap-2 transition duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -19,14 +15,12 @@
             </a>
         </div>
 
-        {{-- THÔNG BÁO FLASH MESSAGE (Nếu có) --}}
         @if(session('success'))
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6" role="alert">
                 <span class="block sm:inline">{{ session('success') }}</span>
             </div>
         @endif
 
-        {{-- BẢNG DANH SÁCH BÀI VIẾT --}}
         <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
@@ -70,10 +64,8 @@
                                 {{ $post->created_at->format('d/m/Y') }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                {{-- Nút Sửa: Chuyển sang trang Edit --}}
                                 <a href="{{ route('posts.edit', $post->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3 inline-block">Sửa</a>
                                 
-                                {{-- Nút Xóa: Mở Modal Confirm --}}
                                 <button onclick="confirmDelete({{ $post->id }})" class="text-red-600 hover:text-red-900 inline-block">Xóa</button>
                             </td>
                         </tr>
@@ -88,14 +80,12 @@
                 </table>
             </div>
             
-            {{-- Phân trang (Pagination) nếu có --}}
             <div class="px-6 py-4 border-t border-gray-200">
                 {{ $posts->links() }} 
             </div>
         </div>
     </main>
 
-    {{-- MODAL XÓA (Giữ style Modal của User để đồng bộ) --}}
     <div id="deleteModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onclick="toggleModal('deleteModal')"></div>
@@ -118,7 +108,6 @@
                     </div>
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    {{-- Form Xóa thực sự --}}
                     <form id="deleteForm" method="POST" action="">
                         @csrf
                         @method('DELETE')
@@ -144,10 +133,7 @@
             }
         }
 
-        // Hàm xử lý mở Modal Xóa và cập nhật Action cho Form
         function confirmDelete(id) {
-            // Cập nhật đường dẫn action cho form xóa
-            // Giả sử route xóa là admin.posts.destroy
             let url = "{{ route('posts.destroy', ':id') }}";
             url = url.replace(':id', id);
             

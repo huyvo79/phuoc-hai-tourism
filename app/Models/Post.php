@@ -9,7 +9,6 @@ class Post extends Model
 {
     use HasFactory;
 
-    // QUAN TRỌNG: Phải khai báo các cột được phép thêm dữ liệu vào đây
     protected $fillable = [
         'title', 
         'slug', 
@@ -17,7 +16,9 @@ class Post extends Model
         'content', 
         'thumbnail', 
         'priority', 
-        'category_id'
+        'category_id',
+        'latitude', 
+        'longitude' 
     ];
 
     public function category()
@@ -28,5 +29,10 @@ class Post extends Model
     public function images()
     {
         return $this->hasMany(PostImage::class);
+    }
+
+    public function relatedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'post_related', 'post_id', 'related_post_id');
     }
 }

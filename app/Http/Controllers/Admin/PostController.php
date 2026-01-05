@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Services\PostService;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Post;
+use App\Models\Category;
 
 class PostController extends Controller
 {
@@ -24,7 +26,10 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('admin.posts.create');
+        $allPosts = Post::select('id', 'title')->get();
+        $categories = Category::all();
+        
+        return view('admin.posts.create', compact('allPosts', 'categories'));
     }
 
     public function store(StorePostRequest $request)
@@ -41,7 +46,10 @@ class PostController extends Controller
             return redirect()->route('posts.index')->with('error', 'Không tìm thấy bài viết!');
         }
 
-        return view('admin.posts.edit', compact('post'));
+        $allPosts = Post::select('id', 'title')->where('id', '!=', $id)->get();
+        $categories = Category::all();
+
+        return view('admin.posts.edit', compact('post', 'allPosts', 'categories'));
     }
 
     public function update(UpdatePostRequest $request, $id)

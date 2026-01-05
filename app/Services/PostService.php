@@ -32,6 +32,10 @@ class PostService implements PostServiceInterface
             $data['slug'] = Str::slug($data['title']) . '-' . time();
         }
 
+        if (empty($data['category_id'])) {
+            $data['category_id'] = 1;
+        }
+
         if (isset($data['thumbnail']) && $data['thumbnail'] instanceof UploadedFile) {
             $file = $data['thumbnail'];
             $filename = time() . '_' . $file->getClientOriginalName();
@@ -53,7 +57,10 @@ class PostService implements PostServiceInterface
             return null;
         }
 
-        // Bổ sung: Xóa ảnh cũ nếu người dùng upload ảnh mới
+        if (array_key_exists('category_id', $data) && empty($data['category_id'])) {
+            $data['category_id'] = 1;
+        }
+
         if (isset($data['thumbnail']) && $data['thumbnail'] instanceof UploadedFile) {
             if ($post->thumbnail) {
                 $oldPath = str_replace('/storage/', '', $post->thumbnail);
