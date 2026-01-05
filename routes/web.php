@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\PostController;
 
 Route::get('/', function () {
     return view('ui-index.index');
@@ -18,6 +19,8 @@ Route::prefix('admin')->group(function () {
         Route::get('dashboard', fn() => view('admin.dashboard'))->name('admin.dashboard');
 
         Route::get('users', fn() => view('crud-user.list'))->name('user.list');
+
+        Route::resource('posts', PostController::class);
     });
 });
 Route::get('/single', [App\Http\Controllers\IndexController::class, 'single'])->name('single');
