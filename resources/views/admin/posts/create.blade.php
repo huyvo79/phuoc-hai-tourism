@@ -6,7 +6,7 @@
 
 <main class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-semibold text-gray-800">Viết bài mới</h1>
+        <h1 class="text-2xl font-semibold text-white-800">Viết bài mới</h1>
         <a href="{{ route('posts.index') }}" 
            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded shadow flex items-center gap-2 transition duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
