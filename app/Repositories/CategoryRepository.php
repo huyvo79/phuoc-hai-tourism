@@ -5,22 +5,22 @@ use App\Interfaces\CategoryRepositoryInterface;
 use App\Models\Category;
 
 class CategoryRepository implements CategoryRepositoryInterface{
-    public function getAllCategories()
+    public function getAll()
     {
         return Category::all();
     }
 
-    public function findCategoryById(int $id): ?Category
+    public function find(int $id): ?Category
     {
         return Category::find($id);
     }
 
-    public function createCategory(array $data)
+    public function create(array $data)
     {
         return Category::create($data);
     }
 
-    public function updateCategory(int $id, array $data): bool
+    public function update(int $id, array $data): bool
     {
         $category = Category::find($id);
 
@@ -29,7 +29,7 @@ class CategoryRepository implements CategoryRepositoryInterface{
         return Category::update($data);
     }
 
-    public function deleteCategory(int $id): bool
+    public function delete(int $id): bool
     {
         $category = Category::find($id);
 
