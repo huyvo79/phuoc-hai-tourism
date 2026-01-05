@@ -4,7 +4,6 @@ namespace App\Services;
 use App\Interfaces\CategoryServiceInterface;
 use App\Interfaces\CategoryRepositoryInterface;
 use App\Models\Category;
-use App\Repositories\CategoryRepository;
 
 class CategoryService implements CategoryServiceInterface{
     public function __construct(

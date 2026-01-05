@@ -69,7 +69,6 @@ class PostController extends Controller
 
     public function destroy($id)
     {
-        //
         $categoryDeleted = $this->categoryService->deleteCategoryById($id);
 
         if(!$categoryDeleted) return response()->json([
