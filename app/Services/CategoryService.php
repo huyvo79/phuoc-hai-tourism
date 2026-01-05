@@ -13,26 +13,26 @@ class CategoryService implements CategoryServiceInterface{
 
     public function getCategories()
     {
-        throw new \Exception('Not implemented');
+        return $this->categoryRepository->getAll();
     }
 
     public function findCategoryById(int $id): ?Category
     {
-        throw new \Exception('Not implemented');
+        return $this->categoryRepository->find($id);
     }
 
     public function createCategory(array $data)
     {
-        throw new \Exception('Not implemented');
+        return $this->categoryRepository->create($data);
     }
 
     public function updateCategoryById(int $id, array $data): bool
     {
-        throw new \Exception('Not implemented');
+        return $this->categoryRepository->update($id, $data);
     }
 
     public function deleteCategoryById(int $id): bool
     {
-        throw new \Exception('Not implemented');
+        return $this->categoryRepository->delete($id);
     }
 }
