@@ -7,7 +7,7 @@
 <main class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-semibold text-white-800">Viết bài mới</h1>
-        <a href="{{ route('posts.index') }}" 
+        <a href="{{ route('posts.index') }}"
            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded shadow flex items-center gap-2 transition duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
@@ -20,7 +20,7 @@
         <div class="p-6">
             <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="md:col-span-2 space-y-6">
                         <div>
@@ -87,7 +87,7 @@
 
                         <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
                             <h3 class="text-sm font-medium text-gray-700 mb-3 border-b pb-2">Tọa độ (Google Maps)</h3>
-                            
+
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
                                     <label for="latitude" class="block text-xs font-medium text-gray-600 mb-1">Vĩ độ (Lat)</label>
@@ -96,7 +96,7 @@
                                         placeholder="VD: 10.762">
                                     @error('latitude') <p class="text-red-500 text-xs mt-1 italic">{{ $message }}</p> @enderror
                                 </div>
-                        
+
                                 <div>
                                     <label for="longitude" class="block text-xs font-medium text-gray-600 mb-1">Kinh độ (Long)</label>
                                     <input type="text" name="longitude" id="longitude" value="{{ old('longitude') }}"
@@ -112,7 +112,7 @@
 
                         <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
                             <label for="related_ids" class="block text-sm font-medium text-gray-700 mb-2">Bài viết liên quan</label>
-                            
+
                             <select name="related_ids[]" id="related_ids" multiple
                                 class="w-full h-32 rounded-md shadow-sm border-gray-300 border p-2 text-sm text-gray-900 focus:border-green-500 focus:ring-green-500">
                                 @if(isset($allPosts) && $allPosts->count() > 0)
