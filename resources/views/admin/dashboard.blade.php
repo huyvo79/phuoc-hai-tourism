@@ -31,7 +31,7 @@
                     <i class="fas fa-th-large w-5 text-purple-400"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="#"
+                <a href="{{ route('category.list') }}"
                     class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white transition-all">
                     <i class="fas fa-layer-group w-5"></i>
                     <span>Quản lý Danh mục</span>

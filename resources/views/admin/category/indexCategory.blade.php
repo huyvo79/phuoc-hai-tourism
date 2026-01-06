@@ -1,18 +1,18 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Quản lý Bài viết')
+@section('title', 'Quản lý danh mục')
 
 @section('content')
     <main class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-semibold text-white-800">Danh sách Bài viết</h1>
-            <a href="{{ route('posts.create') }}"
+            <h1 class="text-2xl font-semibold text-white-800">Danh sách danh mục</h1>
+            {{-- <a href="{{ route('posts.create') }}"
                class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow flex items-center gap-2 transition duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                 </svg>
                 Viết bài mới
-            </a>
+            </a> --}}
         </div>
 
         @if(session('success'))
@@ -20,68 +20,22 @@
                 <span class="block sm:inline">{{ session('success') }}</span>
             </div>
         @endif
-
         <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hình ảnh</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tiêu đề / Slug</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Danh mục</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ngày đăng</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Slug</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase  tracking-wider">Ngày đăng</th>
                             <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Hành động</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        @forelse($posts as $post)
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ $post->id }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                @if($post->thumbnail)
-                                    <img src="{{ $post->thumbnail }}" alt="Thumb" class="h-12 w-12 rounded object-cover border border-gray-200">
-                                @else
-                                    <span class="inline-block h-12 w-12 rounded bg-gray-100 flex items-center justify-center text-xs text-gray-400">No img</span>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="text-sm font-medium text-gray-900 line-clamp-1" title="{{ $post->title }}">
-                                    {{ $post->title }}
-                                </div>
-                                <div class="text-sm text-gray-500 line-clamp-1">
-                                    {{ $post->slug }}
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                    {{ $post->category ? $post->category->name : 'Chưa phân loại' }}
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ $post->created_at->format('d/m/Y') }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <a href="{{ route('posts.edit', $post->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3 inline-block">Sửa</a>
 
-                                <button onclick="confirmDelete({{ $post->id }})" class="text-red-600 hover:text-red-900 inline-block">Xóa</button>
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
-                                Chưa có bài viết nào.
-                            </td>
-                        </tr>
-                        @endforelse
                     </tbody>
                 </table>
-            </div>
-
-            <div class="px-6 py-4 border-t border-gray-200">
-                {{ $posts->links() }}
             </div>
         </div>
     </main>
