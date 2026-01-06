@@ -27,8 +27,9 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->only(['name']);
-        $data['slug'] = Str::slug($data['name']);
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
 
         $category = $this->categoryService->createCategory($data);
 
@@ -49,16 +50,18 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = $request->only(['name']);
-        $data['slug'] = Str::slug($data['name']);
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
 
         $categoryUpdated = $this->categoryService->updateCategoryById($id, $data);
 
-
-        if(!$categoryUpdated) return response()->json([
-            'success' => false,
-            'message' => 'Category not found'
-        ], 404);
+        if (!$categoryUpdated) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Category not found'
+            ], 404);
+        }
 
         return response()->json([
             'success' => true,
@@ -66,6 +69,7 @@ class PostController extends Controller
             'data' => $categoryUpdated
         ]);
     }
+
 
     public function destroy($id)
     {

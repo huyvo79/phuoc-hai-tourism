@@ -32,17 +32,15 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255'
         ]);
 
-        $data = [
+        $this->categoryService->createCategory([
             'name' => $request->name,
-            'slug' => Str::slug($request->name),
-        ];
-
-        $this->categoryService->createCategory($data);
+        ]);
 
         return redirect()
             ->route('category.list')
             ->with('success', 'Thêm danh mục thành công');
     }
+
 
     public function edit($id)
     {
@@ -60,7 +58,6 @@ class CategoryController extends Controller
 
         $updated = $this->categoryService->updateCategoryById($id, [
             'name' => $request->name,
-            'slug' => Str::slug($request->name),
         ]);
 
         if (!$updated) {
