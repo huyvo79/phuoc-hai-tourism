@@ -26,7 +26,7 @@ class CategoryRepository implements CategoryRepositoryInterface{
 
         if(!$category) return false;
 
-        return Category::update($data);
+        return $category->update($data);
     }
 
     public function delete(int $id): bool
@@ -35,6 +35,6 @@ class CategoryRepository implements CategoryRepositoryInterface{
 
         if(!$category) return false;
 
-        return Category::delete($id);
+        return $category->delete($id);
     }
 }
