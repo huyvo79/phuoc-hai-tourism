@@ -29,6 +29,12 @@ Route::prefix('admin')->group(function () {
         Route::get('categories/create', [CategoryController::class, 'create'])->name('category.create');
 
         Route::post('categories', [CategoryController::class, 'store'])->name('category.store');
+
+        Route::get('categories/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+
+        Route::put('categories/{id}', [CategoryController::class, 'update'])->name('category.update');
+
+        Route::delete('categories/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
     });
 });
 Route::get('/single', [App\Http\Controllers\IndexController::class, 'single'])->name('single');

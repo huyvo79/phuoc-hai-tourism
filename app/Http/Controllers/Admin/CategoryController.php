@@ -32,15 +32,53 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255'
         ]);
 
-        $data = [
+        $this->categoryService->createCategory([
             'name' => $request->name,
-            'slug' => Str::slug($request->name),
-        ];
-
-        $this->categoryService->createCategory($data);
+        ]);
 
         return redirect()
             ->route('category.list')
             ->with('success', 'Thêm danh mục thành công');
+    }
+
+
+    public function edit($id)
+    {
+        $category = $this->categoryService->findCategoryById($id);
+        abort_if(!$category, 404);
+
+        return view('admin.category.editCategory', compact('category'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255'
+        ]);
+
+        $updated = $this->categoryService->updateCategoryById($id, [
+            'name' => $request->name,
+        ]);
+
+        if (!$updated) {
+            return redirect()->back()->with('error', 'Danh mục không tồn tại');
+        }
+
+        return redirect()
+            ->route('category.list')
+            ->with('success', 'Cập nhật danh mục thành công');
+    }
+
+    public function destroy($id)
+    {
+        $deleted = $this->categoryService->deleteCategoryById($id);
+
+        if (!$deleted) {
+            return redirect()->back()->with('error', 'Danh mục không tồn tại');
+        }
+
+        return redirect()
+            ->route('category.list')
+            ->with('success', 'Xóa danh mục thành công');
     }
 }

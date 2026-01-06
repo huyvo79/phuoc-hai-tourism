@@ -57,18 +57,18 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $category->created_at->format('d/m/Y') }}
                                 </td>
-                                {{-- <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="{{ route('posts.edit', $category->id) }}"
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <a href="{{ route('category.edit', $category->id) }}"
                                         class="text-indigo-600 hover:text-indigo-900 mr-3 inline-block">Sửa</a>
 
                                     <button onclick="confirmDelete({{ $category->id }})"
                                         class="text-red-600 hover:text-red-900 inline-block">Xóa</button>
-                                </td> --}}
+                                </td>
                             </tr>
                         @empty
                             <tr>
                                 <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
-                                    Chưa có bài viết nào.
+                                    Chưa có danh mục nào.
                                 </td>
                             </tr>
                         @endforelse
@@ -98,9 +98,9 @@
                             </svg>
                         </div>
                         <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Xóa bài viết</h3>
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Xóa danh mục</h3>
                             <div class="mt-2">
-                                <p class="text-sm text-gray-500">Bạn có chắc chắn muốn xóa bài viết này không? Hành động này
+                                <p class="text-sm text-gray-500">Bạn có chắc chắn muốn xóa danh mục này không? Hành động này
                                     không thể hoàn tác.</p>
                             </div>
                         </div>
@@ -135,7 +135,7 @@
         }
 
         function confirmDelete(id) {
-            let url = "{{ route('posts.destroy', ':id') }}";
+            let url = "{{ route('category.destroy', ':id') }}";
             url = url.replace(':id', id);
 
             document.getElementById('deleteForm').action = url;
