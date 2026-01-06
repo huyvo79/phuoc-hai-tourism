@@ -68,7 +68,7 @@
                         @empty
                             <tr>
                                 <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
-                                    Chưa có bài viết nào.
+                                    Chưa có danh mục nào.
                                 </td>
                             </tr>
                         @endforelse
@@ -98,7 +98,7 @@
                             </svg>
                         </div>
                         <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Xóa bài viết</h3>
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Xóa danh mục</h3>
                             <div class="mt-2">
                                 <p class="text-sm text-gray-500">Bạn có chắc chắn muốn xóa danh mục này không? Hành động này
                                     không thể hoàn tác.</p>

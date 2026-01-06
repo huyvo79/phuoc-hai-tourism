@@ -6,7 +6,7 @@
 <main class="w-full mx-auto px-6 py-8">
 
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-semibold text-gray-800">Cập nhật danh mục</h1>
+        <h1 class="text-2xl font-semibold text-white-800">Cập nhật danh mục</h1>
 
         <a href="{{ route('category.list') }}"
            class="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded shadow">
@@ -29,7 +29,7 @@
                     <input type="text"
                            name="name"
                            value="{{ old('name', $category->name) }}"
-                           class="w-full rounded-md border p-2 focus:ring-green-500 focus:border-green-500
+                           class="w-full rounded-md border p-2 focus:ring-green-500 focus:border-green-500 text-gray-700
                            @error('name') border-red-500 @else border-gray-300 @enderror">
 
                     @error('name')
