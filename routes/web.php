@@ -24,9 +24,12 @@ Route::prefix('admin')->group(function () {
         Route::resource('posts', PostController::class);
 
         //category
-        Route::get('categories', [CategoryController::class, 'index'])
-            ->name('category.list');
-            });
+        Route::get('categories', [CategoryController::class, 'index'])->name('category.list');
+
+        Route::get('categories/create', [CategoryController::class, 'create'])->name('category.create');
+
+        Route::post('categories', [CategoryController::class, 'store'])->name('category.store');
+    });
 });
 Route::get('/single', [App\Http\Controllers\IndexController::class, 'single'])->name('single');
 
