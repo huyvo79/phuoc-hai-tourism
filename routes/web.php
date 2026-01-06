@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\CategoryController;
 
 Route::get('/', function () {
     return view('ui-index.index');
@@ -23,10 +24,9 @@ Route::prefix('admin')->group(function () {
         Route::resource('posts', PostController::class);
 
         //category
-        Route::get('categories', function () {
-            return view('admin.category.indexCategory');
-        })->name('category.list');
-    });
+        Route::get('categories', [CategoryController::class, 'index'])
+            ->name('category.list');
+            });
 });
 Route::get('/single', [App\Http\Controllers\IndexController::class, 'single'])->name('single');
 
