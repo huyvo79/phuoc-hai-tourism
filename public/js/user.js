@@ -1,251 +1,204 @@
-document.addEventListener('DOMContentLoaded', function () {
+/* ===============================
+   CONFIG
+================================ */
+const API_BASE = '/api/users';
 
-    // ============================================================
-    // 1. XỬ LÝ MODAL THÊM USER (ADD)
-    // ============================================================
-
-    // Mở Modal khi bấm nút "Thêm tài khoản"
-    // Lưu ý: Trong HTML nút id="btn-add-user" chưa có data-toggle, nên ta dùng JS để mở
-    const btnAddUser = document.getElementById('btn-add-user');
-    if (btnAddUser) {
-        btnAddUser.addEventListener('click', function () {
-            // Reset form và lỗi trước khi mở
-            const addForm = document.getElementById('addUserForm');
-            if (addForm) addForm.reset();
-            clearErrors();
-            
-            // Mở Modal bằng jQuery (do dùng Bootstrap 4/5)
-            $('#addUserModal').modal('show');
-        });
-    }
-
-    // Xử lý Submit Form Thêm
-    const addForm = document.getElementById('addUserForm');
-    if (addForm) {
-        addForm.addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            // Setup nút bấm (loading)
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            setLoading(submitBtn, true);
-
-            // Chuẩn bị dữ liệu
-            const url = '/api/users';
-            const formData = new FormData(this);
-            clearErrors();
-
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': getCsrfToken()
-                    },
-                    body: formData
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    handleSuccess('Thêm tài khoản thành công!');
-                } else if (response.status === 422) {
-                    handleValidationErrors(data.errors, 'add');
-                    setLoading(submitBtn, false, originalText);
-                } else {
-                    handleError(data.message || 'Có lỗi xảy ra.');
-                    setLoading(submitBtn, false, originalText);
-                }
-            } catch (err) {
-                console.error(err);
-                handleError('Lỗi kết nối server.');
-                setLoading(submitBtn, false, originalText);
-            }
-        });
-    }
-
-    // ============================================================
-    // 2. XỬ LÝ MODAL SỬA USER (EDIT)
-    // ============================================================
-
-    // Bắt sự kiện click vào nút Edit (Dùng Event Delegation vì nút này do Livewire sinh ra)
-    $(document).on('click', '.edit-btn', function () {
-        // Lấy dữ liệu từ nút bấm
-        const id = $(this).data('id');
-        const username = $(this).data('username');
-        const name = $(this).data('name');
-
-        // Điền vào form
-        $('#edit_user_id').val(id);
-        $('#edit_username').val(username);
-        $('#edit_name').val(name);
-        $('#edit_password').val(''); // Luôn xóa trắng mật khẩu
-
-        clearErrors();
-        
-        // Mở Modal
-        $('#editUserModal').modal('show');
+/* ===============================
+   FETCH WRAPPER (COOKIE JWT)
+================================ */
+async function apiFetch(url, options = {}) {
+    const response = await fetch(url, {
+        credentials: 'same-origin', // ⬅️ BẮT BUỘC
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        ...options,
     });
 
-    // Xử lý Submit Form Sửa
-    const editForm = document.getElementById('editUserForm');
-    if (editForm) {
-        editForm.addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            const id = document.getElementById('edit_user_id').value;
-            if (!id) {
-                handleError('Không tìm thấy ID tài khoản.');
-                return;
-            }
-
-            // Setup nút bấm
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            setLoading(submitBtn, true);
-
-            const url = `/api/users/${id}`;
-            const formData = new FormData(this);
-            formData.append('_method', 'PUT'); // Method spoofing cho Laravel
-
-            clearErrors();
-
-            try {
-                const response = await fetch(url, {
-                    method: 'POST', // Dùng POST để gửi FormData có _method: PUT
-                    headers: {
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': getCsrfToken()
-                    },
-                    body: formData
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    handleSuccess('Cập nhật tài khoản thành công!');
-                } else if (response.status === 422) {
-                    handleValidationErrors(data.errors, 'edit');
-                    setLoading(submitBtn, false, originalText);
-                } else {
-                    handleError(data.message || 'Cập nhật thất bại.');
-                    setLoading(submitBtn, false, originalText);
-                }
-            } catch (err) {
-                console.error(err);
-                handleError('Lỗi kết nối server.');
-                setLoading(submitBtn, false, originalText);
-            }
+    if (response.status === 401) {
+        Swal.fire(
+            'Phiên đăng nhập hết hạn',
+            'Vui lòng đăng nhập lại',
+            'warning'
+        ).then(() => {
+            window.location.href = '/login';
         });
+        throw new Error('Unauthorized');
     }
 
-    // ============================================================
-    // 3. CÁC HÀM TIỆN ÍCH (HELPER FUNCTIONS)
-    // ============================================================
+    return response.json();
+}
 
-    // Lấy CSRF Token
-    function getCsrfToken() {
-        return document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+/* ===============================
+   LOAD USERS
+================================ */
+async function fetchUsers() {
+    try {
+        const res = await apiFetch(API_BASE);
+        renderTable(res.data ?? []);
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+/* ===============================
+   RENDER TABLE
+================================ */
+function renderTable(users) {
+    const tbody = document.getElementById('userTableBody');
+    if (!tbody) return;
+
+    tbody.innerHTML = '';
+
+    if (!users.length) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="4" class="text-center py-6 text-gray-500">
+                    Chưa có dữ liệu
+                </td>
+            </tr>`;
+        return;
     }
 
-    // Xóa toàn bộ thông báo lỗi
-    function clearErrors() {
-        document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
-    }
-
-    // Hiển thị trạng thái loading cho nút
-    function setLoading(btn, isLoading, originalText = '') {
-        if (!btn) return;
-        if (isLoading) {
-            btn.disabled = true;
-            btn.textContent = 'Đang xử lý...';
-        } else {
-            btn.disabled = false;
-            btn.textContent = originalText;
-        }
-    }
-
-    // Hiển thị lỗi Validation (422)
-    function handleValidationErrors(errors, prefix) {
-        if (!errors) return;
-        for (const [key, messages] of Object.entries(errors)) {
-            // key: username -> id: error_add_username hoặc error_edit_username
-            const errorElement = document.getElementById(`error_${prefix}_${key}`);
-            if (errorElement) {
-                errorElement.textContent = messages[0];
-            }
-        }
-    }
-
-    // Xử lý thành công
-    function handleSuccess(message) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Thành công!',
-            text: message,
-            timer: 1500,
-            showConfirmButton: false
-        }).then(() => {
-            location.reload(); // Load lại trang để cập nhật bảng Livewire
-        });
-    }
-
-    // Xử lý lỗi chung
-    function handleError(message) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Lỗi',
-            text: message
-        });
-    }
-
-    // Reset form khi đóng Modal (Bootstrap Events)
-    $('#addUserModal, #editUserModal').on('hidden.bs.modal', function () {
-        const form = this.querySelector('form');
-        if (form) form.reset();
-        clearErrors();
+    users.forEach(u => {
+        tbody.insertAdjacentHTML('beforeend', `
+            <tr>
+                <td class="px-6 py-4">${u.id}</td>
+                <td class="px-6 py-4 font-medium">${u.username}</td>
+                <td class="px-6 py-4">${u.name}</td>
+                <td class="px-6 py-4">${u.created_at}</td>
+                <td class="px-6 py-4 text-right">
+                    <button class="text-indigo-600 mr-3"
+                        onclick="openEditModal(${u.id})">Sửa</button>
+                    <button class="text-red-600"
+                        onclick="confirmDelete(${u.id})">Xóa</button>
+                </td>
+            </tr>
+        `);
     });
+}
 
-});
+/* ===============================
+   CREATE USER
+================================ */
+async function createUser() {
+    clearErrors('add');
+    const form = document.getElementById('addUserForm');
+    const data = Object.fromEntries(new FormData(form));
 
-// ============================================================
-// 4. XỬ LÝ XÓA USER (Global Function)
-// ============================================================
-// Hàm này phải để ở scope global (window) vì nó được gọi từ onclick="" trong HTML
+    try {
+        await apiFetch(API_BASE, {
+            method: 'POST',
+            body: JSON.stringify(data),
+        });
 
-window.confirmDeleteUser = function (id) {
+        toggleModal('addUserModal');
+        form.reset();
+        fetchUsers();
+        Swal.fire('Thành công', 'Đã thêm tài khoản', 'success');
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+/* ===============================
+   EDIT USER
+================================ */
+async function openEditModal(id) {
+    try {
+        const res = await apiFetch(`${API_BASE}/${id}`);
+        const u = res.data;
+
+        document.getElementById('edit_user_id').value = u.id;
+        document.getElementById('edit_username').value = u.username;
+        document.getElementById('edit_name').value = u.name;
+        document.getElementById('edit_password').value = '';
+
+        clearErrors('edit');
+        toggleModal('editUserModal');
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+async function updateUser() {
+    clearErrors('edit');
+    const id = document.getElementById('edit_user_id').value;
+    const raw = Object.fromEntries(new FormData(
+        document.getElementById('editUserForm')
+    ));
+
+    const data = {};
+    for (const k in raw) {
+        if (k === 'password' && !raw[k]) continue;
+        data[k] = raw[k];
+    }
+
+    try {
+        await apiFetch(`${API_BASE}/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+        });
+
+        toggleModal('editUserModal');
+        fetchUsers();
+        Swal.fire('Thành công', 'Đã cập nhật', 'success');
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+/* ===============================
+   DELETE USER
+================================ */
+function confirmDelete(id) {
     Swal.fire({
-        title: 'Xác nhận xóa?',
-        text: "Bạn có chắc chắn muốn xóa tài khoản này? Hành động này không thể hoàn tác!",
+        title: 'Xóa tài khoản?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Xóa ngay',
-        cancelButtonText: 'Hủy'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            fetch(`/api/users/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Accept': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                // Kiểm tra cả 2 trường hợp success trả về từ API
-                if (data.status === true || data.success === true) {
-                    Swal.fire('Đã xóa!', 'Tài khoản đã được xóa thành công.', 'success')
-                        .then(() => location.reload());
-                } else {
-                    Swal.fire('Lỗi!', data.message || 'Không thể xóa tài khoản.', 'error');
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                Swal.fire('Lỗi!', 'Không thể kết nối đến server.', 'error');
-            });
+        confirmButtonText: 'Xóa',
+    }).then(async r => {
+        if (!r.isConfirmed) return;
+
+        try {
+            await apiFetch(`${API_BASE}/${id}`, { method: 'DELETE' });
+            fetchUsers();
+            Swal.fire('Đã xóa', '', 'success');
+        } catch (e) {
+            console.error(e);
         }
     });
-};
+}
+
+/* ===============================
+   UI HELPERS
+================================ */
+window.toggleModal = id =>
+    document.getElementById(id)?.classList.toggle('hidden');
+
+function clearErrors(prefix) {
+    document
+        .querySelectorAll(`[id^="error_${prefix}_"]`)
+        .forEach(e => e.innerText = '');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('addUserForm')?.addEventListener('submit', e => {
+        e.preventDefault();
+        createUser();
+    });
+
+    document.getElementById('editUserForm')?.addEventListener('submit', e => {
+        e.preventDefault();
+        updateUser();
+    });
+});
+
+
+/* ===============================
+   AUTO LOAD
+================================ */
+console.log('USER.JS LOADED');
+fetchUsers();
