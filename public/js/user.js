@@ -201,19 +201,28 @@ async function createUser() {
     const data = Object.fromEntries(new FormData(form));
 
     try {
-        await apiFetch(API_BASE, {
+        // Lưu kết quả trả về vào biến res
+        const res = await apiFetch(API_BASE, {
             method: 'POST',
             body: JSON.stringify(data),
         });
 
+        // KIỂM TRA LỖI TỪ BACKEND
+        // Nếu backend trả về status: false (do Validation failed)
+        if (res.status === false) {
+            showErrors(res.errors, 'add'); // Hiển thị lỗi lên form
+            return; // Dừng hàm, không chạy đoạn code success bên dưới
+        }
+
+        // Nếu thành công
         toggleModal('addUserModal');
         form.reset();
-        
-        // Khi thêm mới thành công, nên về trang 1 để thấy user mới nhất (nếu sort desc)
         fetchUsers(1, ''); 
         Swal.fire('Thành công', 'Đã thêm tài khoản', 'success');
+
     } catch (e) {
         console.error(e);
+        Swal.fire('Lỗi hệ thống', 'Vui lòng thử lại sau', 'error');
     }
 }
 
@@ -249,17 +258,23 @@ async function updateUser() {
     }
 
     try {
-        await apiFetch(`${API_BASE}/${id}`, {
+        const res = await apiFetch(`${API_BASE}/${id}`, {
             method: 'PUT',
             body: JSON.stringify(data),
         });
 
+        // KIỂM TRA LỖI
+        if (res.status === false) {
+            showErrors(res.errors, 'edit'); // Chú ý prefix là 'edit'
+            return; 
+        }
+
         toggleModal('editUserModal');
-        // SỬA: Giữ nguyên trang và từ khóa tìm kiếm
         fetchUsers(currentPage, currentSearch); 
         Swal.fire('Thành công', 'Đã cập nhật', 'success');
     } catch (e) {
         console.error(e);
+        Swal.fire('Lỗi hệ thống', 'Vui lòng thử lại sau', 'error');
     }
 }
 
@@ -293,8 +308,34 @@ function confirmDelete(id) {
 /* ===============================
    UI HELPERS
 ================================ */
-window.toggleModal = id =>
-    document.getElementById(id)?.classList.toggle('hidden');
+window.toggleModal = (id) => {
+    const modal = document.getElementById(id);
+    if (!modal) return;
+
+    // Kiểm tra trạng thái hiện tại: 
+    // Nếu modal KHÔNG có class 'hidden' nghĩa là nó đang hiện -> Hành động này sẽ là ĐÓNG.
+    const isClosing = !modal.classList.contains('hidden');
+
+    // Thực hiện ẩn/hiện
+    modal.classList.toggle('hidden');
+
+    // LOGIC DỌN DẸP KHI ĐÓNG MODAL
+    if (isClosing) {
+        
+        // 1. Xử lý cho Modal Thêm mới (addUserModal)
+        if (id === 'addUserModal') {
+            const form = document.getElementById('addUserForm');
+            if (form) form.reset(); // Xóa sạch dữ liệu trong các ô input
+            clearErrors('add');     // Xóa các dòng thông báo lỗi màu đỏ
+        }
+
+        // 2. Xử lý cho Modal Sửa (editUserModal) - Tùy chọn
+        // Khi đóng form sửa, ta cũng nên xóa lỗi cũ để lần sau mở lên không bị ám
+        if (id === 'editUserModal') {
+            clearErrors('edit');
+        }
+    }
+};
 
 function clearErrors(prefix) {
     document
@@ -313,6 +354,16 @@ document.addEventListener('DOMContentLoaded', () => {
         updateUser();
     });
 });
+
+function showErrors(errors, prefix) {
+    // errors là object: { username: ["Lỗi 1"], password: ["Lỗi 2"] }
+    for (const [key, messages] of Object.entries(errors)) {
+        const errorDiv = document.getElementById(`error_${prefix}_${key}`);
+        if (errorDiv) {
+            errorDiv.innerText = messages[0]; // Chỉ hiện thông báo lỗi đầu tiên
+        }
+    }
+}
 
 /* ===============================
    AUTO LOAD
