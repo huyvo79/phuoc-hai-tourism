@@ -7,6 +7,7 @@ use App\Models\Category;
 interface CategoryRepositoryInterface
 {
     public function getAll();
+    public function paginate(array $filter, int $perPage);
     public function find(int $id): ?Category;
     public function create(array $data);
     public function update(int $id, array $data): bool;
