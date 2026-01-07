@@ -24,12 +24,14 @@ class UserController extends Controller
             'search' => $request->input('search'),
         ];
 
-        $perPage = $request->input('per_page', 5);
+        // SỬA: Lấy tham số 'limit', nếu không có thì mặc định là 5
+        // Ép kiểu (int) để đảm bảo an toàn
+        $limit = (int) $request->input('limit', 5);
 
-        $users = $this->userService->getPaginatedUsers($filters, $perPage);
+        // Gọi service với biến $limit vừa lấy được
+        $users = $this->userService->getPaginatedUsers($filters, $limit);
 
-        // Bỏ response()->json(), chỉ return collection
-        // Laravel sẽ tự động chuyển thành JSON và thêm meta/links
+        // Trả về collection (Laravel tự động bao gồm meta pagination)
         return UserResource::collection($users);
     }
 

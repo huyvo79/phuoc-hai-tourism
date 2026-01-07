@@ -9,23 +9,44 @@
     <main class="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         {{-- Header & Button Thêm mới --}}
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-semibold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                Danh sách Tài khoản Admin</h1>
-            {{-- Thanh Tìm kiếm --}}
-            <div class="flex w-full md:w-1/3">
-                <input type="text" id="searchInput" placeholder="Tìm theo tên hoặc username..."
-                    class="w-full rounded-md border-gray-300 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2">
+        <div class="mb-1">
+            <div class="text-center mb-8">
+                <h1
+                    class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                    Danh sách Tài khoản Admin
+                </h1>
+                <p class="text-gray-300 mt-2 text-sm">Quản lý tất cả tài khoản quản trị viên tại một nơi.</p>
             </div>
-            {{-- Nút Thêm mới --}}
-            <button onclick="toggleModal('addUserModal')"
-                class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded shadow flex items-center gap-2 transition duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                </svg>
-                Thêm Admin mới
-            </button>
+
+            <div class="flex flex-col md:flex-row justify-between items-center bg-indigo-200 gap-4 p-2 rounded-xl">
+
+                {{-- Thanh Tìm kiếm --}}
+                <div class="relative w-full md:w-1/3">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <input type="text" id="searchInput"
+                        class="block w-full p-2.5 pl-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-white focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
+                        placeholder="Tìm theo tên hoặc username...">
+                </div>
+
+                {{-- Nút Thêm mới --}}
+                <div class="w-full md:w-auto">
+                    <button onclick="toggleModal('addUserModal')"
+                        class="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-5 rounded-full shadow-lg flex items-center justify-center gap-2 transition duration-200 transform hover:-translate-y-0.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Thêm Admin mới
+                    </button>
+                </div>
+            </div>
         </div>
 
         {{-- Bảng danh sách User --}}
@@ -57,21 +78,28 @@
                     </tbody>
                 </table>
                 {{-- Pagination Controls --}}
-                <div class="flex items-center justify-between border-t border-gray-200 bg-indigo-200 px-4 py-3 sm:px-6">
-                    <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-                        <div>
-                            <p class="text-sm text-gray-700">
-                                Hiển thị từ <span class="font-medium" id="pageFrom">0</span> đến <span class="font-medium"
-                                    id="pageTo">0</span>
-                                trong tổng số <span class="font-medium" id="pageTotal">0</span> kết quả
-                            </p>
-                        </div>
-                        <div>
-                            <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination"
-                                id="paginationControls">
-                                {{-- JS sẽ render các nút Previous/Next/Numbers vào đây --}}
-                            </nav>
-                        </div>
+                <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+
+                    <div class="flex items-center gap-2 text-sm text-gray-700">
+                        <span class="hidden sm:inline">Hiển thị</span>
+
+                        <select onchange="changeLimit(this.value)"
+                            class="block w-10 rounded-lg border-gray-300 py-1.5 text-sm text-indigo-600 font-medium leading-5 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white border cursor-pointer">
+                            <option value="5" class="font-medium" selected>5</option>
+                            <option value="10" class="font-medium">10</option> 
+                            <option value="15" class="font-medium">15</option>
+                            <option value="20" class="font-medium">20</option>
+                        </select>
+
+                        <span class="hidden sm:inline">
+                            dòng trên tổng số <span class="font-medium text-indigo-600" id="pageTotal">0</span> dòng
+                        </span>
+                    </div>
+
+                    <div class="flex items-center gap-1">
+                        <nav class="isolate inline-flex gap-1" aria-label="Pagination" id="paginationControls">
+                            {{-- JS sẽ render các nút hình tròn vào đây --}}
+                        </nav>
                     </div>
                 </div>
             </div>

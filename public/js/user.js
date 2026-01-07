@@ -8,8 +8,15 @@ const API_BASE = '/api/users';
 ================================ */
 let currentPage = 1;
 let currentSearch = '';
-const PER_PAGE = 5; // Bạn có thể chỉnh số lượng tùy ý
-
+let currentLimit = 5; // Bạn có thể chỉnh số lượng tùy ý
+/* ===============================
+   HÀM XỬ LÝ KHI CHỌN SELECT BOX
+================================ */
+// Thêm hàm này để bắt sự kiện onchange từ HTML
+function changeLimit(newLimit) {
+    currentLimit = parseInt(newLimit); // Cập nhật limit mới
+    fetchUsers(1, currentSearch);      // Reset về trang 1 với limit mới
+}
 /* ===============================
    FETCH WRAPPER (COOKIE JWT)
 ================================ */
@@ -42,26 +49,25 @@ async function apiFetch(url, options = {}) {
 ================================ */
 async function fetchUsers(page = 1, search = '') {
     try {
-        // Cập nhật state toàn cục để dùng lại khi reload
         currentPage = page;
         currentSearch = search;
 
+        // SỬA: Sử dụng currentLimit thay vì hằng số
+        // SỬA: Đổi key 'per_page' thành 'limit' cho thống nhất với Controller bên dưới
         const params = new URLSearchParams({
             page: page,
-            per_page: PER_PAGE,
+            limit: currentLimit,
             search: search
         });
 
         const res = await apiFetch(`${API_BASE}?${params.toString()}`);
 
-        // Laravel Resource trả về: { data: [...], meta: {...}, links: {...} }
         const users = res.data || [];
         const meta = res.meta;
 
-        renderTable(users);       // <--- Đã thêm lại hàm này
-        renderPagination(meta);   // <--- Render phân trang
+        renderTable(users);
+        renderPagination(meta);
 
-        // Cập nhật text hiển thị số lượng (nếu có meta)
         if (meta) {
             document.getElementById('pageFrom').innerText = meta.from || 0;
             document.getElementById('pageTo').innerText = meta.to || 0;
@@ -95,12 +101,12 @@ function renderTable(users) {
     users.forEach(u => {
         tbody.insertAdjacentHTML('beforeend', `
             <tr class="bg-white even:bg-indigo-50 hover:bg-indigo-100 transition-colors duration-200">
-                <td class="px-6 py-4 border-b border-indigo-100 text-gray-900">${u.id}</td>
-                <td class="px-6 py-4 border-b border-indigo-100 font-medium text-gray-900">${u.username}</td>
-                <td class="px-6 py-4 border-b border-indigo-100 text-gray-700">${u.name}</td>
-                <td class="px-6 py-4 border-b border-indigo-100 text-gray-500">${u.created_at}</td>
+                <td class="px-6 py-2 border-b border-indigo-100 text-gray-900">${u.id}</td>
+                <td class="px-6 py-2 border-b border-indigo-100 font-medium text-gray-900">${u.username}</td>
+                <td class="px-6 py-2 border-b border-indigo-100 text-gray-700">${u.name}</td>
+                <td class="px-6 py-2 border-b border-indigo-100 text-gray-500">${u.created_at}</td>
                 
-                <td class="px-6 py-4 border-b border-indigo-100 text-right">
+                <td class="px-6 py-2 border-b border-indigo-100 text-right">
                     <div class="flex items-center justify-end gap-3">
                         <button onclick="openEditModal(${u.id})" 
                                 class="text-indigo-600 hover:text-indigo-900 transition-colors mt-1 p-1 rounded hover:bg-indigo-200" 
@@ -129,44 +135,92 @@ function renderTable(users) {
 ================================ */
 function renderPagination(meta) {
     const container = document.getElementById('paginationControls');
+    const pageTotalDisplay = document.getElementById('pageTotal');
+
+    if (pageTotalDisplay && meta) {
+        pageTotalDisplay.innerText = meta.total; // Cập nhật tổng số dòng
+    }
+
     if (!container || !meta) return;
 
     let html = '';
+    const current = meta.current_page;
+    const last = meta.last_page;
 
-    // Nút Previous
-    const prevDisabled = meta.current_page === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer';
+    // Helper: Class cho nút thường (trắng) và nút active (xanh đậm)
+    const baseClass = "relative inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-semibold transition-colors duration-200";
+    const inactiveClass = "text-gray-500 hover:bg-indigo-100 hover:text-indigo-700";
+    const activeClass = "bg-indigo-700 text-white shadow-sm"; // Màu xanh đen giống hình mẫu
+    const disabledClass = "text-gray-300 pointer-events-none";
+
+    // 1. Nút First (<<)
     html += `
-        <a onclick="changePage(${meta.current_page - 1})" 
-           class="${prevDisabled} relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 bg-indigo-100 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
-            <span class="sr-only">Previous</span>
-            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+        <a onclick="changePage(1)" class="${baseClass} ${current === 1 ? disabledClass : inactiveClass} cursor-pointer">
+            <span class="sr-only">First</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
             </svg>
         </a>
     `;
 
-    // Render các số trang
-    for (let i = 1; i <= meta.last_page; i++) {
-        const activeClass = i === meta.current_page
-            ? 'z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
-            : 'text-gray-900 bg-indigo-100 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0';
+    // 2. Nút Previous (<)
+    html += `
+        <a onclick="changePage(${current - 1})" class="${baseClass} ${current === 1 ? disabledClass : inactiveClass} cursor-pointer">
+            <span class="sr-only">Previous</span>
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </a>
+    `;
 
-        html += `
-            <a onclick="changePage(${i})" 
-               class="${activeClass} relative cursor-pointer inline-flex items-center px-4 py-2 text-sm font-semibold focus:z-20">
-               ${i}
-            </a>
-        `;
+    // 3. Render các số trang (Xử lý dấu ... thông minh)
+    // Logic: Luôn hiện trang đầu, trang cuối, và các trang xung quanh current
+    let pages = [];
+
+    if (last <= 7) {
+        // Nếu ít trang thì hiện hết
+        for (let i = 1; i <= last; i++) pages.push(i);
+    } else {
+        // Nếu nhiều trang, tính toán hiển thị dấu ...
+        if (current <= 4) {
+            pages = [1, 2, 3, 4, 5, '...', last];
+        } else if (current >= last - 3) {
+            pages = [1, '...', last - 4, last - 3, last - 2, last - 1, last];
+        } else {
+            pages = [1, '...', current - 1, current, current + 1, '...', last];
+        }
     }
 
-    // Nút Next
-    const nextDisabled = meta.current_page === meta.last_page ? 'pointer-events-none opacity-50' : 'cursor-pointer';
+    pages.forEach(page => {
+        if (page === '...') {
+            html += `<span class="relative inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400">...</span>`;
+        } else {
+            const isActive = page === current;
+            html += `
+                <a onclick="changePage(${page})" 
+                   class="${baseClass} ${isActive ? activeClass : inactiveClass} cursor-pointer">
+                   ${page}
+                </a>
+            `;
+        }
+    });
+
+    // 4. Nút Next (>)
     html += `
-        <a onclick="changePage(${meta.current_page + 1})" 
-           class="${nextDisabled} relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 bg-indigo-100 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+        <a onclick="changePage(${current + 1})" class="${baseClass} ${current === last ? disabledClass : inactiveClass} cursor-pointer">
             <span class="sr-only">Next</span>
-            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </a>
+    `;
+
+    // 5. Nút Last (>>)
+    html += `
+        <a onclick="changePage(${last})" class="${baseClass} ${current === last ? disabledClass : inactiveClass} cursor-pointer">
+            <span class="sr-only">Last</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
             </svg>
         </a>
     `;
@@ -217,7 +271,7 @@ async function createUser() {
         // Nếu thành công
         toggleModal('addUserModal');
         form.reset();
-        fetchUsers(1, ''); 
+        fetchUsers(1, '');
         Swal.fire('Thành công', 'Đã thêm tài khoản', 'success');
 
     } catch (e) {
@@ -266,11 +320,11 @@ async function updateUser() {
         // KIỂM TRA LỖI
         if (res.status === false) {
             showErrors(res.errors, 'edit'); // Chú ý prefix là 'edit'
-            return; 
+            return;
         }
 
         toggleModal('editUserModal');
-        fetchUsers(currentPage, currentSearch); 
+        fetchUsers(currentPage, currentSearch);
         Swal.fire('Thành công', 'Đã cập nhật', 'success');
     } catch (e) {
         console.error(e);
@@ -294,9 +348,9 @@ function confirmDelete(id) {
 
         try {
             await apiFetch(`${API_BASE}/${id}`, { method: 'DELETE' });
-            
+
             // SỬA: Giữ nguyên trang và từ khóa tìm kiếm
-            fetchUsers(currentPage, currentSearch); 
+            fetchUsers(currentPage, currentSearch);
             Swal.fire('Đã xóa!', 'Tài khoản đã được xóa.', 'success');
         } catch (e) {
             console.error(e);
@@ -321,7 +375,7 @@ window.toggleModal = (id) => {
 
     // LOGIC DỌN DẸP KHI ĐÓNG MODAL
     if (isClosing) {
-        
+
         // 1. Xử lý cho Modal Thêm mới (addUserModal)
         if (id === 'addUserModal') {
             const form = document.getElementById('addUserForm');
