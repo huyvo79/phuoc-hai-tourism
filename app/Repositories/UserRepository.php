@@ -33,4 +33,21 @@ class UserRepository implements UserRepositoryInterface
     {
         return $user->delete();
     }
+
+    public function getPaginatedUsers(array $filters = [], int $perPage = 5)
+    {
+        $query = User::query();
+
+        // Logic tìm kiếm
+        if (isset($filters['search']) && $filters['search']) {
+            $search = $filters['search'];
+            $query->where(function ($q) use ($search) {
+                $q->where('username', 'LIKE', "%{$search}%")
+                    ->orWhere('name', 'LIKE', "%{$search}%");
+            });
+        }
+
+        // Sắp xếp mới nhất trước và phân trang
+        return $query->orderBy('created_at', 'asc')->paginate($perPage);
+    }
 }
