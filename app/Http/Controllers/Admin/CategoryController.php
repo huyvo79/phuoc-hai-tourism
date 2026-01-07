@@ -22,7 +22,7 @@ class CategoryController extends Controller
             $request->only(['search']),
             $perPage
         );
-        // ⬇⬇⬇ ĐIỂM KHÁC BIỆT QUAN TRỌNG
+
         return view('admin.category.indexCategory', compact('categories', 'perPage'));
     }
 

@@ -32,7 +32,6 @@
                     </form>
                 </div>
 
-                {{-- Nút Thêm mới --}}
                 <div class="w-full md:w-auto">
                     <a href="{{ route('category.create') }}"
                         class="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-5 rounded-full shadow-lg flex items-center justify-center gap-2 transition duration-200 transform hover:-translate-y-0.5">
@@ -45,19 +44,6 @@
                 </div>
             </div>
         </div>
-
-        {{--  --}}
-        {{-- <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-semibold text-white-800">Danh sách danh mục</h1>
-            <a href="{{ route('category.create') }}"
-                class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow flex items-center gap-2 transition duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                </svg>
-                Thêm Danh mục
-            </a>
-        </div> --}}
 
         @if (session('success'))
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6" role="alert">
@@ -135,14 +121,8 @@
                         @endforelse
                     </tbody>
                 </table>
-                {{--  --}}
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    {{-- Tổng số category --}}
-                    {{-- <div class="text-indigo-700">
-                        <strong>Tổng số:</strong> {{ $categories->total() }} danh mục
-                    </div> --}}
 
-                    {{--  --}}
+                <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
                         <form action="" method="GET">
                             <div class="flex items-center gap-2 text-sm text-gray-700">
@@ -249,9 +229,7 @@
                                         d="M13 5l7 7-7 7M5 5l7 7-7 7" />
                                 </svg>
                             </a>
-
                         </div>
-
                     </div>
                 </div>
             </div>
