@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface UserRepositoryInterface
 {
-    public function all(): Collection;
+    public function getPaginatedUsers(array $filters = [], int $perPage = 5);
     public function find(int $id): ?User;
     public function create(array $data): User;
     public function update(User $user, array $data): User;

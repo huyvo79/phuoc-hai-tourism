@@ -12,7 +12,8 @@ class UserService implements UserServiceInterface
 {
     public function __construct(
         private UserRepositoryInterface $userRepository
-    ) {}
+    ) {
+    }
 
     public function getAllUsers(): Collection
     {
@@ -41,5 +42,10 @@ class UserService implements UserServiceInterface
     public function deleteUser(User $user): bool
     {
         return $this->userRepository->delete($user);
+    }
+
+    public function getPaginatedUsers(array $filters = [], int $perPage = 5)
+    {
+        return $this->userRepository->getPaginatedUsers($filters, $perPage);
     }
 }

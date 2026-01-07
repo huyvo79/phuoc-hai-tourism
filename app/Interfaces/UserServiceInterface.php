@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface UserServiceInterface
 {
-    public function getAllUsers(): Collection;
+    public function getPaginatedUsers(array $filters = [], int $perPage = 5);
     public function getUserById(int $id): ?User;
     public function createUser(array $data): User;
     public function updateUser(User $user, array $data): User;

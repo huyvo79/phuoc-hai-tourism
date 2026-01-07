@@ -9,20 +9,30 @@ use App\Http\Resources\UserResource;
 use App\Interfaces\UserServiceInterface;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     public function __construct(
         private UserServiceInterface $userService
-    ) {}
+    ) {
+    }
 
-    public function index(): JsonResponse
+    public function index(Request $request)
     {
-        return response()->json([
-            'success' => true,
-            'message' => 'Lấy danh sách người dùng thành công',
-            'data' => UserResource::collection($this->userService->getAllUsers())
-        ]);
+        $filters = [
+            'search' => $request->input('search'),
+        ];
+
+        // SỬA: Lấy tham số 'limit', nếu không có thì mặc định là 5
+        // Ép kiểu (int) để đảm bảo an toàn
+        $limit = (int) $request->input('limit', 5);
+
+        // Gọi service với biến $limit vừa lấy được
+        $users = $this->userService->getPaginatedUsers($filters, $limit);
+
+        // Trả về collection (Laravel tự động bao gồm meta pagination)
+        return UserResource::collection($users);
     }
 
     public function store(StoreUserRequest $request): JsonResponse

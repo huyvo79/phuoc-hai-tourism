@@ -26,29 +26,46 @@
             </div>
 
             <nav class="flex-1 py-6 space-y-1 px-3">
+    
+                {{-- 1. DASHBOARD --}}
                 <a href="{{ route('admin.dashboard') }}"
-                    class="sidebar-link active flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:text-white transition-all">
-                    <i class="fas fa-th-large w-5 text-purple-400"></i>
+                class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg transition-all
+                {{ request()->routeIs('admin.dashboard') ? 'active bg-slate-700/50 text-white shadow-lg shadow-purple-500/10' : 'text-gray-400 hover:text-white' }}">
+                    
+                    <i class="fas fa-th-large w-5 {{ request()->routeIs('admin.dashboard') ? 'text-purple-400' : '' }}"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="{{ route('category.list') }}"
-                    class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white transition-all">
-                    <i class="fas fa-layer-group w-5"></i>
+
+                {{-- 2. QUẢN LÝ DANH MỤC --}}
+                <a href="{{ route('category.list') }}" 
+                class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg transition-all
+                {{ request()->routeIs('category.list') ? 'active bg-slate-700/50 text-white shadow-lg shadow-purple-500/10' : 'text-gray-400 hover:text-white' }}">
+                    
+                    <i class="fas fa-layer-group w-5 {{ request()->routeIs('category.list') ? 'text-purple-400' : '' }}"></i>
                     <span>Quản lý Danh mục</span>
                 </a>
+
+                {{-- 3. ĐỊA ĐIỂM / BÀI VIẾT --}}
                 <a href="{{ route('posts.index') }}"
-                    class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white transition-all">
-                    <i class="fas fa-map-marked-alt w-5"></i>
+                class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg transition-all
+                {{ request()->routeIs('posts.index') ? 'active bg-slate-700/50 text-white shadow-lg shadow-purple-500/10' : 'text-gray-400 hover:text-white' }}">
+                    
+                    <i class="fas fa-map-marked-alt w-5 {{ request()->routeIs('posts.index') ? 'text-purple-400' : '' }}"></i>
                     <span>Địa điểm / Bài viết</span>
                 </a>
 
                 <div class="border-t border-white/10 my-4"></div>
 
+                {{-- 4. TÀI KHOẢN ADMIN (Phần bạn đang làm) --}}
                 <a href="{{ route('user.list') }}"
-                    class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white transition-all">
-                    <i class="fas fa-users-cog w-5"></i>
+                class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg transition-all
+                {{ request()->routeIs('user.list') || request()->routeIs('user.*') ? 'active bg-slate-700/50 text-white shadow-lg shadow-purple-500/10' : 'text-gray-400 hover:text-white' }}">
+                    
+                    {{-- Icon cũng đổi màu tím khi active --}}
+                    <i class="fas fa-users-cog w-5 {{ request()->routeIs('user.list') || request()->routeIs('user.*') ? 'text-purple-400' : '' }}"></i>
                     <span>Tài khoản Admin</span>
                 </a>
+
                 <a href="#" id="logoutBtn"
                     class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all">
                     <i class="fas fa-sign-out-alt w-5"></i>
