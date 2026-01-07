@@ -3,11 +3,27 @@ namespace App\Repositories;
 
 use App\Interfaces\CategoryRepositoryInterface;
 use App\Models\Category;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CategoryRepository implements CategoryRepositoryInterface{
     public function getAll()
     {
         return Category::all();
+    }
+
+    public function paginate(array $filter = [], int $perPage = 5): LengthAwarePaginator
+    {
+        $query = Category::query();
+
+        // filter theo tên (ví dụ)
+        if (!empty($filters['name'])) {
+            $query->where('name', 'like', '%' . $filters['name'] . '%');
+        }
+
+        // sort mới nhất
+        $query->orderBy('id', 'desc');
+
+        return $query->paginate($perPage);
     }
 
     public function find(int $id): ?Category

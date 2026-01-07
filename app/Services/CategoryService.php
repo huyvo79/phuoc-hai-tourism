@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Interfaces\CategoryServiceInterface;
 use App\Interfaces\CategoryRepositoryInterface;
 use App\Models\Category;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class CategoryService implements CategoryServiceInterface{
     public function __construct(
@@ -13,6 +14,11 @@ class CategoryService implements CategoryServiceInterface{
     public function getCategories()
     {
         return $this->categoryRepository->getAll();
+    }
+
+    public function getPaginatedCategories(array $filters = [], int $perPage = 5): LengthAwarePaginator
+    {
+        return $this->categoryRepository->paginate($filters, $perPage);
     }
 
     public function findCategoryById(int $id): ?Category

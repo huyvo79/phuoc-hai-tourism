@@ -13,12 +13,17 @@ class CategoryController extends Controller
         protected CategoryServiceInterface $categoryService
     ){}
 
-    public function index()
+    public function index(Request $request)
     {
-        $categories = $this->categoryService->getCategories();
-
+        // $categories = $this->categoryService->getCategories();
+        //paginate
+        $perPage = (int) $request->get('per_page', 5);
+        $categories = $this->categoryService->getPaginatedCategories(
+            $request->only(['name']),
+            $perPage
+        );
         // ⬇⬇⬇ ĐIỂM KHÁC BIỆT QUAN TRỌNG
-        return view('admin.category.indexCategory', compact('categories'));
+        return view('admin.category.indexCategory', compact('categories', 'perPage'));
     }
 
     public function create()
