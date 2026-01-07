@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    const SUPER_ADMIN = 'admin';
+
     public function __construct(
         private UserServiceInterface $userService
     ) {
@@ -56,6 +58,13 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
+        if ($user->username === self::SUPER_ADMIN) {
+            return response()->json([
+                'success' => false,
+                'errors' => ['message' => ['Bạn không có quyền chỉnh sửa tài khoản Super Admin này!']]
+            ], 403);
+        }
+
         $user = $this->userService->updateUser($user, $request->validated());
 
         return response()->json([
@@ -67,6 +76,13 @@ class UserController extends Controller
 
     public function destroy(User $user): JsonResponse
     {
+        if ($user->username === self::SUPER_ADMIN) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nguy hiểm! Không thể xóa tài khoản Super Admin.'
+            ], 403);
+        }
+
         $this->userService->deleteUser($user);
 
         return response()->json([
