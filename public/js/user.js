@@ -1,251 +1,447 @@
-document.addEventListener('DOMContentLoaded', function () {
+/* ===============================
+   CONFIG
+================================ */
+const API_BASE = '/api/users';
 
-    // ============================================================
-    // 1. XỬ LÝ MODAL THÊM USER (ADD)
-    // ============================================================
-
-    // Mở Modal khi bấm nút "Thêm tài khoản"
-    // Lưu ý: Trong HTML nút id="btn-add-user" chưa có data-toggle, nên ta dùng JS để mở
-    const btnAddUser = document.getElementById('btn-add-user');
-    if (btnAddUser) {
-        btnAddUser.addEventListener('click', function () {
-            // Reset form và lỗi trước khi mở
-            const addForm = document.getElementById('addUserForm');
-            if (addForm) addForm.reset();
-            clearErrors();
-            
-            // Mở Modal bằng jQuery (do dùng Bootstrap 4/5)
-            $('#addUserModal').modal('show');
-        });
-    }
-
-    // Xử lý Submit Form Thêm
-    const addForm = document.getElementById('addUserForm');
-    if (addForm) {
-        addForm.addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            // Setup nút bấm (loading)
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            setLoading(submitBtn, true);
-
-            // Chuẩn bị dữ liệu
-            const url = '/api/users';
-            const formData = new FormData(this);
-            clearErrors();
-
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': getCsrfToken()
-                    },
-                    body: formData
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    handleSuccess('Thêm tài khoản thành công!');
-                } else if (response.status === 422) {
-                    handleValidationErrors(data.errors, 'add');
-                    setLoading(submitBtn, false, originalText);
-                } else {
-                    handleError(data.message || 'Có lỗi xảy ra.');
-                    setLoading(submitBtn, false, originalText);
-                }
-            } catch (err) {
-                console.error(err);
-                handleError('Lỗi kết nối server.');
-                setLoading(submitBtn, false, originalText);
-            }
-        });
-    }
-
-    // ============================================================
-    // 2. XỬ LÝ MODAL SỬA USER (EDIT)
-    // ============================================================
-
-    // Bắt sự kiện click vào nút Edit (Dùng Event Delegation vì nút này do Livewire sinh ra)
-    $(document).on('click', '.edit-btn', function () {
-        // Lấy dữ liệu từ nút bấm
-        const id = $(this).data('id');
-        const username = $(this).data('username');
-        const name = $(this).data('name');
-
-        // Điền vào form
-        $('#edit_user_id').val(id);
-        $('#edit_username').val(username);
-        $('#edit_name').val(name);
-        $('#edit_password').val(''); // Luôn xóa trắng mật khẩu
-
-        clearErrors();
-        
-        // Mở Modal
-        $('#editUserModal').modal('show');
+/* ===============================
+   STATE QUẢN LÝ
+================================ */
+let currentPage = 1;
+let currentSearch = '';
+let currentLimit = 5;
+/* ===============================
+   HÀM XỬ LÝ KHI CHỌN SELECT BOX
+================================ */
+// Thêm hàm này để bắt sự kiện onchange từ HTML
+function changeLimit(newLimit) {
+    currentLimit = parseInt(newLimit); // Cập nhật limit mới
+    fetchUsers(1, currentSearch);      // Reset về trang 1 với limit mới
+}
+/* ===============================
+   FETCH WRAPPER (COOKIE JWT)
+================================ */
+async function apiFetch(url, options = {}) {
+    const response = await fetch(url, {
+        credentials: 'same-origin',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        ...options,
     });
 
-    // Xử lý Submit Form Sửa
-    const editForm = document.getElementById('editUserForm');
-    if (editForm) {
-        editForm.addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            const id = document.getElementById('edit_user_id').value;
-            if (!id) {
-                handleError('Không tìm thấy ID tài khoản.');
-                return;
-            }
-
-            // Setup nút bấm
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            setLoading(submitBtn, true);
-
-            const url = `/api/users/${id}`;
-            const formData = new FormData(this);
-            formData.append('_method', 'PUT'); // Method spoofing cho Laravel
-
-            clearErrors();
-
-            try {
-                const response = await fetch(url, {
-                    method: 'POST', // Dùng POST để gửi FormData có _method: PUT
-                    headers: {
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': getCsrfToken()
-                    },
-                    body: formData
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    handleSuccess('Cập nhật tài khoản thành công!');
-                } else if (response.status === 422) {
-                    handleValidationErrors(data.errors, 'edit');
-                    setLoading(submitBtn, false, originalText);
-                } else {
-                    handleError(data.message || 'Cập nhật thất bại.');
-                    setLoading(submitBtn, false, originalText);
-                }
-            } catch (err) {
-                console.error(err);
-                handleError('Lỗi kết nối server.');
-                setLoading(submitBtn, false, originalText);
-            }
+    if (response.status === 401) {
+        Swal.fire(
+            'Phiên đăng nhập hết hạn',
+            'Vui lòng đăng nhập lại',
+            'warning'
+        ).then(() => {
+            window.location.href = '/admin/login';
         });
+        throw new Error('Unauthorized');
     }
 
-    // ============================================================
-    // 3. CÁC HÀM TIỆN ÍCH (HELPER FUNCTIONS)
-    // ============================================================
+    return response.json();
+}
 
-    // Lấy CSRF Token
-    function getCsrfToken() {
-        return document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+/* ===============================
+   LOAD USERS
+================================ */
+async function fetchUsers(page = 1, search = '') {
+    try {
+        currentPage = page;
+        currentSearch = search;
+
+        const params = new URLSearchParams({
+            page: page,
+            limit: currentLimit,
+            search: search
+        });
+
+        const res = await apiFetch(`${API_BASE}?${params.toString()}`);
+
+        const users = res.data || [];
+        const meta = res.meta;
+
+        renderTable(users);
+        renderPagination(meta);
+
+        if (meta) {
+            document.getElementById('pageFrom').innerText = meta.from || 0;
+            document.getElementById('pageTo').innerText = meta.to || 0;
+            document.getElementById('pageTotal').innerText = meta.total || 0;
+        }
+
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+/* ===============================
+   RENDER TABLE
+================================ */
+function renderTable(users) {
+    const tbody = document.getElementById('userTableBody');
+    if (!tbody) return;
+
+    tbody.innerHTML = '';
+
+    if (!users.length) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" class="text-center py-6 text-gray-500">
+                    Không tìm thấy dữ liệu phù hợp
+                </td>
+            </tr>`;
+        return;
     }
 
-    // Xóa toàn bộ thông báo lỗi
-    function clearErrors() {
-        document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
-    }
+    users.forEach(u => {
+        // --- LOGIC KIỂM TRA SUPER ADMIN ---
+        // Giả sử tài khoản cần bảo vệ có username là 'admin'
+        const isSuperAdmin = (u.username === 'admin'); 
 
-    // Hiển thị trạng thái loading cho nút
-    function setLoading(btn, isLoading, originalText = '') {
-        if (!btn) return;
-        if (isLoading) {
-            btn.disabled = true;
-            btn.textContent = 'Đang xử lý...';
+        let actionButtons = '';
+
+        if (isSuperAdmin) {
+            // CASE 1: Nếu là Admin xịn -> Hiện Badge "Bảo vệ"
+            actionButtons = `
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                    Được bảo vệ
+                </span>
+            `;
         } else {
-            btn.disabled = false;
-            btn.textContent = originalText;
+            // CASE 2: Tài khoản thường -> Hiện nút Sửa / Xóa
+            actionButtons = `
+                <div class="flex items-center justify-end gap-3">
+                    <button onclick="openEditModal(${u.id})" 
+                            class="text-indigo-600 hover:text-indigo-900 transition-colors mt-1 p-1 rounded hover:bg-indigo-200" 
+                            title="Sửa tài khoản">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                        </svg>
+                    </button>
+
+                    <button onclick="confirmDelete(${u.id})" 
+                            class="text-red-500 hover:text-red-700 transition-colors p-1 rounded hover:bg-red-200" 
+                            title="Xóa tài khoản">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        </svg>
+                    </button>
+                </div>
+            `;
+        }
+
+        tbody.insertAdjacentHTML('beforeend', `
+            <tr class="bg-white even:bg-indigo-50 hover:bg-indigo-100 transition-colors duration-200">
+                <td class="px-6 py-2 border-b border-indigo-100 text-gray-900">${u.id}</td>
+                <td class="px-6 py-2 border-b border-indigo-100 font-medium text-gray-900">${u.username}</td>
+                <td class="px-6 py-2 border-b border-indigo-100 text-gray-700">${u.name}</td>
+                <td class="px-6 py-2 border-b border-indigo-100 text-gray-500">${u.created_at}</td>
+                
+                <td class="px-6 py-2 border-b border-indigo-100 text-right">
+                   ${actionButtons}
+                </td>
+            </tr>
+        `);
+    });
+}
+
+/* ===============================
+   RENDER PAGINATION
+================================ */
+function renderPagination(meta) {
+    const container = document.getElementById('paginationControls');
+    const pageTotalDisplay = document.getElementById('pageTotal');
+
+    if (pageTotalDisplay && meta) {
+        pageTotalDisplay.innerText = meta.total; // Cập nhật tổng số dòng
+    }
+
+    if (!container || !meta) return;
+
+    let html = '';
+    const current = meta.current_page;
+    const last = meta.last_page;
+
+    // Helper: Class cho nút thường và nút active
+    const baseClass = "relative inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-semibold transition-colors duration-200";
+    const inactiveClass = "text-gray-500 hover:bg-indigo-100 hover:text-indigo-700";
+    const activeClass = "bg-indigo-700 text-white shadow-sm";
+    const disabledClass = "text-gray-300 pointer-events-none";
+
+    // 1. Nút First (<<)
+    html += `
+        <a onclick="changePage(1)" class="${baseClass} ${current === 1 ? disabledClass : inactiveClass} cursor-pointer">
+            <span class="sr-only">First</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+            </svg>
+        </a>
+    `;
+
+    // 2. Nút Previous (<)
+    html += `
+        <a onclick="changePage(${current - 1})" class="${baseClass} ${current === 1 ? disabledClass : inactiveClass} cursor-pointer">
+            <span class="sr-only">Previous</span>
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </a>
+    `;
+
+    // 3. Render các số trang (Xử lý dấu ... thông minh)
+    // Logic: Luôn hiện trang đầu, trang cuối, và các trang xung quanh current
+    let pages = [];
+
+    if (last <= 7) {
+        // Nếu ít trang thì hiện hết
+        for (let i = 1; i <= last; i++) pages.push(i);
+    } else {
+        // Nếu nhiều trang, tính toán hiển thị dấu ...
+        if (current <= 4) {
+            pages = [1, 2, 3, 4, 5, '...', last];
+        } else if (current >= last - 3) {
+            pages = [1, '...', last - 4, last - 3, last - 2, last - 1, last];
+        } else {
+            pages = [1, '...', current - 1, current, current + 1, '...', last];
         }
     }
 
-    // Hiển thị lỗi Validation (422)
-    function handleValidationErrors(errors, prefix) {
-        if (!errors) return;
-        for (const [key, messages] of Object.entries(errors)) {
-            // key: username -> id: error_add_username hoặc error_edit_username
-            const errorElement = document.getElementById(`error_${prefix}_${key}`);
-            if (errorElement) {
-                errorElement.textContent = messages[0];
-            }
+    pages.forEach(page => {
+        if (page === '...') {
+            html += `<span class="relative inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400">...</span>`;
+        } else {
+            const isActive = page === current;
+            html += `
+                <a onclick="changePage(${page})" 
+                   class="${baseClass} ${isActive ? activeClass : inactiveClass} cursor-pointer">
+                   ${page}
+                </a>
+            `;
         }
-    }
-
-    // Xử lý thành công
-    function handleSuccess(message) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Thành công!',
-            text: message,
-            timer: 1500,
-            showConfirmButton: false
-        }).then(() => {
-            location.reload(); // Load lại trang để cập nhật bảng Livewire
-        });
-    }
-
-    // Xử lý lỗi chung
-    function handleError(message) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Lỗi',
-            text: message
-        });
-    }
-
-    // Reset form khi đóng Modal (Bootstrap Events)
-    $('#addUserModal, #editUserModal').on('hidden.bs.modal', function () {
-        const form = this.querySelector('form');
-        if (form) form.reset();
-        clearErrors();
     });
 
+    // 4. Nút Next (>)
+    html += `
+        <a onclick="changePage(${current + 1})" class="${baseClass} ${current === last ? disabledClass : inactiveClass} cursor-pointer">
+            <span class="sr-only">Next</span>
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </a>
+    `;
+
+    // 5. Nút Last (>>)
+    html += `
+        <a onclick="changePage(${last})" class="${baseClass} ${current === last ? disabledClass : inactiveClass} cursor-pointer">
+            <span class="sr-only">Last</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+            </svg>
+        </a>
+    `;
+
+    container.innerHTML = html;
+}
+
+/* ===============================
+   EVENT HANDLERS
+================================ */
+function changePage(page) {
+    if (page < 1) return;
+    fetchUsers(page, currentSearch);
+}
+
+// Debounce Search
+let debounceTimer;
+document.getElementById('searchInput')?.addEventListener('input', (e) => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+        const keyword = e.target.value.trim();
+        fetchUsers(1, keyword); // Tìm kiếm mới luôn về trang 1
+    }, 500);
 });
 
-// ============================================================
-// 4. XỬ LÝ XÓA USER (Global Function)
-// ============================================================
-// Hàm này phải để ở scope global (window) vì nó được gọi từ onclick="" trong HTML
+/* ===============================
+   CREATE USER
+================================ */
+async function createUser() {
+    clearErrors('add');
+    const form = document.getElementById('addUserForm');
+    const data = Object.fromEntries(new FormData(form));
 
-window.confirmDeleteUser = function (id) {
+    try {
+        // Lưu kết quả trả về vào biến res
+        const res = await apiFetch(API_BASE, {
+            method: 'POST',
+            body: JSON.stringify(data),
+        });
+
+        // KIỂM TRA LỖI TỪ BACKEND
+        // Nếu backend trả về status: false (do Validation failed)
+        if (res.status === false) {
+            showErrors(res.errors, 'add'); // Hiển thị lỗi lên form
+            return; // Dừng hàm, không chạy đoạn code success bên dưới
+        }
+
+        // Nếu thành công
+        toggleModal('addUserModal');
+        form.reset();
+        fetchUsers(1, '');
+        Swal.fire('Thành công', 'Đã thêm tài khoản', 'success');
+
+    } catch (e) {
+        console.error(e);
+        Swal.fire('Lỗi hệ thống', 'Vui lòng thử lại sau', 'error');
+    }
+}
+
+/* ===============================
+   EDIT USER
+================================ */
+async function openEditModal(id) {
+    try {
+        const res = await apiFetch(`${API_BASE}/${id}`);
+        const u = res.data;
+
+        document.getElementById('edit_user_id').value = u.id;
+        document.getElementById('edit_username').value = u.username;
+        document.getElementById('edit_name').value = u.name;
+        document.getElementById('edit_password').value = '';
+
+        clearErrors('edit');
+        toggleModal('editUserModal');
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+async function updateUser() {
+    clearErrors('edit');
+    const id = document.getElementById('edit_user_id').value;
+    const raw = Object.fromEntries(new FormData(document.getElementById('editUserForm')));
+
+    const data = {};
+    for (const k in raw) {
+        if (k === 'password' && !raw[k]) continue;
+        data[k] = raw[k];
+    }
+
+    try {
+        const res = await apiFetch(`${API_BASE}/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+        });
+
+        // KIỂM TRA LỖI
+        if (res.status === false) {
+            showErrors(res.errors, 'edit'); // Chú ý prefix là 'edit'
+            return;
+        }
+
+        toggleModal('editUserModal');
+        fetchUsers(currentPage, currentSearch);
+        Swal.fire('Thành công', 'Đã cập nhật', 'success');
+    } catch (e) {
+        console.error(e);
+        Swal.fire('Lỗi hệ thống', 'Vui lòng thử lại sau', 'error');
+    }
+}
+
+/* ===============================
+   DELETE USER
+================================ */
+function confirmDelete(id) {
     Swal.fire({
-        title: 'Xác nhận xóa?',
-        text: "Bạn có chắc chắn muốn xóa tài khoản này? Hành động này không thể hoàn tác!",
+        title: `Bạn có chắc muốn xóa tài khoản (ID = ${id})?`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Xóa ngay',
+        confirmButtonText: 'Xóa',
         cancelButtonText: 'Hủy'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            fetch(`/api/users/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Accept': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                // Kiểm tra cả 2 trường hợp success trả về từ API
-                if (data.status === true || data.success === true) {
-                    Swal.fire('Đã xóa!', 'Tài khoản đã được xóa thành công.', 'success')
-                        .then(() => location.reload());
-                } else {
-                    Swal.fire('Lỗi!', data.message || 'Không thể xóa tài khoản.', 'error');
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                Swal.fire('Lỗi!', 'Không thể kết nối đến server.', 'error');
-            });
+    }).then(async (result) => {
+        if (!result.isConfirmed) return;
+
+        try {
+            await apiFetch(`${API_BASE}/${id}`, { method: 'DELETE' });
+
+            // SỬA: Giữ nguyên trang và từ khóa tìm kiếm
+            fetchUsers(currentPage, currentSearch);
+            Swal.fire('Đã xóa!', 'Tài khoản đã được xóa.', 'success');
+        } catch (e) {
+            console.error(e);
+            Swal.fire('Lỗi!', 'Không thể xóa tài khoản này.', 'error');
         }
     });
+}
+
+/* ===============================
+   UI HELPERS
+================================ */
+window.toggleModal = (id) => {
+    const modal = document.getElementById(id);
+    if (!modal) return;
+
+    // Kiểm tra trạng thái hiện tại: 
+    // Nếu modal KHÔNG có class 'hidden' nghĩa là nó đang hiện -> Hành động này sẽ là ĐÓNG.
+    const isClosing = !modal.classList.contains('hidden');
+
+    // Thực hiện ẩn/hiện
+    modal.classList.toggle('hidden');
+
+    // LOGIC DỌN DẸP KHI ĐÓNG MODAL
+    if (isClosing) {
+
+        // 1. Xử lý cho Modal Thêm mới (addUserModal)
+        if (id === 'addUserModal') {
+            const form = document.getElementById('addUserForm');
+            if (form) form.reset(); // Xóa sạch dữ liệu trong các ô input
+            clearErrors('add');     // Xóa các dòng thông báo lỗi màu đỏ
+        }
+
+        // 2. Xử lý cho Modal Sửa (editUserModal) - Tùy chọn
+        // Khi đóng form sửa, ta cũng nên xóa lỗi cũ để lần sau mở lên không bị ám
+        if (id === 'editUserModal') {
+            clearErrors('edit');
+        }
+    }
 };
+
+function clearErrors(prefix) {
+    document
+        .querySelectorAll(`[id^="error_${prefix}_"]`)
+        .forEach(e => e.innerText = '');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('addUserForm')?.addEventListener('submit', e => {
+        e.preventDefault();
+        createUser();
+    });
+
+    document.getElementById('editUserForm')?.addEventListener('submit', e => {
+        e.preventDefault();
+        updateUser();
+    });
+});
+
+function showErrors(errors, prefix) {
+    // errors là object: { username: ["Lỗi 1"], password: ["Lỗi 2"] }
+    for (const [key, messages] of Object.entries(errors)) {
+        const errorDiv = document.getElementById(`error_${prefix}_${key}`);
+        if (errorDiv) {
+            errorDiv.innerText = messages[0]; // Chỉ hiện thông báo lỗi đầu tiên
+        }
+    }
+}
+
+/* ===============================
+   AUTO LOAD
+================================ */
+console.log('USER.JS LOADED');
+fetchUsers(currentPage, currentSearch);

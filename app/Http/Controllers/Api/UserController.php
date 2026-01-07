@@ -3,95 +3,91 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
+use App\Interfaces\UserServiceInterface;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * GET: Lấy danh sách users
-     */
-    public function index(): JsonResponse
-    {
-        // Sử dụng UserResource::collection để format cả danh sách
-        return response()->json([
-            'status'  => true,
-            'message' => 'Lấy danh sách người dùng thành công',
-            'data'    => UserResource::collection(User::all())
-        ], 200);
+    const SUPER_ADMIN = 'admin';
+
+    public function __construct(
+        private UserServiceInterface $userService
+    ) {
     }
 
-    /**
-     * POST: Tạo user mới
-     * Sử dụng StoreUserRequest để validate tự động
-     */
+    public function index(Request $request)
+    {
+        $filters = [
+            'search' => $request->input('search'),
+        ];
+
+        // SỬA: Lấy tham số 'limit', nếu không có thì mặc định là 5
+        // Ép kiểu (int) để đảm bảo an toàn
+        $limit = (int) $request->input('limit', 5);
+
+        // Gọi service với biến $limit vừa lấy được
+        $users = $this->userService->getPaginatedUsers($filters, $limit);
+
+        // Trả về collection (Laravel tự động bao gồm meta pagination)
+        return UserResource::collection($users);
+    }
+
     public function store(StoreUserRequest $request): JsonResponse
     {
-        // Lấy dữ liệu đã validate
-        $validated = $request->validated();
-        
-        // Nếu Model chưa có cast 'password' => 'hashed', cần hash thủ công:
-        // $validated['password'] = Hash::make($validated['password']);
-
-        $user = User::create($validated);
+        $user = $this->userService->createUser($request->validated());
 
         return response()->json([
-            'status'  => true,
+            'success' => true,
             'message' => 'Tạo người dùng thành công',
-            'data'    => new UserResource($user)
+            'data' => new UserResource($user)
         ], 201);
     }
 
-    /**
-     * GET: Xem chi tiết
-     * Sử dụng Route Model Binding (User $user) thay vì $id
-     */
     public function show(User $user): JsonResponse
     {
-        // Nếu không tìm thấy, Laravel tự động trả về 404 (ModelNotFoundException)
-        // Nên bạn không cần check if (!$user) thủ công nữa.
-        
         return response()->json([
-            'status' => true,
-            'data'   => new UserResource($user)
-        ], 200);
+            'success' => true,
+            'data' => new UserResource($user)
+        ]);
     }
 
-    /**
-     * PUT/PATCH: Cập nhật
-     */
     public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
-        $validated = $request->validated();
-
-        // Xử lý riêng password nếu có gửi lên (nếu Model chưa cast hashed)
-        if (isset($validated['password'])) {
-            $validated['password'] = Hash::make($validated['password']);
+        if ($user->username === self::SUPER_ADMIN) {
+            return response()->json([
+                'success' => false,
+                'errors' => ['message' => ['Bạn không có quyền chỉnh sửa tài khoản Super Admin này!']]
+            ], 403);
         }
 
-        $user->update($validated);
+        $user = $this->userService->updateUser($user, $request->validated());
 
         return response()->json([
-            'status'  => true,
+            'success' => true,
             'message' => 'Cập nhật thành công',
-            'data'    => new UserResource($user)
-        ], 200);
+            'data' => new UserResource($user)
+        ]);
     }
 
-    /**
-     * DELETE: Xóa user
-     */
     public function destroy(User $user): JsonResponse
     {
-        $user->delete();
+        if ($user->username === self::SUPER_ADMIN) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nguy hiểm! Không thể xóa tài khoản Super Admin.'
+            ], 403);
+        }
+
+        $this->userService->deleteUser($user);
 
         return response()->json([
-            'status'  => true,
+            'success' => true,
             'message' => 'Đã xóa người dùng thành công'
-        ], 200);
+        ]);
     }
 }

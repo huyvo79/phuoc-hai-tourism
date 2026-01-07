@@ -12,7 +12,9 @@ class UserResource extends JsonResource
             'id'         => $this->id,
             'username'   => $this->username,
             'name'       => $this->name,
-            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'created_at' => $this->created_at 
+                ? $this->created_at->setTimezone('Asia/Ho_Chi_Minh')->format('d/m/Y (H:i)') 
+                : null,
             // Password tự động bị ẩn do không khai báo ở đây
         ];
     }
