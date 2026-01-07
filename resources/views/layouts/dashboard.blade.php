@@ -37,12 +37,11 @@
                 </a>
 
                 {{-- 2. QUẢN LÝ DANH MỤC --}}
-                {{-- Giả sử route tên là categories.index --}}
-                <a href="#" 
+                <a href="{{ route('category.list') }}" 
                 class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg transition-all
-                {{ request()->routeIs('categories.*') ? 'active bg-slate-700/50 text-white shadow-lg shadow-purple-500/10' : 'text-gray-400 hover:text-white' }}">
+                {{ request()->routeIs('category.list') ? 'active bg-slate-700/50 text-white shadow-lg shadow-purple-500/10' : 'text-gray-400 hover:text-white' }}">
                     
-                    <i class="fas fa-layer-group w-5 {{ request()->routeIs('categories.*') ? 'text-purple-400' : '' }}"></i>
+                    <i class="fas fa-layer-group w-5 {{ request()->routeIs('category.list') ? 'text-purple-400' : '' }}"></i>
                     <span>Quản lý Danh mục</span>
                 </a>
 
