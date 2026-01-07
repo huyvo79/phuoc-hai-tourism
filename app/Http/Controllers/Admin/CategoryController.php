@@ -19,7 +19,7 @@ class CategoryController extends Controller
         //paginate
         $perPage = (int) $request->get('per_page', 5);
         $categories = $this->categoryService->getPaginatedCategories(
-            $request->only(['name']),
+            $request->only(['search']),
             $perPage
         );
         // ⬇⬇⬇ ĐIỂM KHÁC BIỆT QUAN TRỌNG

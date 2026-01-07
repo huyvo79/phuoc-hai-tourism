@@ -11,19 +11,30 @@ class CategoryRepository implements CategoryRepositoryInterface{
         return Category::all();
     }
 
-    public function paginate(array $filter = [], int $perPage = 5): LengthAwarePaginator
+    public function paginate(array $filters = [], int $perPage = 5): LengthAwarePaginator
     {
         $query = Category::query();
 
-        // filter theo tên (ví dụ)
-        if (!empty($filters['name'])) {
-            $query->where('name', 'like', '%' . $filters['name'] . '%');
+         // 🔍 SEARCH: theo ID hoặc Name
+        if (!empty($filters['search'])) {
+            $search = trim($filters['search']);
+
+            $query->where(function ($q) use ($search) {
+
+                // Nếu là số → tìm theo ID
+                if (is_numeric($search)) {
+                    $q->where('id', $search);
+                }
+
+                // Luôn tìm theo name
+                $q->orWhere('name', 'like', '%' . $search . '%');
+            });
         }
 
-        // sort mới nhất
-        $query->orderBy('id', 'desc');
-
-        return $query->paginate($perPage);
+        return $query
+            ->orderBy('id', 'desc')
+            ->paginate($perPage)
+            ->withQueryString(); // ⭐ giữ search + per_page khi chuyển trang
     }
 
     public function find(int $id): ?Category

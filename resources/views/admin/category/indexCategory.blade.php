@@ -15,7 +15,6 @@
             </div>
 
             <div class="flex flex-col md:flex-row justify-between items-center bg-indigo-200 gap-4 p-2 rounded-xl">
-
                 {{-- Thanh Tìm kiếm --}}
                 <div class="relative w-full md:w-1/3">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -26,9 +25,11 @@
                                 clip-rule="evenodd"></path>
                         </svg>
                     </div>
-                    <input type="text" id="searchInput"
-                        class="block w-full p-2.5 pl-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-white focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
-                        placeholder="Tìm theo mã danh mục hoặc tên danh mục...">
+                    <form action="" method="GET">
+                        <input type="text" id="searchInput" name="search" value="{{ request('search') }}"
+                            class="block w-full p-2.5 pl-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-white focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
+                            placeholder="Tìm theo mã danh mục hoặc tên danh mục...">
+                    </form>
                 </div>
 
                 {{-- Nút Thêm mới --}}
