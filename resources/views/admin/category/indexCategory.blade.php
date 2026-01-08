@@ -33,14 +33,15 @@
                 </div>
 
                 <div class="w-full md:w-auto">
-                    <a href="{{ route('category.create') }}"
-                        class="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-5 rounded-full shadow-lg flex items-center justify-center gap-2 transition duration-200 transform hover:-translate-y-0.5">
+                    <button onclick="openCreateModal()"
+                        class="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-5 rounded-full shadow-lg flex items-center justify-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
                         Thêm Danh mục
-                    </a>
+                    </button>
+
                 </div>
             </div>
         </div>
@@ -76,166 +77,44 @@
                                 động</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        @forelse($categories as $category)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $category->id }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $category->name }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $category->slug }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $category->created_at->format('d/m/Y') }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="{{ route('category.edit', $category->id) }}"
-                                        class="text-indigo-600 hover:text-indigo-900 mr-3 inline-block">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                                        </svg>
-                                    </a>
+                    <tbody id="categoryTable" class="bg-white divide-y divide-gray-200">
 
-                                    <button onclick="confirmDelete({{ $category->id }})"
-                                        class="text-red-500 hover:text-red-700 transition-colors p-1 rounded hover:bg-red-200"
-                                        title="Xóa tài khoản">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
-                                    Chưa có danh mục nào.
-                                </td>
-                            </tr>
-                        @endforelse
                     </tbody>
                 </table>
 
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
-                        <form action="" method="GET">
-                            <div class="flex items-center gap-2 text-sm text-gray-700">
-                                <span class="hidden sm:inline">Hiển thị</span>
+                {{-- pagination --}}
+                <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
 
-                                <select name="per_page" onchange="this.form.submit()"
-                                    class="block w-10 rounded-lg border-gray-300 py-1.5 text-sm text-indigo-600 font-medium leading-5 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white border cursor-pointer">
-                                    @foreach ([5, 10, 15, 20] as $size)
-                                        <option value="{{ $size }}" {{ $perPage == $size ? 'selected' : '' }}>
-                                            {{ $size }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                    <div class="flex items-center gap-2 text-sm text-gray-700">
+                        <span class="hidden sm:inline">Hiển thị</span>
 
-                                <span class="hidden sm:inline">
-                                    dòng trên tổng số <span class="font-medium text-indigo-600" id="pageTotal">0</span> dòng
-                                </span>
-                            </div>
-                        </form>
-                        @php
-                            $current = $categories->currentPage();
-                            $last = $categories->lastPage();
+                        <select onchange="changePerPage(this.value)"
+                            class="block w-10 rounded-lg border-gray-300 py-1.5 text-sm text-indigo-600 font-medium leading-5 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white border cursor-pointer">
+                            <option value="" class="font-medium" selected></option>
+                            <option value="5" class="font-medium">5</option>
+                            <option value="10" class="font-medium">10</option>
+                            <option value="15" class="font-medium">15</option>
+                            <option value="20" class="font-medium">20</option>
+                        </select>
 
-                            // class giống JS
-                            $baseClass =
-                                'relative inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-semibold transition-colors duration-200';
-                            $inactiveClass = 'text-gray-500 hover:bg-indigo-100 hover:text-indigo-700';
-                            $activeClass = 'bg-indigo-700 text-white shadow-sm';
-                            $disabledClass = 'text-gray-300 pointer-events-none';
-                        @endphp
+                        <span class="hidden sm:inline">
+                            dòng trên tổng số <span class="font-medium text-indigo-600" id="pageTotal">0</span> dòng
+                        </span>
+                    </div>
 
-                        {{--  --}}
-                        <div class="flex items-center gap-1 justify-center mt-4">
-
-                            {{-- 1. First (<<) --}}
-                            <a href="{{ $current === 1 ? '#' : $categories->url(1) }}"
-                                class="{{ $baseClass }} {{ $current === 1 ? $disabledClass : $inactiveClass }}">
-                                <span class="sr-only">First</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-                                </svg>
-                            </a>
-
-                            {{-- 2. Previous (<) --}}
-                            <a href="{{ $current === 1 ? '#' : $categories->previousPageUrl() }}"
-                                class="{{ $baseClass }} {{ $current === 1 ? $disabledClass : $inactiveClass }}">
-                                <span class="sr-only">Previous</span>
-                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 19l-7-7 7-7" />
-                                </svg>
-                            </a>
-
-                            {{-- 3. Logic render số trang + ... --}}
-                            @php
-                                $pages = [];
-
-                                if ($last <= 7) {
-                                    $pages = range(1, $last);
-                                } else {
-                                    if ($current <= 4) {
-                                        $pages = [1, 2, 3, 4, 5, '...', $last];
-                                    } elseif ($current >= $last - 3) {
-                                        $pages = [1, '...', $last - 4, $last - 3, $last - 2, $last - 1, $last];
-                                    } else {
-                                        $pages = [1, '...', $current - 1, $current, $current + 1, '...', $last];
-                                    }
-                                }
-                            @endphp
-
-                            @foreach ($pages as $page)
-                                @if ($page === '...')
-                                    <span
-                                        class="relative inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400">
-                                        ...
-                                    </span>
-                                @else
-                                    <a href="{{ $categories->url($page) }}"
-                                        class="{{ $baseClass }} {{ $page == $current ? $activeClass : $inactiveClass }}">
-                                        {{ $page }}
-                                    </a>
-                                @endif
-                            @endforeach
-
-                            {{-- 4. Next (>) --}}
-                            <a href="{{ $current === $last ? '#' : $categories->nextPageUrl() }}"
-                                class="{{ $baseClass }} {{ $current === $last ? $disabledClass : $inactiveClass }}">
-                                <span class="sr-only">Next</span>
-                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5l7 7-7 7" />
-                                </svg>
-                            </a>
-
-                            {{-- 5. Last (>>) --}}
-                            <a href="{{ $current === $last ? '#' : $categories->url($last) }}"
-                                class="{{ $baseClass }} {{ $current === $last ? $disabledClass : $inactiveClass }}">
-                                <span class="sr-only">Last</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                                </svg>
-                            </a>
-                        </div>
+                    <div class="flex items-center gap-1">
+                        <nav class="isolate inline-flex gap-1" aria-label="Pagination" id="paginationControls">
+                            {{-- JS sẽ render các nút hình tròn vào đây --}}
+                        </nav>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </main>
 
+    {{-- Delete category --}}
     <div id="deleteModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog"
         aria-modal="true">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -266,14 +145,17 @@
                     </div>
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <form id="deleteForm" method="POST" action="">
+                    {{-- <form id="deleteForm" method="POST" action="">
                         @csrf
                         @method('DELETE')
                         <button type="submit"
                             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
                             Xóa ngay
                         </button>
-                    </form>
+                    </form> --}}
+                    <button type="button" onclick="deleteCategory()" class="bg-red-600 text-white px-4 py-2 rounded">
+                        Xóa ngay
+                    </button>
                     <button type="button" onclick="toggleModal('deleteModal')"
                         class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                         Hủy bỏ
@@ -282,10 +164,69 @@
             </div>
         </div>
     </div>
+
+    {{-- Edit category --}}
+    <div id="editModal" class="fixed inset-0 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen bg-black bg-opacity-50">
+            <div class="bg-white rounded-lg w-full max-w-md p-6">
+                <h3 class="text-lg font-semibold mb-4">Sửa danh mục</h3>
+
+                <input type="hidden" id="editId">
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                        Tên danh mục
+                    </label>
+                    <input type="text" id="editName"
+                        class="w-full border rounded px-3 py-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-700">
+                </div>
+
+                <div class="flex justify-end gap-2">
+                    <button onclick="toggleModal('editModal')" class="px-4 py-2 border rounded text-gray-700">
+                        Hủy
+                    </button>
+                    <button onclick="updateCategory()" class="px-4 py-2 bg-indigo-600 text-white rounded">
+                        Lưu
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Create category --}}
+    <div id="createModal" class="fixed inset-0 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen bg-black bg-opacity-50">
+            <div class="bg-white rounded-lg w-full max-w-md p-6">
+                <h3 class="text-lg font-semibold mb-4">Thêm danh mục</h3>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                        Tên danh mục
+                    </label>
+                    <input type="text" id="createName"
+                        class="w-full border rounded px-3 py-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-700">
+                </div>
+
+                <div class="flex justify-end gap-2">
+                    <button onclick="toggleModal('createModal')" class="px-4 py-2 border rounded text-gray-700">
+                        Hủy
+                    </button>
+                    <button onclick="storeCategory()" class="px-4 py-2 bg-indigo-600 text-white rounded">
+                        Thêm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Announce --}}
+    <div id="toast" class="fixed top-5 right-5 z-50 hidden px-4 py-3 rounded-lg shadow-lg text-white transition">
+    </div>
+
 @endsection
 
 @push('scripts')
-    <script>
+    {{-- <script>
         function toggleModal(modalID) {
             const modal = document.getElementById(modalID);
             if (modal) {
@@ -300,5 +241,13 @@
             document.getElementById('deleteForm').action = url;
             toggleModal('deleteModal');
         }
+    </script> --}}
+
+    <script>
+        window.CategoryConfig = {
+            apiUrl: '/api/categories',
+            csrfToken: '{{ csrf_token() }}'
+        };
     </script>
+    <script src="{{ asset('js/category.js') }}"></script>
 @endpush

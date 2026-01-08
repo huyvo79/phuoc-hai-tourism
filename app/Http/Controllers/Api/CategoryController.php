@@ -1,21 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Category;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Interfaces\CategoryServiceInterface;
-use Illuminate\Support\Str;
+use App\Models\Category;
 
-class PostController extends Controller
+class CategoryController extends Controller
 {
     public function __construct(
         protected CategoryServiceInterface $categoryService
     ){}
 
-    public function index()
+    public function index(Request $request)
     {
-        $categories = $this->categoryService->getCategories();
+        $perPage = $request->get('per_page', 5);
+
+        $categories = Category::orderBy('id', 'desc')
+            ->paginate($perPage);
 
         return response()->json($categories);
     }
