@@ -99,6 +99,7 @@ function deleteCategory() {
         }
     })
     .then(() => {
+        showToast('Xóa danh mục thành công');
         toggleModal('deleteModal');
         loadCategories(currentPage);
     });
@@ -129,8 +130,58 @@ function updateCategory() {
     .then(res => res.json())
     .then(() => {
         toggleModal('editModal');
+        showToast('Sửa danh mục thành công');
         loadCategories(currentPage);
     });
+}
+
+function openCreateModal() {
+    document.getElementById('createName').value = '';
+    toggleModal('createModal');
+}
+
+function storeCategory() {
+    const name = document.getElementById('createName').value.trim();
+
+    if (!name) {
+        alert('Vui lòng nhập tên danh mục');
+        return;
+    }
+
+    fetch(CategoryConfig.apiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': CategoryConfig.csrfToken
+        },
+        body: JSON.stringify({ name })
+    })
+    .then(res => res.json())
+    .then(() => {
+        toggleModal('createModal');
+        showToast('Thêm danh mục thành công');
+        loadCategories(1); // reload lại trang đầu
+    });
+}
+
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+
+    toast.innerText = message;
+    toast.className =
+        'fixed top-5 right-5 z-50 px-4 py-3 rounded-lg shadow-lg text-white';
+
+    if (type === 'success') {
+        toast.classList.add('bg-green-600');
+    } else {
+        toast.classList.add('bg-red-600');
+    }
+
+    toast.classList.remove('hidden');
+
+    setTimeout(() => {
+        toast.classList.add('hidden');
+    }, 2500);
 }
 
 

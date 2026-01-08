@@ -33,14 +33,15 @@
                 </div>
 
                 <div class="w-full md:w-auto">
-                    <a href="{{ route('category.create') }}"
-                        class="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-5 rounded-full shadow-lg flex items-center justify-center gap-2 transition duration-200 transform hover:-translate-y-0.5">
+                    <button onclick="openCreateModal()"
+                        class="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-5 rounded-full shadow-lg flex items-center justify-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
                         Thêm Danh mục
-                    </a>
+                    </button>
+
                 </div>
             </div>
         </div>
@@ -195,6 +196,7 @@
         </div>
     </main>
 
+    {{-- Delete category --}}
     <div id="deleteModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog"
         aria-modal="true">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -245,6 +247,7 @@
         </div>
     </div>
 
+    {{-- Edit category --}}
     <div id="editModal" class="fixed inset-0 z-50 hidden">
         <div class="flex items-center justify-center min-h-screen bg-black bg-opacity-50">
             <div class="bg-white rounded-lg w-full max-w-md p-6">
@@ -261,17 +264,48 @@
                 </div>
 
                 <div class="flex justify-end gap-2">
-                    <button onclick="toggleModal('editModal')"
-                        class="px-4 py-2 border rounded text-gray-700">
+                    <button onclick="toggleModal('editModal')" class="px-4 py-2 border rounded text-gray-700">
                         Hủy
                     </button>
-                    <button onclick="updateCategory()"
-                        class="px-4 py-2 bg-indigo-600 text-white rounded">
+                    <button onclick="updateCategory()" class="px-4 py-2 bg-indigo-600 text-white rounded">
                         Lưu
                     </button>
                 </div>
             </div>
         </div>
+    </div>
+
+    {{-- Create category --}}
+    <div id="createModal" class="fixed inset-0 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen bg-black bg-opacity-50">
+            <div class="bg-white rounded-lg w-full max-w-md p-6">
+                <h3 class="text-lg font-semibold mb-4">Thêm danh mục</h3>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                        Tên danh mục
+                    </label>
+                    <input type="text" id="createName"
+                        class="w-full border rounded px-3 py-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-700">
+                </div>
+
+                <div class="flex justify-end gap-2">
+                    <button onclick="toggleModal('createModal')"
+                        class="px-4 py-2 border rounded text-gray-700">
+                        Hủy
+                    </button>
+                    <button onclick="storeCategory()"
+                        class="px-4 py-2 bg-indigo-600 text-white rounded">
+                        Thêm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Anounce --}}
+    <div id="toast"
+        class="fixed top-5 right-5 z-50 hidden px-4 py-3 rounded-lg shadow-lg text-white transition">
     </div>
 
 @endsection
