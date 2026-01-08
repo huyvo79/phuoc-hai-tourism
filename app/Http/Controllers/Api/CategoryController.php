@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Category;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Interfaces\CategoryServiceInterface;
-use Illuminate\Support\Str;
 
-class PostController extends Controller
+class CategoryController extends Controller
 {
     public function __construct(
         protected CategoryServiceInterface $categoryService

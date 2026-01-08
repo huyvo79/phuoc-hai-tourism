@@ -76,49 +76,8 @@
                                 động</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        @forelse($categories as $category)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $category->id }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $category->name }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $category->slug }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $category->created_at->format('d/m/Y') }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="{{ route('category.edit', $category->id) }}"
-                                        class="text-indigo-600 hover:text-indigo-900 mr-3 inline-block">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                                        </svg>
-                                    </a>
+                    <tbody id="categoryTable" class="bg-white divide-y divide-gray-200">
 
-                                    <button onclick="confirmDelete({{ $category->id }})"
-                                        class="text-red-500 hover:text-red-700 transition-colors p-1 rounded hover:bg-red-200"
-                                        title="Xóa tài khoản">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
-                                    Chưa có danh mục nào.
-                                </td>
-                            </tr>
-                        @endforelse
                     </tbody>
                 </table>
 
@@ -266,14 +225,17 @@
                     </div>
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <form id="deleteForm" method="POST" action="">
+                    {{-- <form id="deleteForm" method="POST" action="">
                         @csrf
                         @method('DELETE')
                         <button type="submit"
                             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
                             Xóa ngay
                         </button>
-                    </form>
+                    </form> --}}
+                    <button type="button" onclick="deleteCategory()" class="bg-red-600 text-white px-4 py-2 rounded">
+                        Xóa ngay
+                    </button>
                     <button type="button" onclick="toggleModal('deleteModal')"
                         class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                         Hủy bỏ
@@ -285,7 +247,7 @@
 @endsection
 
 @push('scripts')
-    <script>
+    {{-- <script>
         function toggleModal(modalID) {
             const modal = document.getElementById(modalID);
             if (modal) {
@@ -300,5 +262,13 @@
             document.getElementById('deleteForm').action = url;
             toggleModal('deleteModal');
         }
+    </script> --}}
+
+    <script>
+        window.CategoryConfig = {
+            apiUrl: '/api/categories',
+            csrfToken: '{{ csrf_token() }}'
+        };
     </script>
+    <script src="{{ asset('js/category.js') }}"></script>
 @endpush
