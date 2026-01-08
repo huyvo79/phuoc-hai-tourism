@@ -1,5 +1,10 @@
 console.log('CATEGORY JS LOADED');
 
+
+
+const API_URL = window.CategoryConfig.apiUrl;
+const CSRF_TOKEN = window.CategoryConfig.csrfToken;
+
 let currentPage = 1;
 let perPage = 10;
 let search = '';
@@ -184,9 +189,151 @@ function showToast(message, type = 'success') {
     }, 2500);
 }
 
+function loadCategories(page = 1) {
+    currentPage = page;
+
+    fetch(`/api/categories?page=${page}&per_page=${perPage}`)
+        .then(res => res.json())
+        .then(res => {
+            renderTable(res.data);
+            renderPagination(res);
+            document.getElementById('pageTotal').innerText = res.total;
+        })
+        .catch(err => console.error(err));
+}
+
+function renderPagination(meta) {
+    const container = document.getElementById('paginationControls');
+    const pageTotalDisplay = document.getElementById('pageTotal');
+
+    if (pageTotalDisplay && meta) {
+        pageTotalDisplay.innerText = meta.total;
+    }
+
+    if (!container || !meta) return;
+
+    let html = '';
+    const current = meta.current_page;
+    const last = meta.last_page;
+
+    if (last <= 1) {
+        container.innerHTML = '';
+        return;
+    }
+
+    // ==== Class giống Blade
+    const baseClass =
+        "relative inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-semibold transition-colors duration-200";
+    const inactiveClass =
+        "text-gray-500 hover:bg-indigo-100 hover:text-indigo-700";
+    const activeClass =
+        "bg-indigo-700 text-white shadow-sm";
+    const disabledClass =
+        "text-gray-300 pointer-events-none";
+
+    // ==== 1. First (<<)
+    html += `
+        <a onclick="${current === 1 ? '' : 'changePage(1)'}"
+           class="${baseClass} ${current === 1 ? disabledClass : inactiveClass} cursor-pointer">
+            <span class="sr-only">First</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+            </svg>
+        </a>
+    `;
+
+    // ==== 2. Previous (<)
+    html += `
+        <a onclick="${current === 1 ? '' : `changePage(${current - 1})`}"
+           class="${baseClass} ${current === 1 ? disabledClass : inactiveClass} cursor-pointer">
+            <span class="sr-only">Previous</span>
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                 stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15 19l-7-7 7-7" />
+            </svg>
+        </a>
+    `;
+
+    // ==== 3. Logic số trang + ...
+    let pages = [];
+
+    if (last <= 7) {
+        for (let i = 1; i <= last; i++) pages.push(i);
+    } else {
+        if (current <= 4) {
+            pages = [1, 2, 3, 4, 5, '...', last];
+        } else if (current >= last - 3) {
+            pages = [1, '...', last - 4, last - 3, last - 2, last - 1, last];
+        } else {
+            pages = [1, '...', current - 1, current, current + 1, '...', last];
+        }
+    }
+
+    pages.forEach(page => {
+        if (page === '...') {
+            html += `
+                <span class="relative inline-flex items-center justify-center
+                             w-8 h-8 text-sm text-gray-400">
+                    ...
+                </span>
+            `;
+        } else {
+            html += `
+                <a onclick="changePage(${page})"
+                   class="${baseClass} ${
+                       page === current ? activeClass : inactiveClass
+                   } cursor-pointer">
+                    ${page}
+                </a>
+            `;
+        }
+    });
+
+    // ==== 4. Next (>)
+    html += `
+        <a onclick="${current === last ? '' : `changePage(${current + 1})`}"
+           class="${baseClass} ${current === last ? disabledClass : inactiveClass} cursor-pointer">
+            <span class="sr-only">Next</span>
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                 stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 5l7 7-7 7" />
+            </svg>
+        </a>
+    `;
+
+    // ==== 5. Last (>>)
+    html += `
+        <a onclick="${current === last ? '' : `changePage(${last})`}"
+           class="${baseClass} ${current === last ? disabledClass : inactiveClass} cursor-pointer">
+            <span class="sr-only">Last</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
+                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+            </svg>
+        </a>
+    `;
+
+    container.innerHTML = html;
+}
+
+
+function changePerPage(value) {
+    perPage = value;
+    loadCategories(1);
+}
 
 /* Modal helper */
 function toggleModal(modalID) {
     const modal = document.getElementById(modalID);
     modal.classList.toggle('hidden');
 }
+
+window.changePage = function (page) {
+    if (page < 1) return;
+    loadCategories(page);
+};

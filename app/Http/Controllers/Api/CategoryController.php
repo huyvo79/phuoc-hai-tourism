@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Interfaces\CategoryServiceInterface;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -12,9 +13,12 @@ class CategoryController extends Controller
         protected CategoryServiceInterface $categoryService
     ){}
 
-    public function index()
+    public function index(Request $request)
     {
-        $categories = $this->categoryService->getCategories();
+        $perPage = $request->get('per_page', 5);
+
+        $categories = Category::orderBy('id', 'desc')
+            ->paginate($perPage);
 
         return response()->json($categories);
     }
