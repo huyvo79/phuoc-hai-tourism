@@ -58,14 +58,20 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
+        $validated = $request->validated();
+
         if ($user->username === self::SUPER_ADMIN) {
-            return response()->json([
-                'success' => false,
-                'errors' => ['message' => ['Bạn không có quyền chỉnh sửa tài khoản Super Admin này!']]
-            ], 403);
+            // Nếu người dùng cố tình gửi lên field 'username' khác với 'admin'
+            if (isset($validated['username']) && $validated['username'] !== self::SUPER_ADMIN) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Bạn không được phép thay đổi Tên đăng nhập của Super Admin!'
+                ], 403);
+            }
+            // Nếu ok (chỉ đổi tên hiển thị hoặc mật khẩu), cho phép đi tiếp
         }
 
-        $user = $this->userService->updateUser($user, $request->validated());
+        $user = $this->userService->updateUser($user, $validated);
 
         return response()->json([
             'success' => true,

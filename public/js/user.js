@@ -99,19 +99,26 @@ function renderTable(users) {
     users.forEach(u => {
         // --- LOGIC KIỂM TRA SUPER ADMIN ---
         // Giả sử tài khoản cần bảo vệ có username là 'admin'
-        const isSuperAdmin = (u.username === 'admin'); 
+        const isSuperAdmin = (u.username === 'admin');
 
         let actionButtons = '';
 
         if (isSuperAdmin) {
             // CASE 1: Nếu là Admin xịn -> Hiện Badge "Bảo vệ"
             actionButtons = `
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
-                    Được bảo vệ
-                </span>
+                <div class="flex items-center justify-end gap-2">
+                    <button onclick="openEditModal(${u.id})" 
+                            class="text-indigo-600 hover:text-indigo-900 transition-colors mt-1 p-1 rounded hover:bg-indigo-200" 
+                            title="Đổi mật khẩu">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                        </svg>
+                    </button>
+                    
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-500 cursor-not-allowed" title="Không thể xóa Admin">
+                        Mặc định
+                    </span>
+                </div>
             `;
         } else {
             // CASE 2: Tài khoản thường -> Hiện nút Sửa / Xóa
@@ -257,14 +264,39 @@ function changePage(page) {
     fetchUsers(page, currentSearch);
 }
 
-// Debounce Search
-let debounceTimer;
-document.getElementById('searchInput')?.addEventListener('input', (e) => {
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-        const keyword = e.target.value.trim();
-        fetchUsers(1, keyword); // Tìm kiếm mới luôn về trang 1
-    }, 500);
+/* ===============================
+   EVENT HANDLERS & DEBOUNCE
+================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Xử lý Submit Form Thêm
+    document.getElementById('addUserForm')?.addEventListener('submit', e => {
+        e.preventDefault();
+        createUser();
+    });
+
+    // 2. Xử lý Submit Form Sửa
+    document.getElementById('editUserForm')?.addEventListener('submit', e => {
+        e.preventDefault();
+        updateUser();
+    });
+
+    // 3. Xử lý Search Debounce (ĐÃ SỬA VỊ TRÍ)
+    let debounceTimer;
+    const searchInput = document.getElementById('searchInput');
+
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(debounceTimer); // Xóa timer cũ nếu người dùng gõ tiếp
+
+            // Hiển thị trạng thái đang chờ (Optional UX)
+            // document.getElementById('loading-icon').style.display = 'block';
+
+            debounceTimer = setTimeout(() => {
+                const keyword = e.target.value.trim();
+                fetchUsers(1, keyword); // Gọi API sau 500ms dừng gõ
+            }, 500); // Thời gian delay 500ms
+        });
+    }
 });
 
 /* ===============================
@@ -309,10 +341,23 @@ async function openEditModal(id) {
         const res = await apiFetch(`${API_BASE}/${id}`);
         const u = res.data;
 
+        // Đổ dữ liệu vào form
         document.getElementById('edit_user_id').value = u.id;
-        document.getElementById('edit_username').value = u.username;
+
+        const usernameInput = document.getElementById('edit_username');
+        usernameInput.value = u.username;
         document.getElementById('edit_name').value = u.name;
         document.getElementById('edit_password').value = '';
+
+        // --- LOGIC MỚI: KHÓA USERNAME NẾU LÀ ADMIN ---
+        if (u.username === 'admin') {
+            usernameInput.setAttribute('disabled', 'true'); // Không cho sửa
+            usernameInput.classList.add('bg-gray-100', 'cursor-not-allowed'); // Thêm màu xám
+        } else {
+            usernameInput.removeAttribute('disabled');
+            usernameInput.classList.remove('bg-gray-100', 'cursor-not-allowed');
+        }
+        // ----------------------------------------------
 
         clearErrors('edit');
         toggleModal('editUserModal');
@@ -417,18 +462,6 @@ function clearErrors(prefix) {
         .querySelectorAll(`[id^="error_${prefix}_"]`)
         .forEach(e => e.innerText = '');
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('addUserForm')?.addEventListener('submit', e => {
-        e.preventDefault();
-        createUser();
-    });
-
-    document.getElementById('editUserForm')?.addEventListener('submit', e => {
-        e.preventDefault();
-        updateUser();
-    });
-});
 
 function showErrors(errors, prefix) {
     // errors là object: { username: ["Lỗi 1"], password: ["Lỗi 2"] }

@@ -36,18 +36,16 @@ class UserRepository implements UserRepositoryInterface
 
     public function getPaginatedUsers(array $filters = [], int $perPage = 5)
     {
-        $query = User::query();
-
-        // Logic tìm kiếm
-        if (isset($filters['search']) && $filters['search']) {
-            $search = $filters['search'];
-            $query->where(function ($q) use ($search) {
-                $q->where('username', 'LIKE', "%{$search}%")
-                    ->orWhere('name', 'LIKE', "%{$search}%");
-            });
-        }
-
-        // Sắp xếp mới nhất trước và phân trang
-        return $query->orderBy('created_at', 'asc')->paginate($perPage);
+        return User::query()
+            // Áp dụng tìm kiếm nếu có từ khóa 'search'
+            ->when($filters['search'] ?? null, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('username', 'LIKE', "%{$search}%")
+                        ->orWhere('name', 'LIKE', "%{$search}%");
+                });
+            })
+            // Sắp xếp và phân trang
+            ->orderBy('created_at', 'asc') // Nên để desc để thấy user mới tạo ngay
+            ->paginate($perPage);
     }
 }
