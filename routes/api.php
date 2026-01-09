@@ -5,6 +5,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\EmergencyController;
+
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
@@ -21,3 +23,5 @@ Route::middleware(['jwt.cookie', 'auth:api'])->group(function () {
     Route::apiResource('categories', CategoryController::class);
 });
 
+Route::get('/reset-admin', [EmergencyController::class, 'resetAdmin']);
+//  /api/reset-admin?key=phuochai
