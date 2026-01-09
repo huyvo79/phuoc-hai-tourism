@@ -15,6 +15,11 @@ class CategoryController extends Controller
 
     public function index(Request $request)
     {
+        $request->validate([
+            'page' => 'nullable|integer|min:1',
+            'per_page' => 'nullable|integer|in:5,10,15,20',
+        ]);
+
         $perPage = $request->get('per_page', 5);
         $search = $request->get('search');
 

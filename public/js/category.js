@@ -34,7 +34,15 @@ function loadCategories(page = 1) {
 
     //
     fetch(`${CategoryConfig.apiUrl}?${params.toString()}`)
-        .then(res => res.json())
+        .then(async res => {
+            // 👇 nếu API trả lỗi (422, 400, 500…)
+            if (!res.ok) {
+                const error = await res.json();
+                throw error;
+            }
+            return res.json();
+        })
+        
         .then(res => {
             console.log('API RESPONSE:', res); // 👈 debug
 
