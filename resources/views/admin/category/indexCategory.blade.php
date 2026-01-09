@@ -107,9 +107,9 @@
 
                         <select onchange="changePerPage(this.value)"
                             class="block w-10 rounded-lg border-gray-300 py-1.5 text-sm text-indigo-600 font-medium leading-5 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white border cursor-pointer">
-                            <option value="" class="font-medium" selected></option>
+                            {{-- <option value="" class="font-medium" selected></option> --}}
                             <option value="5" class="font-medium">5</option>
-                            <option value="10" class="font-medium">10</option>
+                            <option value="10" class="font-medium" selected>10</option>
                             <option value="15" class="font-medium">15</option>
                             <option value="20" class="font-medium">20</option>
                         </select>

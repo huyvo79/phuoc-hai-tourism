@@ -41,7 +41,9 @@ function loadCategories(page = 1) {
             // API trả về array => truyền thẳng
             renderTable(res.data);
 
-            document.getElementById('pageTotal').innerText = res.length;
+            renderPagination(res);
+
+            document.getElementById('pageTotal').innerText = res.total;
         })
         .catch(err => console.error(err));
 }
