@@ -12,15 +12,22 @@ class CategoryController extends Controller
     public function __construct(
         protected CategoryServiceInterface $categoryService
     ){}
-
+    
     public function index(Request $request)
     {
         $perPage = $request->get('per_page', 5);
+        $search = $request->get('search');
 
-        $categories = Category::orderBy('id', 'desc')
-            ->paginate($perPage);
+        $query = Category::query();
 
-        return response()->json($categories);
+        if ($search) {
+            $query->where('name', 'like', "%{$search}%")
+                ->orWhere('id', $search);
+        }
+
+        return response()->json(
+            $query->orderBy('id', 'desc')->paginate($perPage)
+        );
     }
 
     public function create()

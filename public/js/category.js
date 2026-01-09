@@ -25,13 +25,21 @@ document.addEventListener('DOMContentLoaded', () => {
 function loadCategories(page = 1) {
     currentPage = page;
 
-    fetch(`${CategoryConfig.apiUrl}?page=${page}&per_page=${perPage}&search=${search}`)
+    //search
+    const params = new URLSearchParams({
+        page: currentPage,
+        per_page: perPage,
+        search: currentSearch
+    });
+
+    //
+    fetch(`${CategoryConfig.apiUrl}?${params.toString()}`)
         .then(res => res.json())
         .then(res => {
             console.log('API RESPONSE:', res); // 👈 debug
 
             // API trả về array => truyền thẳng
-            renderTable(res);
+            renderTable(res.data);
 
             document.getElementById('pageTotal').innerText = res.length;
         })
@@ -189,18 +197,6 @@ function showToast(message, type = 'success') {
     }, 2500);
 }
 
-function loadCategories(page = 1) {
-    currentPage = page;
-
-    fetch(`/api/categories?page=${page}&per_page=${perPage}`)
-        .then(res => res.json())
-        .then(res => {
-            renderTable(res.data);
-            renderPagination(res);
-            document.getElementById('pageTotal').innerText = res.total;
-        })
-        .catch(err => console.error(err));
-}
 
 function renderPagination(meta) {
     const container = document.getElementById('paginationControls');
@@ -326,6 +322,21 @@ function changePerPage(value) {
     perPage = value;
     loadCategories(1);
 }
+
+//search
+const searchInput = document.getElementById('searchInput');
+
+let searchTimeout = null;
+let currentSearch = '';
+
+searchInput.addEventListener('input', function () {
+    clearTimeout(searchTimeout);
+
+    searchTimeout = setTimeout(() => {
+        currentSearch = this.value.trim();
+        loadCategories(1); // search là về trang 1
+    }, 400); // debounce 400ms
+});
 
 /* Modal helper */
 function toggleModal(modalID) {
