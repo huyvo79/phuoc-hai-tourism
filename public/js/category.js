@@ -132,6 +132,11 @@ function updateCategory() {
     const id = document.getElementById('editId').value;
     const name = document.getElementById('editName').value;
 
+     if (!isValidCategoryName(name)) {
+        showToast('Tên danh mục không được chứa ký tự đặc biệt', 'error');
+        return;
+    }
+
     fetch(`${CategoryConfig.apiUrl}/${id}`, {
         method: 'PUT',
         headers: {
@@ -158,6 +163,11 @@ function storeCategory() {
 
     if (!name) {
         alert('Vui lòng nhập tên danh mục');
+        return;
+    }
+
+    if (!isValidCategoryName(name)) {
+        showToast('Tên danh mục không được chứa ký tự đặc biệt', 'error');
         return;
     }
 
@@ -348,3 +358,9 @@ window.changePage = function (page) {
     if (page < 1) return;
     loadCategories(page);
 };
+
+//check input
+function isValidCategoryName(name) {
+    const regex = /^[\p{L}0-9\s]+$/u;
+    return regex.test(name);
+}

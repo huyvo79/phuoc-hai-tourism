@@ -12,7 +12,7 @@ class CategoryController extends Controller
     public function __construct(
         protected CategoryServiceInterface $categoryService
     ){}
-    
+
     public function index(Request $request)
     {
         $perPage = $request->get('per_page', 5);
