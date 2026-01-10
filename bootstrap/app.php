@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'jwt.cookie' => \App\Http\Middleware\JwtCookieMiddleware::class,
             'admin.auth' => \App\Http\Middleware\AdminAuthMiddleware::class,
             'admin.guest' => \App\Http\Middleware\AdminGuestMiddleware::class,
+            'track.visitor' => \App\Http\Middleware\TrackVisitor::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
