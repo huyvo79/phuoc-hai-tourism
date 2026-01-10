@@ -15,10 +15,10 @@
     <div class="flex min-h-screen">
         <aside class="w-64 bg-slate-800/50 backdrop-blur-xl border-r border-white/10 flex flex-col">
             <div class="p-6 text-center border-b border-white/10">
-                <div
+                <a href="/"
                     class="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg shadow-purple-500/30">
                     <i class="fas fa-mountain-sun text-xl text-white"></i>
-                </div>
+                </a>
                 <h1
                     class="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
                     PHƯỚC HẢI</h1>
