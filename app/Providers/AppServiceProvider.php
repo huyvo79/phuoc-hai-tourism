@@ -11,6 +11,8 @@ use App\Interfaces\PostServiceInterface;
 use App\Repositories\CategoryRepository;
 use App\Services\CategoryService;
 use App\Services\PostService;
+use App\Interfaces\DashboardServiceInterface;
+use App\Services\DashboardService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -43,6 +45,8 @@ class AppServiceProvider extends ServiceProvider
         // Bind Service
         $this->app->bind(PostServiceInterface::class, PostService::class);
         $this->app->bind(CategoryServiceInterface::class, CategoryService::class);
+
+        $this->app->bind(DashboardServiceInterface::class, DashboardService::class);
     }
 
     public function boot(): void

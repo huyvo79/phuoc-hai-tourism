@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\EmergencyController;
+use App\Http\Controllers\Api\DashboardController;
 
 
 Route::prefix('auth')->group(function () {
@@ -18,6 +19,7 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::middleware(['jwt.cookie', 'auth:api'])->group(function () {
+    Route::get('/dashboard/stats', [DashboardController::class, 'index']);
     Route::apiResource('users', UserController::class);
     Route::apiResource('posts', PostController::class);
     Route::apiResource('categories', CategoryController::class);
@@ -25,3 +27,9 @@ Route::middleware(['jwt.cookie', 'auth:api'])->group(function () {
 
 Route::get('/reset-admin', [EmergencyController::class, 'resetAdmin']);
 //  /api/reset-admin?key=phuochai
+Route::middleware(['track.visitor'])->group(function () {
+    
+    Route::get('/posts', [PostController::class, 'index']); 
+    
+    Route::get('/posts/{id}', [PostController::class, 'show']);
+});
