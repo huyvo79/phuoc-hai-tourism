@@ -38,5 +38,10 @@ Route::prefix('admin')->group(function () {
     });
 });
 Route::get('/single', [App\Http\Controllers\IndexController::class, 'single'])->name('single'); 
-Route::get('/contact', [App\Http\Controllers\IndexController::class, 'contact'])->name('contact');
+Route::get('/contact', [App\Http\Controllers\IndexController::class, 'contact'])->name('home.contact');
 Route::get('/home', [App\Http\Controllers\IndexController::class, 'index'])->name('home');
+Route::get('/news', [App\Http\Controllers\IndexController::class, 'news'])->name('home.news');
+Route::get('/events', [App\Http\Controllers\IndexController::class, 'events'])->name('home.events');
+Route::get('/plan', [App\Http\Controllers\IndexController::class, 'plan'])->name('home.plan');
+Route::get('/explore', [App\Http\Controllers\IndexController::class, 'explore'])->name('home.explore');
+Route::get('/post_details', [App\Http\Controllers\IndexController::class, 'post_details'])->name('home.post_details');
