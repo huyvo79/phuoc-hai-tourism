@@ -37,5 +37,6 @@ Route::prefix('admin')->group(function () {
         Route::delete('categories/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
     });
 });
-Route::get('/single', [App\Http\Controllers\IndexController::class, 'single'])->name('single');
-
+Route::get('/single', [App\Http\Controllers\IndexController::class, 'single'])->name('single'); 
+Route::get('/contact', [App\Http\Controllers\IndexController::class, 'contact'])->name('contact');
+Route::get('/home', [App\Http\Controllers\IndexController::class, 'index'])->name('home');

@@ -16,14 +16,16 @@ use App\Models\Supplier;
 
 class IndexController extends Controller
 {
-    public function index()
-    {
-       return view('ui-index.index');
-    }
-    public function single()
-    {
-       return view('ui-single.single');
-    }
-
-
+   public function index()
+   {
+      return view('ui-index.index');
+   }
+   public function single()
+   {
+      return view('ui-single.single');
+   }
+   public function contact()
+   {
+      return view('pages.contact');
+   }
 }

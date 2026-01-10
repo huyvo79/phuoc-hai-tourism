@@ -1,6 +1,6 @@
 <!-- Header -->
 <header class="header" id="header">
-    <a href="#" class="logo">PhuocHai</a>
+    <a href="{{ route('home') }}" class="logo">PhuocHai</a>
 
     <nav class="nav-container">
         <ul class="nav-menu">
@@ -8,7 +8,7 @@
             <li><a href="#plan">Kế hoạch</a></li>
             <li><a href="#events">Sự kiện</a></li>
             <li><a href="#news">Tin tức</a></li>
-            <li><a href="#contact">Liên hệ</a></li>
+            <li><a href="{{ route('contact') }}">Liên hệ</a></li>
         </ul>
     </nav>
 
