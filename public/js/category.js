@@ -152,6 +152,9 @@ function openEditModal(id) {
             document.getElementById('editName').value = cat.name;
             toggleModal('editModal');
         });
+    setTimeout(() => {
+        document.getElementById('editName')?.focus();
+    }, 100);
 }
 
 function updateCategory() {
@@ -182,6 +185,10 @@ function updateCategory() {
 function openCreateModal() {
     document.getElementById('createName').value = '';
     toggleModal('createModal');
+
+    setTimeout(() => {
+        document.getElementById('createName')?.focus();
+    }, 100);
 }
 
 function storeCategory() {
