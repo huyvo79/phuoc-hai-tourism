@@ -42,7 +42,7 @@ function loadCategories(page = 1) {
             }
             return res.json();
         })
-        
+
         .then(res => {
             console.log('API RESPONSE:', res); // 👈 debug
 
@@ -118,15 +118,31 @@ function deleteCategory() {
     fetch(`${CategoryConfig.apiUrl}/${deleteId}`, {
         method: 'DELETE',
         headers: {
-            'X-CSRF-TOKEN': CategoryConfig.csrfToken
+            'X-CSRF-TOKEN': CategoryConfig.csrfToken,
+            'Accept': 'application/json'
         }
     })
-    .then(() => {
-        showToast('Xóa danh mục thành công');
+    .then(async res => {
+        const data = await res.json();
+
+        if (!res.ok) {
+            // backend trả 404 / 422 / 500
+            throw new Error(data.message || 'Xóa thất bại');
+        }
+
+        // ✅ chỉ vào đây khi HTTP 2xx
+        showToast(data.message || 'Xóa danh mục thành công');
+        toggleModal('deleteModal');
+        loadCategories(currentPage);
+    })
+    .catch(err => {
+        // ❌ record đã bị xóa ở tab khác
+        showToast(err.message, 'error');
         toggleModal('deleteModal');
         loadCategories(currentPage);
     });
 }
+
 
 function openEditModal(id) {
     fetch(`${CategoryConfig.apiUrl}/${id}`)

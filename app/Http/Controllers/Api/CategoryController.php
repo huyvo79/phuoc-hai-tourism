@@ -88,16 +88,19 @@ class CategoryController extends Controller
 
     public function destroy($id)
     {
-        $categoryDeleted = $this->categoryService->deleteCategoryById($id);
+        $category = Category::find($id);
 
-        if(!$categoryDeleted) return response()->json([
-            'success' => false,
-            'message' => 'Category not found'
-        ], 404);
+        if (!$category) {
+            return response()->json([
+                'message' => 'Danh mục đã bị xóa hoặc không tồn tại'
+            ], 404);
+        }
+
+        $category->delete();
 
         return response()->json([
-            'success' => true,
-            'message' => 'Category deleted',
+            'message' => 'Xóa danh mục thành công'
         ]);
     }
+
 }
