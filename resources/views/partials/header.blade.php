@@ -44,10 +44,10 @@
 <div class="mobile-overlay" id="mobileOverlay"></div>
 <div class="mobile-menu" id="mobileMenu">
     <ul>
-        <li><a href="#explore">Khám phá</a></li>
-        <li><a href="#plan">Kế hoạch chuyến đi</a></li>
-        <li><a href="#events">Sự kiện</a></li>
-        <li><a href="#news">Tin tức</a></li>
-        <li><a href="#contact">Liên hệ</a></li>
+          <li><a href="{{ route('home.explore') }}">Khám phá</a></li>
+            <li><a href="{{ route('home.plan') }}">Kế hoạch</a></li>
+            <li><a href="{{ route('home.events') }}">Sự kiện</a></li>
+            <li><a href="{{ route('home.news') }}">Tin tức</a></li>
+            <li><a href="{{ route('home.contact') }}">Liên hệ</a></li>
     </ul>
 </div>

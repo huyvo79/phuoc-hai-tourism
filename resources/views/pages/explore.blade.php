@@ -166,7 +166,7 @@
                     </div>
                     <div class="destination-actions">
                         <a href="#" class="destination-btn destination-btn-primary">Đặt Tour</a>
-                        <a href="#" class="destination-btn destination-btn-secondary">Chi Tiết</a>
+                        <a href="{{ route('home.post_details') }}" class="destination-btn destination-btn-secondary">Chi Tiết</a>
                     </div>
                 </div>
             </article>

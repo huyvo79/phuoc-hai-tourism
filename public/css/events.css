@@ -443,8 +443,8 @@
     }
     
     .events-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
     }
     
     .event-card {
@@ -515,19 +515,94 @@
         padding: 15px 10px;
     }
     
+    .events-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        align-items: stretch;
+    }
+    
+    .event-card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    
     .event-content {
         padding: 15px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
     }
     
     .event-title {
         font-size: 1rem;
+        line-height: 1.3;
+        -webkit-line-clamp: 2;
+        margin-bottom: 8px;
+        min-height: 2.6em;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    .event-description {
+        font-size: 0.85rem;
+        -webkit-line-clamp: 2;
+        margin-bottom: 12px;
+        min-height: 2.4em;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        flex-grow: 1;
     }
     
     .event-card-image {
-        height: 180px;
+        height: 140px;
     }
     
     .featured-event .event-card-image {
-        height: 200px;
+        height: 180px;
+    }
+    
+    .event-meta {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        margin-bottom: 12px;
+        margin-top: auto;
+    }
+    
+    .event-meta-item {
+        font-size: 0.8rem;
+    }
+    
+    .event-actions {
+        flex-direction: column;
+        gap: 8px;
+        margin-top: auto;
+    }
+    
+    .event-btn {
+        padding: 10px 14px;
+        font-size: 0.8rem;
+        border-radius: 8px;
+    }
+    
+    .event-status, .event-price {
+        font-size: 0.75rem;
+        padding: 5px 10px;
+    }
+    
+    .event-card {
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    
+    .event-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+    
+    .event-card-image {
+        border-radius: 12px 12px 0 0;
     }
 }

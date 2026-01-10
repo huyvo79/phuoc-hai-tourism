@@ -33,12 +33,6 @@
                 </div>
                 <div class="news-content">
                     <h2 class="news-title">Vịnh Hạ Long - Kỳ Quan Thiên Nhiên Thế Giới Tại Việt Nam</h2>
-                    <div class="news-meta">
-                        <div class="news-author">
-                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Author" class="author-avatar">
-                            <span>Nguyễn Minh Anh</span>
-                        </div>
-                    </div>
                     <p class="news-excerpt">Khám phá vẻ đẹp huyền bí của Vịnh Hạ Long với hàng nghìn đảo đá vôi nhô lên từ mặt nước xanh biếc. Tìm hiểu lịch sử hình thành, những hoạt động thú vị và kinh nghiệm du lịch tại kỳ quan thiên nhiên thế giới này.</p>
                     <a href="#" class="read-more-btn">Đọc Thêm</a>
                 </div>
@@ -53,12 +47,6 @@
                 </div>
                 <div class="news-content">
                     <h3 class="news-title">Trekking Sapa: Chinh Phục Đỉnh Fansipan Nóc Nhà Đông Dương</h3>
-                    <div class="news-meta">
-                        <div class="news-author">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Author" class="author-avatar">
-                            <span>Trần Văn Hùng</span>
-                        </div>
-                    </div>
                     <p class="news-excerpt">Hành trình chinh phục đỉnh Fansipan cao 3.143m với những thử thách thú vị và cảnh quan tuyệt đẹp. Chia sẻ kinh nghiệm chuẩn bị, lộ trình và những điều cần lưu ý.</p>
                     <a href="#" class="read-more-btn">Đọc Thêm</a>
                 </div>
@@ -72,12 +60,6 @@
                 </div>
                 <div class="news-content">
                     <h3 class="news-title">Hành Trình Khám Phá Ẩm Thực Đường Phố Hà Nội</h3>
-                    <div class="news-meta">
-                        <div class="news-author">
-                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80" alt="Author" class="author-avatar">
-                            <span>Lê Thị Mai</span>
-                        </div>
-                    </div>
                     <p class="news-excerpt">Từ tô phở nóng hổi buổi sáng đến chén chè đậu xanh mát lạnh buổi chiều, khám phá tinh hoa ẩm thực đường phố Thủ đô với những món ăn truyền thống đậm đà hương vị.</p>
                     <a href="#" class="read-more-btn">Đọc Thêm</a>
                 </div>
@@ -91,12 +73,6 @@
                 </div>
                 <div class="news-content">
                     <h3 class="news-title">Hội An - Thành Phố Cổ Với Nét Đẹp Văn Hóa Đa Dạng</h3>
-                    <div class="news-meta">
-                        <div class="news-author">
-                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80" alt="Author" class="author-avatar">
-                            <span>Phạm Đức Thành</span>
-                        </div>
-                    </div>
                     <p class="news-excerpt">Tìm hiểu về lịch sử hình thành và phát triển của phố cổ Hội An, nơi giao thoa văn hóa Việt - Trung - Nhật tạo nên một bức tranh văn hóa độc đáo và phong phú.</p>
                     <a href="#" class="read-more-btn">Đọc Thêm</a>
                 </div>
@@ -110,12 +86,6 @@
                 </div>
                 <div class="news-content">
                     <h3 class="news-title">Phú Quốc - Đảo Ngọc Với Bãi Biển Tuyệt Đẹp</h3>
-                    <div class="news-meta">
-                        <div class="news-author">
-                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Author" class="author-avatar">
-                            <span>Võ Thị Lan</span>
-                        </div>
-                    </div>
                     <p class="news-excerpt">Khám phá vẻ đẹp hoang sơ của đảo Phú Quốc với những bãi biển cát trắng, nước biển trong xanh và hệ sinh thái biển phong phú. Cùng tìm hiểu các hoạt động du lịch hấp dẫn tại đây.</p>
                     <a href="#" class="read-more-btn">Đọc Thêm</a>
                 </div>
@@ -129,12 +99,6 @@
                 </div>
                 <div class="news-content">
                     <h3 class="news-title">Du Ngoạn Đồng Bằng Sông Cửu Long Trên Thuyền</h3>
-                    <div class="news-meta">
-                        <div class="news-author">
-                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Author" class="author-avatar">
-                            <span>Nguyễn Văn Đức</span>
-                        </div>
-                    </div>
                     <p class="news-excerpt">Trải nghiệm cuộc sống sông nước miền Tây qua chuyến du ngoạn trên các kênh rạch, thăm vườn trái cây và khám phá chợ nổi độc đáo của vùng đất phù sa màu mỡ.</p>
                     <a href="#" class="read-more-btn">Đọc Thêm</a>
                 </div>
