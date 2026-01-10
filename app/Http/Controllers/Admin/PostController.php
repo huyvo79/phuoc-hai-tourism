@@ -8,6 +8,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\Category;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -18,9 +19,28 @@ class PostController extends Controller
         $this->postService = $postService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $posts = $this->postService->getAllPosts();
+        $search = $request->input('search');
+        $limit = $request->input('limit', 10);
+
+        $query = Post::with('category')
+            ->when($search, function ($q) use ($search) {
+                return $q->where(function ($subQuery) use ($search) {
+                    $subQuery->where('title', 'LIKE', "%{$search}%")
+                        ->orWhere('slug', 'LIKE', "%{$search}%")
+                        ->orWhere('summary', 'LIKE', "%{$search}%");
+                });
+            })
+            ->orderBy('priority', 'desc')
+            ->orderBy('created_at', 'desc');
+
+        $posts = $query->paginate($limit);
+
+        if ($request->wantsJson()) {
+            return response()->json($posts);
+        }
+
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -40,7 +60,7 @@ class PostController extends Controller
 
     public function edit($id)
     {
-        $post = $this->postService->getPostById($id);
+        $post = Post::with('relatedPosts')->find($id);
 
         if (!$post) {
             return redirect()->route('posts.index')->with('error', 'Không tìm thấy bài viết!');
