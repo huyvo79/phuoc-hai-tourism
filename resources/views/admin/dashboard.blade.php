@@ -12,12 +12,6 @@
                     <h2 class="text-2xl font-bold tracking-tight">Dashboard</h2>
                     <p class="text-slate-400 text-sm mt-1">Tổng quan hệ thống & báo cáo</p>
                 </div>
-                <div class="flex items-center gap-4">
-                    <button
-                        class="w-10 h-10 rounded-full bg-slate-800 hover:bg-slate-700 transition-all flex items-center justify-center text-slate-400 hover:text-white border border-white/5">
-                        <i class="fas fa-bell"></i>
-                    </button>
-                </div>
             </div>
         </header>
 
