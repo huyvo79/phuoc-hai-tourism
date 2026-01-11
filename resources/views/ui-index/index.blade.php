@@ -11,7 +11,7 @@
     <section class="hero">
         <video class="hero-video" autoplay muted loop playsinline>
             <source
-                src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-a-beach-in-vietnam-4046-large.mp4"
+                src="images/855633-hd_1920_1080_25fps.mp4"
                 type="video/mp4">
         </video>
         <div class="hero-overlay"></div>
@@ -31,10 +31,10 @@
     <section class="intro-section" id="explore">
         <div class="intro-container">
             <div class="intro-images">
-                <img src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=600&h=800&fit=crop"
-                    alt="Vịnh Hạ Long" class="intro-img-main">
-                <img src="https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=400&h=300&fit=crop"
-                    alt="Phố cổ Hội An" class="intro-img-secondary">
+                <img src="images/du-lich-phuoc-hai-vung-tau.jpg"
+                    alt="Du Lịch Phước Hải" class="intro-img-main">
+                <img src="images/phuot-phuoc-hai-vung-tau.jpg"
+                    alt="Du Lịch Phước Hải" class="intro-img-secondary">
             </div>
             <div class="intro-content">
                 <span class="intro-label">Về Việt Nam</span>
@@ -70,71 +70,75 @@
             <div class="slider-track">
                 <!-- Slide 1 -->
                 <div class="slide-item">
-                    <img src="https://images.unsplash.com/photo-1528127269322-539801943592?w=400&h=500&fit=crop"
-                        alt="Vịnh Hạ Long">
+                    <img src="images/banhcanhcopho.png"
+                        alt="Bánh Canh Cô Phờ">
                     <div class="slide-overlay">
-                        <h3>Vịnh Hạ Long</h3>
-                        <p>Di sản thiên nhiên thế giới UNESCO</p>
+                        <h3>Bánh Canh Cô Phờ</h3>
+                        <p>Hải sản tươi, rất nhiều topping cho tô thập cẩm, vị đậm đà vừa ăn, cơ đầy đủ nước uống và nước chấm. Bánh canh chả cá có cục giò 35k</p>
                     </div>
                 </div>
                 <!-- Slide 2 -->
                 <div class="slide-item">
-                    <img src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=400&h=500&fit=crop"
-                        alt="Phố cổ Hội An">
+                    <img src="images/bokelocan.png"
+                        alt="Bờ Kè Lộc An">
                     <div class="slide-overlay">
-                        <h3>Phố cổ Hội An</h3>
-                        <p>Thành phố đèn lồng cổ kính</p>
+                        <h3>Bờ Kè Lộc An</h3>
+                        <p>điểm chụp ảnh và hóng gió biển được nhiều người dân và du khách yêu thích.</p>
                     </div>
                 </div>
                 <!-- Slide 3 -->
                 <div class="slide-item">
-                    <img src="https://images.unsplash.com/photo-1464817739973-0128fe77aaa1?w=400&h=500&fit=crop"
-                        alt="Sapa">
+                    <img src="images/chophuochai.png"
+                        alt="Chợ Phước Hải">
                     <div class="slide-overlay">
-                        <h3>Sapa</h3>
-                        <p>Ruộng bậc thang tuyệt đẹp</p>
+                        <h3>Chợ Phước Hải</h3>
+                        <p>thiên đường ẩm thực ven biển, nơi du khách có thể thưởng thức hải sản tươi sống vừa được ngư dân mang về, từ tôm, cua, ghẹ đến cá, mực… đầy phong vị biển cả </p>
                     </div>
                 </div>
                 <!-- Slide 4 -->
                 <div class="slide-item">
-                    <img src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=400&h=500&fit=crop"
-                        alt="Đà Nẵng">
+                    <img src="images/co-bong-homestay-phuoc-hai-1.jpg"
+                        alt="Cô Bông Homestay">
                     <div class="slide-overlay">
-                        <h3>Đà Nẵng</h3>
-                        <p>Thành phố đáng sống nhất Việt Nam</p>
+                        <h3>Cô Bông Homestay</h3>
+                        <p>Phòng được trang bị đầy đủ tiện nghi cùng với vách kính lớn để mọi người tha hồ check in sống ảo.Nhà có khu bếp lớn đầy đủ dụng cụ cùng với sân bbq siêu chill mọi người thoải mái sử dụng. Đặc biệt là có Hồ Bơi lớn trong nhà cho mọi người thoải mái vui chơi.</p>
                     </div>
                 </div>
                 <!-- Duplicate for seamless loop -->
+                 <!-- Slide 1 -->
                 <div class="slide-item">
-                    <img src="https://images.unsplash.com/photo-1528127269322-539801943592?w=400&h=500&fit=crop"
-                        alt="Vịnh Hạ Long">
+                    <img src="images/banhcanhcopho.png"
+                        alt="Bánh Canh Cô Phờ">
                     <div class="slide-overlay">
-                        <h3>Vịnh Hạ Long</h3>
-                        <p>Di sản thiên nhiên thế giới UNESCO</p>
+                        <h3>Bánh Canh Cô Phờ</h3>
+                        <p>Hải sản tươi, rất nhiều topping cho tô thập cẩm, vị đậm đà vừa ăn, cơ đầy đủ nước uống và nước chấm. Bánh canh chả cá có cục giò 35k</p>
                     </div>
                 </div>
+                <!-- Slide 2 -->
                 <div class="slide-item">
-                    <img src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=400&h=500&fit=crop"
-                        alt="Phố cổ Hội An">
+                    <img src="images/bokelocan.png"
+                        alt="Bờ Kè Lộc An">
                     <div class="slide-overlay">
-                        <h3>Phố cổ Hội An</h3>
-                        <p>Thành phố đèn lồng cổ kính</p>
+                        <h3>Bờ Kè Lộc An</h3>
+                        <p>điểm chụp ảnh và hóng gió biển được nhiều người dân và du khách yêu thích.</p>
                     </div>
                 </div>
+                <!-- Slide 3 -->
                 <div class="slide-item">
-                    <img src="https://images.unsplash.com/photo-1464817739973-0128fe77aaa1?w=400&h=500&fit=crop"
-                        alt="Sapa">
+                    <img src="images/chophuochai.png"
+                        alt="Chợ Phước Hải">
                     <div class="slide-overlay">
-                        <h3>Sapa</h3>
-                        <p>Ruộng bậc thang tuyệt đẹp</p>
+                        <h3>Chợ Phước Hải</h3>
+                        <p>thiên đường ẩm thực ven biển, nơi du khách có thể thưởng thức hải sản tươi sống vừa được ngư dân mang về, từ tôm, cua, ghẹ đến cá, mực… đầy phong vị biển cả </p>
                     </div>
                 </div>
+                <!-- Slide 4 -->
                 <div class="slide-item">
-                    <img src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=400&h=500&fit=crop"
-                        alt="Đà Nẵng">
+                    <img src="images/co-bong-homestay-phuoc-hai-1.jpg"
+                        alt="Cô Bông Homestay">
                     <div class="slide-overlay">
-                        <h3>Đà Nẵng</h3>
-                        <p>Thành phố đáng sống nhất Việt Nam</p>
+                        <h3>Cô Bông Homestay</h3>
+                        <p>Phòng được trang bị đầy đủ tiện nghi cùng với vách kính lớn để mọi người tha hồ check in sống ảo.Nhà có khu bếp lớn đầy đủ dụng cụ cùng với sân bbq siêu chill mọi người thoải mái sử dụng. Đặc biệt là có Hồ Bơi lớn trong nhà cho mọi người thoải mái vui chơi.</p>
                     </div>
                 </div>
             </div>
@@ -151,59 +155,61 @@
 
             <!-- Desktop Tabs -->
             <div class="category-tabs">
-                <button class="category-tab active" data-category="culture">Văn hóa</button>
+                <button class="category-tab active" data-category="culture">Điểm Check In</button>
                 <button class="category-tab" data-category="food">Ẩm thực</button>
-                <button class="category-tab" data-category="entertainment">Giải trí</button>
-                <button class="category-tab" data-category="shopping">Mua sắm</button>
-                <button class="category-tab" data-category="nature">Thiên nhiên</button>
+                <button class="category-tab" data-category="entertainment">Bãi Tắm</button>
+                <button class="category-tab" data-category="shopping">Homestay</button>
+                <button class="category-tab" data-category="nature">Team Building</button>
             </div>
 
             <!-- Mobile Select -->
             <div class="category-select-wrapper">
                 <select class="category-select" id="categorySelect">
-                    <option value="culture">Văn hóa</option>
+                    <option value="culture">Điểm Check In</option>
                     <option value="food">Ẩm thực</option>
-                    <option value="entertainment">Giải trí</option>
-                    <option value="shopping">Mua sắm</option>
-                    <option value="nature">Thiên nhiên</option>
+                    <option value="entertainment">Bãi Tắm</option>
+                    <option value="shopping">Homestay</option>
+                    <option value="nature">Team Building</option>
                 </select>
             </div>
 
             <!-- Category Contents -->
             <div class="category-content active" data-content="culture">
                 <div class="category-intro">
-                    <h3>Văn hóa Việt Nam</h3>
-                    <p>Khám phá di sản văn hóa phong phú với hàng ngàn năm lịch sử</p>
+                    <h3>ĐIỂM CHECK IN PHƯỚC HẢI FREE</h3>
+                    <p>Khám phá những địa điểm du lịch ở Phước Hải</p>
                 </div>
                 <div class="category-grid">
                     <div class="category-card">
                         <div class="category-card-img">
-                            <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=400&h=300&fit=crop"
-                                alt="Hoàng thành Huế">
+                            <img src="images/quangtruongphuochai.png"
+                                alt="Quảng Trường Phước Hải">
                         </div>
                         <div class="category-card-content">
-                            <h4>Hoàng thành Huế</h4>
-                            <p>Di sản văn hóa thế giới với kiến trúc cung đình độc đáo thời Nguyễn.</p>
+                            <h4>Quảng Trường Phước Hải</h4>
+                            <p>điểm dạo chơi, chụp ảnh và hóng gió biển được nhiều người dân và du khách yêu thích. Mở cửa cả ngày</p>
                         </div>
                     </div>
                     <div class="category-card">
                         <div class="category-card-img">
-                            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop"
-                                alt="Văn Miếu">
+                            <img src="images/bokelocan.png"
+                                alt="Bờ Kè Lộc An">
                         </div>
                         <div class="category-card-content">
-                            <h4>Văn Miếu Quốc Tử Giám</h4>
-                            <p>Trường đại học đầu tiên của Việt Nam, biểu tượng của nền giáo dục.</p>
+                            <h4>Bờ Kè Lộc An</h4>
+                            <p>điểm chụp ảnh và hóng gió biển được nhiều người dân và du khách yêu thích.
+                                Mở cửa cả ngày
+                            </p>
                         </div>
                     </div>
                     <div class="category-card">
                         <div class="category-card-img">
-                            <img src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=400&h=300&fit=crop"
-                                alt="Hội An">
+                            <img src="images/hosobong.png"
+                                alt="Hồ Sở Bông">
                         </div>
                         <div class="category-card-content">
-                            <h4>Phố cổ Hội An</h4>
-                            <p>Đô thị cổ được bảo tồn nguyên vẹn với những ngôi nhà trăm năm tuổi.</p>
+                            <h4>Hồ Sở Bông</h4>
+                            <p>viên ngọc xanh giữa lòng xã Phước Hải – là điểm đến lý tưởng cho những ai muốn tìm về không gian yên bình, hòa mình với thiên nhiên .</p>
                         </div>
                     </div>
                 </div>
@@ -211,38 +217,39 @@
 
             <div class="category-content" data-content="food">
                 <div class="category-intro">
-                    <h3>Ẩm thực Việt Nam</h3>
-                    <p>Thưởng thức những món ăn đặc sắc nhất của nền ẩm thực Việt</p>
+                    <h3>Ẩm thực Phước Hải</h3>
+                    <p>Thưởng thức những món ăn đặc sắc nhất của ẩm thực phước Hải</p>
                 </div>
                 <div class="category-grid">
                     <div class="category-card">
                         <div class="category-card-img">
-                            <img src="https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=400&h=300&fit=crop"
-                                alt="Phở Hà Nội">
+                            <img src="images/banhcanhcopho.png"
+                                 alt="Bánh Canh Cô Phờ">
+                               
                         </div>
                         <div class="category-card-content">
-                            <h4>Phở Hà Nội</h4>
-                            <p>Món ăn biểu tượng với nước dùng thanh ngọt và bánh phở mềm mịn.</p>
+                            <h4>Bánh Canh Cô Phờ</h4>
+                            <p>Hải sản tươi, rất nhiều topping cho tô thập cẩm, vị đậm đà vừa ăn, cơ đầy đủ nước uống và nước chấm. Bánh canh chả cá có cục giò 35k.</p>
                         </div>
                     </div>
                     <div class="category-card">
                         <div class="category-card-img">
-                            <img src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=400&h=300&fit=crop"
-                                alt="Bánh mì">
+                            <img src="images/chophuochai.png"
+                                alt="Chợ Phước Hải">
                         </div>
                         <div class="category-card-content">
-                            <h4>Bánh mì Việt Nam</h4>
-                            <p>Được CNN bình chọn là một trong những món sandwich ngon nhất thế giới.</p>
+                            <h4>Chợ Phước Hải</h4>
+                            <p>thiên đường ẩm thực ven biển, nơi du khách có thể thưởng thức hải sản tươi sống vừa được ngư dân mang về, từ tôm, cua, ghẹ đến cá, mực… đầy phong vị biển cả</p>
                         </div>
                     </div>
                     <div class="category-card">
                         <div class="category-card-img">
-                            <img src="https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?w=400&h=300&fit=crop"
-                                alt="Bún chả">
+                            <img src="images/comnieucaluoi.png"
+                                alt="Cơm Nêu Cá Lưới">
                         </div>
                         <div class="category-card-content">
-                            <h4>Bún chả Hà Nội</h4>
-                            <p>Món ăn được Tổng thống Obama thưởng thức khi đến thăm Việt Nam.</p>
+                            <h4>Cơm Nêu Cá Lưới</h4>
+                            <p>Đây là lựa chọn lý tưởng cho du khách muốn trải nghiệm bữa cơm quê trọn vẹn giữa hương vị biển cả. </p>
                         </div>
                     </div>
                 </div>
@@ -250,38 +257,38 @@
 
             <div class="category-content" data-content="entertainment">
                 <div class="category-intro">
-                    <h3>Giải trí & Vui chơi</h3>
+                    <h3>Bãi Tắm</h3>
                     <p>Những trải nghiệm giải trí độc đáo và thú vị</p>
                 </div>
                 <div class="category-grid">
                     <div class="category-card">
                         <div class="category-card-img">
-                            <img src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=400&h=300&fit=crop"
-                                alt="Vinpearl Land">
+                            <img src="images/baitamcongcong.png"
+                                alt="Bãi Tắm Công Cộng">
                         </div>
                         <div class="category-card-content">
-                            <h4>VinWonders</h4>
-                            <p>Công viên giải trí hàng đầu Việt Nam với nhiều trò chơi hiện đại.</p>
+                            <h4>Bãi Tắm Công Cộng</h4>
+                            <p>Bãi tắm công cộng tại Phước Hải là nơi lý tưởng để thư giãn và tận hưởng không khí trong lành.</p>
                         </div>
                     </div>
                     <div class="category-card">
                         <div class="category-card-img">
-                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop"
-                                alt="Bà Nà Hills">
+                            <img src="images/baitammoong.png"
+                                alt="Bãi Tắm Mộ Ông">
                         </div>
                         <div class="category-card-content">
-                            <h4>Bà Nà Hills</h4>
-                            <p>Khu du lịch nổi tiếng với Cầu Vàng và cáp treo dài nhất thế giới.</p>
+                            <h4>Bãi Tắm Mộ Ông</h4>
+                            <p>Một trong những bãi biển đẹp, hoang sơ của Phước Hải – nổi bật với làn nước trong xanh, bãi cát mịn trải dài cùng không gian yên bình, thoáng đãng .</p>
                         </div>
                     </div>
                     <div class="category-card">
                         <div class="category-card-img">
-                            <img src="https://images.unsplash.com/photo-1540202404-a2f29016b523?w=400&h=300&fit=crop"
-                                alt="Múa rối nước">
+                            <img src="images/baitamlocan.png"
+                                alt="Bãi Tắm Lộc An">
                         </div>
                         <div class="category-card-content">
-                            <h4>Múa rối nước</h4>
-                            <p>Nghệ thuật truyền thống độc đáo chỉ có tại Việt Nam.</p>
+                            <h4>Bãi Tắm Lộc An</h4>
+                            <p>Điểm đến tuyệt vời cho những ai yêu thích biển xanh và không gian yên bình. Với bờ cát trắng mịn, làn nước trong xanh cùng cảnh quan thiên nhiên hoang sơ, nơi đây lý tưởng để tắm biển, cắm trại, picnic và check-in những bức hình ấn tượng khi ghé Phước Hải.</p>
                         </div>
                     </div>
                 </div>
@@ -289,38 +296,38 @@
 
             <div class="category-content" data-content="shopping">
                 <div class="category-intro">
-                    <h3>Mua sắm</h3>
-                    <p>Điểm đến mua sắm hấp dẫn từ truyền thống đến hiện đại</p>
+                    <h3>Homestay</h3>
+                    <p>Điểm đến nghỉ dưỡng thân thiện</p>
                 </div>
                 <div class="category-grid">
                     <div class="category-card">
                         <div class="category-card-img">
-                            <img src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=400&h=300&fit=crop"
-                                alt="Chợ Bến Thành">
+                            <img src="images/cobonghomestay.png"
+                                alt="Cô Bông Homestay">
                         </div>
                         <div class="category-card-content">
-                            <h4>Chợ Bến Thành</h4>
-                            <p>Biểu tượng của Sài Gòn với hàng ngàn mặt hàng đa dạng.</p>
+                            <h4>Cô Bông Homestay</h4>
+                            <p>Phòng được trang bị đầy đủ tiện nghi cùng với vách kính lớn để mọi người tha hồ check in sống ảo.Nhà có khu bếp lớn đầy đủ dụng cụ cùng với sân bbq siêu chill mọi người thoải mái sử dụng. Đặc biệt là có Hồ Bơi lớn trong nhà cho mọi người thoải mái vui chơi.</p>
                         </div>
                     </div>
                     <div class="category-card">
                         <div class="category-card-img">
-                            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=300&fit=crop"
-                                alt="Trung tâm thương mại">
+                            <img src="images/theleaf.png"
+                                alt="The Leaf Homestay">
                         </div>
                         <div class="category-card-content">
-                            <h4>Vincom Center</h4>
-                            <p>Trung tâm thương mại hiện đại với các thương hiệu quốc tế.</p>
+                            <h4>The Leaf Homestay</h4>
+                            <p>The Leaf Cafe & Glamping mang đến trải nghiệm tuyệt vời với không gian cafe ngoài trời, kết hợp cùng dịch vụ cắm trại Glamping ngay bên bờ hồ và dưới tán rừng tự nhiên. Đây là địa điểm cho những ai muốn thư giãn và tận hưởng bầu không khí trong lành tại các khu camping/ glamping ở Đất Đỏ.</p>
                         </div>
                     </div>
                     <div class="category-card">
                         <div class="category-card-img">
-                            <img src="https://images.unsplash.com/photo-1568254183919-78a4f43a2877?w=400&h=300&fit=crop"
-                                alt="Làng nghề">
+                            <img src="images/langbinhyen.png"
+                                alt="Làng Bình Yên">
                         </div>
                         <div class="category-card-content">
-                            <h4>Làng nghề truyền thống</h4>
-                            <p>Mua sản phẩm thủ công mỹ nghệ từ các làng nghề nổi tiếng.</p>
+                            <h4>Làng Bình Yên</h4>
+                            <p>Làng như ôm trọn trong lòng cả một khu vườn xanh mát. Cỏ cây trải dài như tấm thảm tự nhiên, từng tán lá rung rinh dưới ánh nắng nhẹ. Những dải cỏ tươi hòa quyện cùng bóng mát của cây cổ thụ, còn các khóm hoa nhỏ xinh tô điểm thêm sức sống rực rỡ. </p>
                         </div>
                     </div>
                 </div>
@@ -328,38 +335,40 @@
 
             <div class="category-content" data-content="nature">
                 <div class="category-intro">
-                    <h3>Thiên nhiên</h3>
-                    <p>Chiêm ngưỡng vẻ đẹp hùng vĩ của thiên nhiên Việt Nam</p>
+                    <h3>Team Building</h3>
+                    <p>Khám phá các địa điểm lý tưởng cho các hoạt động team building tại Phước Hải</p>
                 </div>
                 <div class="category-grid">
                     <div class="category-card">
                         <div class="category-card-img">
-                            <img src="https://images.unsplash.com/photo-1528127269322-539801943592?w=400&h=300&fit=crop"
-                                alt="Vịnh Hạ Long">
+                            <img src="images/natureme.png"
+                                alt="Nature Me">
                         </div>
                         <div class="category-card-content">
-                            <h4>Vịnh Hạ Long</h4>
-                            <p>Kỳ quan thiên nhiên với hơn 1,600 hòn đảo đá vôi.</p>
+                            <h4>Nature Me</h4>
+                            <h5>SĐT Phone:  0962110192</h5>
+                            <p>Nature Me . EVENT – đơn vị tổ chức teambuilding và gala chuyên nghiệp tại Phước Hải – mang đến những chương trình sôi động, gắn kết và sáng tạo. Với đội ngũ nhiệt huyết, kịch bản ấn tượng và dịch vụ trọn gói, Nature Me . EVENT là lựa chọn hoàn hảo cho doanh nghiệp, tập thể muốn tạo nên trải nghiệm đáng nhớ bên bờ biển</p>
                         </div>
                     </div>
                     <div class="category-card">
                         <div class="category-card-img">
-                            <img src="https://images.unsplash.com/photo-1464817739973-0128fe77aaa1?w=400&h=300&fit=crop"
-                                alt="Sapa">
+                            <img src="images/baithadieu.png"
+                                alt="Bãi thả diều">
                         </div>
                         <div class="category-card-content">
-                            <h4>Ruộng bậc thang Sapa</h4>
-                            <p>Những thửa ruộng bậc thang đẹp như tranh vẽ vùng Tây Bắc.</p>
+                            <h4>Bãi thả diều</h4>
+                            <p>Bãi thả diều Phước Hải – không gian rộng lớn, thoáng mát ven biển, là điểm hẹn lý tưởng để du khách thả diều, vui chơi và ngắm hoàng hôn tuyệt đẹp. Nơi đây mang đến cảm giác bình yên, thư giãn và những trải nghiệm tuổi thơ khó quên bên bờ biển Phước Hải.</p>
                         </div>
                     </div>
                     <div class="category-card">
                         <div class="category-card-img">
-                            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop"
-                                alt="Biển Phú Quốc">
+                            <img src="images/Gozoo_farm_dat_do_cor.jpg"
+                                alt="GOZOO FARM">
                         </div>
                         <div class="category-card-content">
-                            <h4>Đảo Phú Quốc</h4>
-                            <p>Hòn đảo ngọc với bãi biển trong xanh và hoàng hôn tuyệt đẹp.</p>
+                            <h4>GOZOO FARM</h4>
+                            <h5>SĐT Phone: 0835 072 072 </h5>
+                            <p>GozooFarm Phước Hải – điểm đến xanh dành cho gia đình và bạn trẻ yêu thiên nhiên. Tại đây, du khách được trải nghiệm tham quan nông trại, vui chơi cùng các loài thú dễ thương, tận hưởng không gian trong lành và lưu giữ những khoảnh khắc đáng nhớ. Đây là lựa chọn lý tưởng cho những chuyến đi cuối tuần vừa vui vừa bổ ích</p>
                         </div>
                     </div>
                 </div>
