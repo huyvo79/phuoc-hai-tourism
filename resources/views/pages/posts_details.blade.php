@@ -1,6 +1,6 @@
 @extends('layouts.layouts')
 
-@section('title', 'Vịnh Hạ Long - Kỳ Quan Thiên Nhiên Thế Giới')
+@section('title', 'Khu Vui Chơi Giải Trí Trung Tâm - Khu A')
 
 @section('body_class', 'post-details-page')
 
@@ -9,11 +9,11 @@
     <div class="container">
         <!-- Hero Section -->
         <div class="post-hero">
-            <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Vịnh Hạ Long" class="post-hero-image">
+            <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Khu vui chơi giải trí" class="post-hero-image">
             <div class="post-hero-overlay"></div>
             <div class="post-hero-content">
-                <span class="post-category">Điểm Đến</span>
-                <h1 class="post-title">Vịnh Hạ Long - Kỳ Quan Thiên Nhiên Thế Giới Tại Việt Nam</h1>
+                <span class="post-category">Khu Vui Chơi</span>
+                <h1 class="post-title">Khu Vui Chơi Giải Trí Trung Tâm - Khu A</h1>
                 <div class="post-meta">
                     <div class="post-meta-item">
                         <i class="bi bi-calendar-event"></i>
@@ -21,11 +21,11 @@
                     </div>
                     <div class="post-meta-item">
                         <i class="bi bi-clock"></i>
-                        <span>8 phút đọc</span>
+                        <span>5 phút đọc</span>
                     </div>
                     <div class="post-meta-item">
                         <i class="bi bi-eye"></i>
-                        <span>2,547 lượt xem</span>
+                        <span>1,247 lượt xem</span>
                     </div>
                 </div>
             </div>
@@ -36,71 +36,71 @@
             <article class="post-content">
                 <!-- Excerpt -->
                 <div class="post-excerpt">
-                    Vịnh Hạ Long, một trong những kỳ quan thiên nhiên thế giới được UNESCO công nhận, là điểm đến không thể bỏ qua khi du lịch Việt Nam. Với hàng nghìn đảo đá vôi nhô lên từ mặt nước xanh biếc, tạo nên một bức tranh thiên nhiên hùng vĩ và thơ mộng.
+                    Khu A - Khu vui chơi giải trí trung tâm là điểm đến không thể bỏ qua khi tham quan khu du lịch của chúng tôi. Với hệ thống trò chơi hiện đại và đa dạng, khu vực này mang đến những giây phút thư giãn tuyệt vời cho cả gia đình.
                 </div>
 
                 <!-- Post Body -->
                 <div class="post-body">
-                    <h2>Lịch Sử Hình Thành Vịnh Hạ Long</h2>
-                    <p>Vịnh Hạ Long được hình thành qua hàng triệu năm bởi quá trình xói mòn của nước biển lên các khối đá vôi. Theo truyền thuyết dân gian, vịnh được tạo ra bởi một gia đình rồng từ trời xuống để giúp người Việt chống giặc ngoại xâm.</p>
+                    <h2>Giới Thiệu Khu Vui Chơi Giải Trí</h2>
+                    <p>Khu A được thiết kế với diện tích rộng lớn, bao gồm nhiều khu vực vui chơi khác nhau phù hợp với mọi lứa tuổi. Từ những trò chơi mạo hiểm cho người lớn đến khu vui chơi an toàn dành riêng cho trẻ em, tất cả đều được trang bị theo tiêu chuẩn quốc tế về an toàn.</p>
 
-                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Cảnh quan Vịnh Hạ Long" class="post-image">
-                    <p class="image-caption">Cảnh quan hùng vĩ của Vịnh Hạ Long nhìn từ trên cao</p>
+                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Khu vui chơi trẻ em" class="post-image">
+                    <p class="image-caption">Khu vui chơi dành riêng cho trẻ em với các trò chơi an toàn</p>
 
-                    <p>Vịnh có diện tích khoảng 1.553 km² với hơn 1.600 hòn đảo lớn nhỏ, trong đó có khoảng 989 hòn đảo đã được đặt tên. Mỗi hòn đảo đều có hình dáng và câu chuyện riêng, tạo nên sự đa dạng và phong phú cho cảnh quan của vịnh.</p>
+                    <p>Khu vực được chia thành nhiều phân khu chuyên biệt, mỗi khu có chủ đề và độ tuổi phù hợp riêng. Tất cả các thiết bị đều được kiểm tra định kỳ và bảo trì thường xuyên để đảm bảo an toàn tuyệt đối cho du khách.</p>
 
-                    <h2>Những Điểm Tham Quan Nổi Bật</h2>
+                    <h2>Các Trò Chơi Nổi Bật</h2>
                     
-                    <h3>1. Động Thiên Cung</h3>
-                    <p>Động Thiên Cung là một trong những hang động đẹp nhất Vịnh Hạ Long, nổi tiếng với hệ thống nhũ đá kỳ vĩ và những câu chuyện thần thoại hấp dẫn. Hang có chiều dài khoảng 130m, được chia thành nhiều khoang với các hình thù nhũ đá độc đáo.</p>
+                    <h3>1. Tàu Lượn Siêu Tốc</h3>
+                    <p>Trò chơi mạo hiểm dành cho những ai yêu thích cảm giác mạnh. Tàu lượn với chiều cao 25m và tốc độ tối đa 80km/h sẽ mang đến cho bạn những giây phút hồi hộp khó quên.</p>
 
                     <blockquote>
-                        "Vịnh Hạ Long không chỉ là một điểm đến du lịch, mà còn là biểu tượng của vẻ đẹp thiên nhiên Việt Nam, nơi mà con người có thể cảm nhận được sự hùng vĩ và thơ mộng của tạo hóa."
+                        "Khu A không chỉ là nơi vui chơi, mà còn là nơi gắn kết gia đình, tạo ra những kỷ niệm đẹp nhất cho mọi thành viên trong gia đình."
                     </blockquote>
 
-                    <h3>2. Làng Chài Cửa Vạn</h3>
-                    <p>Làng chài Cửa Vạn là nơi sinh sống của cộng đồng ngư dân địa phương, nơi du khách có thể trải nghiệm cuộc sống trên biển và tìm hiểu về văn hóa truyền thống của người dân vùng vịnh.</p>
+                    <h3>2. Khu Vui Chơi Trẻ Em</h3>
+                    <p>Được thiết kế đặc biệt cho trẻ em từ 3-12 tuổi với các trò chơi nhẹ nhàng, an toàn như cầu trượt, xích đu, nhà banh và khu cát vui chơi.</p>
 
-                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Làng chài Cửa Vạn" class="post-image">
-                    <p class="image-caption">Làng chài Cửa Vạn với những ngôi nhà nổi đặc trưng</p>
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Tàu lượn siêu tốc" class="post-image">
+                    <p class="image-caption">Tàu lượn siêu tốc - trò chơi mạo hiểm hấp dẫn nhất</p>
 
-                    <h2>Hoạt Động Du Lịch Hấp Dẫn</h2>
+                    <h2>Dịch Vụ Tiện ��ch</h2>
                     
-                    <p>Vịnh Hạ Long cung cấp nhiều hoạt động thú vị cho du khách:</p>
+                    <p>Khu A cung cấp đầy đủ các dịch vụ tiện ích:</p>
                     
                     <ul>
-                        <li><strong>Du thuyền qua đêm:</strong> Trải nghiệm ngủ trên du thuyền giữa vịnh, thưởng thức bữa tối hải sản và ngắm cảnh hoàng hôn tuyệt đẹp</li>
-                        <li><strong>Chèo kayak:</strong> Khám phá các hang động nhỏ và khu vực nước nông mà du thuyền lớn không thể tiếp cận</li>
-                        <li><strong>Tham quan hang động:</strong> Khám phá các hang động nổi tiếng như Động Thiên Cung, Động Đầu Gỗ, Động Sửng Sốt</li>
-                        <li><strong>Câu cá:</strong> Tham gia hoạt động câu cá cùng ngư dân địa phương</li>
-                        <li><strong>Tắm biển:</strong> Thư giãn tại các bãi tắm đẹp như bãi Soi Sim, bãi Titop</li>
+                        <li><strong>Nhà hàng và quán ăn:</strong> Phục vụ đa dạng món ăn từ fast food đến ẩm thực truyền thống</li>
+                        <li><strong>Cửa hàng lưu niệm:</strong> Bán các sản phẩm kỷ niệm độc đáo của khu du lịch</li>
+                        <li><strong>Khu vệ sinh:</strong> Sạch sẽ, hiện đại với đầy đủ tiện nghi</li>
+                        <li><strong>Bãi đỗ xe:</strong> Rộng rãi, an toàn với camera giám sát 24/7</li>
+                        <li><strong>Dịch vụ y tế:</strong> Trạm y tế với nhân viên y tế túc trực</li>
                     </ul>
 
-                    <h2>Ẩm Thực Đặc Sắc</h2>
-                    <p>Vịnh Hạ Long nổi tiếng với các món hải sản tươi ngon, đặc biệt là:</p>
+                    <h2>Giá Vé và Thời Gian Hoạt Động</h2>
+                    <p>Thông tin chi tiết về giá vé và thời gian:</p>
                     
                     <ol>
-                        <li><strong>Cua Hạ Long:</strong> Loại cua đặc sản với thịt chắc, ngọt tự nhiên</li>
-                        <li><strong>Tôm hùm nướng:</strong> Món ăn sang trọng được chế biến theo nhiều cách khác nhau</li>
-                        <li><strong>Chả mực Hạ Long:</strong> Đặc sản nổi tiếng được làm từ mực tươi</li>
-                        <li><strong>Ốc hương:</strong> Loại ốc biển có vị ngọt đặc trưng</li>
+                        <li><strong>Vé người lớn:</strong> 150.000 VNĐ (trên 12 tuổi)</li>
+                        <li><strong>Vé trẻ em:</strong> 100.000 VNĐ (3-12 tuổi)</li>
+                        <li><strong>Trẻ dưới 3 tuổi:</strong> Miễn phí (có người lớn đi kèm)</li>
+                        <li><strong>Thời gian hoạt động:</strong> 8:00 - 22:00 hàng ngày</li>
                     </ol>
 
-                    <h2>Lời Khuyên Cho Du Khách</h2>
-                    <p>Để có chuyến du lịch Vịnh Hạ Long trọn vẹn, du khách nên lưu ý:</p>
+                    <h2>Lưu Ý An Toàn</h2>
+                    <p>Để đảm bảo an toàn cho tất cả du khách, vui lòng tuân thủ:</p>
                     
                     <ul>
-                        <li>Thời gian lý tưởng để tham quan là từ tháng 10 đến tháng 4 năm sau</li>
-                        <li>Nên đặt tour trước ít nhất 1-2 tuần để có giá tốt và lựa chọn đa dạng</li>
-                        <li>Mang theo kem chống nắng và mũ vì ánh nắng trên biển khá mạnh</li>
-                        <li>Chuẩn bị thuốc say sóng nếu bạn dễ bị say sóng</li>
-                        <li>Tôn trọng môi trường, không vứt rác xuống biển</li>
+                        <li>Tuân thủ hướng dẫn của nhân viên vận hành</li>
+                        <li>Không mang đồ ăn, thức uống từ bên ngoài vào</li>
+                        <li>Trẻ em dưới 8 tuổi phải có người lớn đi kèm</li>
+                        <li>Không chơi các trò chơi mạo hiểm nếu có vấn đề về sức khỏe</li>
+                        <li>Giữ gìn vệ sinh chung và bảo vệ môi trường</li>
                     </ul>
 
-                    <img src="https://images.unsplash.com/photo-1528127269322-539801943592?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Hoàng hôn Vịnh Hạ Long" class="post-image">
-                    <p class="image-caption">Cảnh hoàng hôn thơ mộng trên Vịnh Hạ Long</p>
+                    <img src="https://images.unsplash.com/photo-1528127269322-539801943592?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Khu ẩm thực" class="post-image">
+                    <p class="image-caption">Khu ẩm thực với nhiều lựa chọn phong phú</p>
 
-                    <p>Vịnh Hạ Long thực sự là một điểm đến không thể bỏ qua khi du lịch Việt Nam. Với vẻ đẹp thiên nhiên hùng vĩ, văn hóa phong phú và ẩm thực đặc sắc, vịnh sẽ mang đến cho bạn những trải nghiệm khó quên và kỷ niệm đẹp nhất về đất nước Việt Nam.</p>
+                    <p>Khu A - Khu vui chơi giải trí trung tâm thực sự là điểm đến lý tưởng cho những ai muốn có những giây phút thư giãn, vui vẻ cùng gia đình và bạn bè. Với hệ thống trò chơi đa dạng, dịch vụ chất lượng và môi trường an toàn, chúng tôi cam kết mang đến cho bạn những trải nghiệm tuyệt vời nhất.</p>
 
                     <!-- Location Section -->
                     <div class="location-section">
@@ -110,7 +110,7 @@
                                 <i class="bi bi-geo-alt-fill"></i>
                                 <div>
                                     <strong>Xem Vị Trí Trên Bản Đồ</strong>
-                                    <small>Click để mở Google Maps và chỉ đường đến Vịnh Hạ Long</small>
+                                    <small>Click để xem vị trí Khu A trong khu du lịch</small>
                                 </div>
                             </button>
                         </div>
@@ -119,12 +119,12 @@
 
                 <!-- Tags -->
                 <div class="post-tags">
-                    <a href="#" class="tag">Vịnh Hạ Long</a>
-                    <a href="#" class="tag">Du lịch Việt Nam</a>
-                    <a href="#" class="tag">Kỳ quan thế giới</a>
-                    <a href="#" class="tag">Quảng Ninh</a>
-                    <a href="#" class="tag">Du thuyền</a>
-                    <a href="#" class="tag">Hải sản</a>
+                    <a href="#" class="tag">Khu A</a>
+                    <a href="#" class="tag">Vui chơi giải trí</a>
+                    <a href="#" class="tag">Gia đình</a>
+                    <a href="#" class="tag">Trò chơi</a>
+                    <a href="#" class="tag">Tàu lượn</a>
+                    <a href="#" class="tag">Trẻ em</a>
                 </div>
 
                 <!-- Share Buttons -->
@@ -151,25 +151,25 @@
                     <h3 class="widget-title">Bài Viết Liên Quan</h3>
                     
                     <div class="related-post">
-                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Sapa" class="related-post-image">
+                        <img src="https://images.unsplash.com/photo-1528127269322-539801943592?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Khu B" class="related-post-image">
                         <div class="related-post-content">
-                            <h4>Trekking Sapa: Chinh Phục Đỉnh Fansipan</h4>
+                            <h4>Khu B - Thể Thao Nước: Hồ Bơi và Trượt Nước</h4>
                             <span class="related-post-date">12 Tháng 1, 2024</span>
                         </div>
                     </div>
 
                     <div class="related-post">
-                        <img src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Hội An" class="related-post-image">
+                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Khu C" class="related-post-image">
                         <div class="related-post-content">
-                            <h4>Hội An - Thành Phố Cổ Với Nét Đẹp Văn Hóa</h4>
+                            <h4>Khu C - Không Gian Văn Hóa Truyền Thống</h4>
                             <span class="related-post-date">8 Tháng 1, 2024</span>
                         </div>
                     </div>
 
                     <div class="related-post">
-                        <img src="https://images.unsplash.com/photo-1528127269322-539801943592?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Phú Quốc" class="related-post-image">
+                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Khu D" class="related-post-image">
                         <div class="related-post-content">
-                            <h4>Phú Quốc - Đảo Ngọc Với Bãi Biển Tuyệt Đẹp</h4>
+                            <h4>Khu D - Sinh Thái: Khám Phá Thiên Nhiên</h4>
                             <span class="related-post-date">5 Tháng 1, 2024</span>
                         </div>
                     </div>
@@ -179,14 +179,14 @@
                 <div class="sidebar-widget">
                     <h3 class="widget-title">Thẻ Phổ Biến</h3>
                     <div class="post-tags">
-                        <a href="#" class="tag">Du lịch Việt Nam</a>
-                        <a href="#" class="tag">Ẩm thực</a>
-                        <a href="#" class="tag">Biển đảo</a>
-                        <a href="#" class="tag">Núi rừng</a>
+                        <a href="#" class="tag">Khu du lịch</a>
+                        <a href="#" class="tag">Vui chơi giải trí</a>
+                        <a href="#" class="tag">Gia đình</a>
+                        <a href="#" class="tag">Thể thao</a>
                         <a href="#" class="tag">Văn hóa</a>
-                        <a href="#" class="tag">Lịch sử</a>
-                        <a href="#" class="tag">Phiêu lưu</a>
-                        <a href="#" class="tag">Nhiếp ảnh</a>
+                        <a href="#" class="tag">Sinh thái</a>
+                        <a href="#" class="tag">Ẩm thực</a>
+                        <a href="#" class="tag">Nghỉ dưỡng</a>
                     </div>
                 </div>
             </aside>
@@ -195,18 +195,18 @@
         <!-- Post Navigation -->
         <div class="post-navigation">
             <a href="#" class="nav-post nav-post-prev">
-                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Previous post" class="nav-post-image">
+                <img src="https://images.unsplash.com/photo-1528127269322-539801943592?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Previous post" class="nav-post-image">
                 <div class="nav-post-content">
                     <span class="nav-post-label">Bài trước</span>
-                    <h4>Trekking Sapa: Chinh Phục Đỉnh Fansipan Nóc Nhà Đông Dương</h4>
+                    <h4>Khu B - Thể Thao Nước: Hồ Bơi và Trượt Nước Thú Vị</h4>
                 </div>
             </a>
 
             <a href="#" class="nav-post nav-post-next">
-                <img src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Next post" class="nav-post-image">
+                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Next post" class="nav-post-image">
                 <div class="nav-post-content">
                     <span class="nav-post-label">Bài tiếp</span>
-                    <h4>Hội An - Thành Phố Cổ Với Nét Đẹp Văn Hóa Đa Dạng</h4>
+                    <h4>Khu C - Không Gian Văn Hóa Truyền Thống Đặc Sắc</h4>
                 </div>
             </a>
         </div>

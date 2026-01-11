@@ -9,8 +9,8 @@
     <div class="container">
         <!-- Hero Section -->
         <div class="events-hero">
-            <h1>Sự Kiện Du Lịch</h1>
-            <p>Khám phá những sự kiện du lịch hấp dẫn, lễ hội văn hóa và trải nghiệm độc đáo khắp Việt Nam</p>
+            <h1>Sự Kiện Khu Du Lịch</h1>
+            <p>Tham gia các sự kiện đặc sắc và hoạt động thú vị tại các khu vực khác nhau trong khu du lịch của chúng tôi</p>
         </div>
 
         <!-- Filter Tabs -->
@@ -18,8 +18,9 @@
             <button class="filter-btn active" data-category="all">Tất Cả</button>
             <button class="filter-btn" data-category="upcoming">Sắp Diễn Ra</button>
             <button class="filter-btn" data-category="ongoing">Đang Diễn Ra</button>
-            <button class="filter-btn" data-category="festival">Lễ Hội</button>
-            <button class="filter-btn" data-category="tour">Tour</button>
+            <button class="filter-btn" data-category="entertainment">Khu Vui Chơi</button>
+            <button class="filter-btn" data-category="cultural">Khu Văn Hóa</button>
+            <button class="filter-btn" data-category="nature">Khu Sinh Thái</button>
         </div>
 
         <!-- Calendar Widget -->
@@ -82,27 +83,27 @@
             <!-- Featured Event -->
             <article class="event-card featured-event" data-category="upcoming">
                 <div class="event-card-image">
-                    <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Lễ hội hoa anh đào">
+                    <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Lễ hội mùa hè">
                     <span class="event-status upcoming">Sắp Diễn Ra</span>
-                    <span class="event-price">500.000 VNĐ</span>
+                    <span class="event-price">200.000 VNĐ</span>
                 </div>
                 <div class="event-content">
-                    <h2 class="event-title">Lễ Hội Hoa Anh Đào Đà Lạt 2024</h2>
+                    <h2 class="event-title">Lễ Hội Mùa Hè Khu Du Lịch 2024</h2>
                     <div class="event-meta">
                         <div class="event-meta-item">
                             <i class="bi bi-calendar-event"></i>
-                            <span>15-20 Tháng 1, 2024</span>
+                            <span>15-20 Tháng 6, 2024</span>
                         </div>
                         <div class="event-meta-item">
                             <i class="bi bi-geo-alt"></i>
-                            <span>Đà Lạt, Lâm Đồng</span>
+                            <span>Khu Trung Tâm - Sân khấu chính</span>
                         </div>
                         <div class="event-meta-item">
                             <i class="bi bi-people"></i>
-                            <span>1000+ người tham gia</span>
+                            <span>500+ người tham gia</span>
                         </div>
                     </div>
-                    <p class="event-description">Tham gia lễ hội hoa anh đào lớn nhất Việt Nam tại thành phố ngàn hoa Đà Lạt. Chiêm ngưỡng vẻ đẹp rực rỡ của hàng nghìn cây hoa anh đào nở rộ, thưởng thức ẩm thực địa phương và tham gia các hoạt động văn hóa đặc sắc.</p>
+                    <p class="event-description">Tham gia lễ hội mùa hè sôi động với các hoạt động giải trí, biểu diễn nghệ thuật, trò chơi dân gian và ẩm thực đặc sắc tại khu trung tâm của khu du lịch.</p>
                     <div class="event-actions">
                         <a href="#" class="event-btn event-btn-primary">Đăng Ký Ngay</a>
                         <a href="#" class="event-btn event-btn-secondary">Xem Chi Tiết</a>
@@ -111,14 +112,14 @@
             </article>
 
             <!-- Regular Events -->
-            <article class="event-card" data-category="festival">
+            <article class="event-card" data-category="cultural">
                 <div class="event-card-image">
-                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Lễ hội Sapa">
+                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Khu văn hóa dân tộc">
                     <span class="event-status upcoming">Sắp Diễn Ra</span>
-                    <span class="event-price">300.000 VNĐ</span>
+                    <span class="event-price">150.000 VNĐ</span>
                 </div>
                 <div class="event-content">
-                    <h3 class="event-title">Lễ Hội Mùa Đông Sapa - Tết Hmong</h3>
+                    <h3 class="event-title">Đêm Văn Hóa Dân Tộc - Khu C</h3>
                     <div class="event-meta">
                         <div class="event-meta-item">
                             <i class="bi bi-calendar-event"></i>
@@ -126,10 +127,10 @@
                         </div>
                         <div class="event-meta-item">
                             <i class="bi bi-geo-alt"></i>
-                            <span>Sapa, Lào Cai</span>
+                            <span>Khu C - Không gian văn hóa</span>
                         </div>
                     </div>
-                    <p class="event-description">Trải nghiệm văn hóa độc đáo của đồng bào Hmong trong lễ hội truyền thống, thưởng thức ẩm thực núi rừng và chiêm ngưỡng cảnh sắc mùa đông Sapa.</p>
+                    <p class="event-description">Trải nghiệm văn hóa đặc sắc với các tiết mục biểu diễn dân gian, thưởng thức ẩm thực truyền thống và tham gia các hoạt động thủ công mỹ nghệ.</p>
                     <div class="event-actions">
                         <a href="#" class="event-btn event-btn-primary">Đăng Ký</a>
                         <a href="#" class="event-btn event-btn-secondary">Chi Tiết</a>
@@ -137,40 +138,40 @@
                 </div>
             </article>
 
-            <article class="event-card" data-category="tour">
+            <article class="event-card" data-category="entertainment">
                 <div class="event-card-image">
-                    <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Tour Hạ Long">
+                    <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Khu vui chơi">
                     <span class="event-status ongoing">Đang Diễn Ra</span>
-                    <span class="event-price">1.200.000 VNĐ</span>
+                    <span class="event-price">100.000 VNĐ</span>
                 </div>
                 <div class="event-content">
-                    <h3 class="event-title">Tour Khám Phá Vịnh Hạ Long 3N2Đ</h3>
+                    <h3 class="event-title">Ngày Hội Trò Chơi - Khu A</h3>
                     <div class="event-meta">
                         <div class="event-meta-item">
                             <i class="bi bi-calendar-event"></i>
-                            <span>Hàng ngày</span>
+                            <span>Cuối tuần</span>
                         </div>
                         <div class="event-meta-item">
                             <i class="bi bi-geo-alt"></i>
-                            <span>Quảng Ninh</span>
+                            <span>Khu A - Khu vui chơi giải trí</span>
                         </div>
                     </div>
-                    <p class="event-description">Du thuyền sang trọng khám phá kỳ quan thiên nhiên thế giới, tham quan động Thiên Cung, làng chài Cửa Vạn và thưởng thức hải sản tươi ngon.</p>
+                    <p class="event-description">Tham gia các trò chơi hấp dẫn, thi đấu thể thao và các hoạt động giải trí dành cho cả gia đình tại khu vui chơi trung tâm.</p>
                     <div class="event-actions">
-                        <a href="#" class="event-btn event-btn-primary">Đặt Tour</a>
+                        <a href="#" class="event-btn event-btn-primary">Tham Gia</a>
                         <a href="#" class="event-btn event-btn-secondary">Xem Thêm</a>
                     </div>
                 </div>
             </article>
 
-            <article class="event-card" data-category="festival">
+            <article class="event-card" data-category="nature">
                 <div class="event-card-image">
-                    <img src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Lễ hội đèn lồng Hội An">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Khu sinh thái">
                     <span class="event-status upcoming">Sắp Diễn Ra</span>
                     <span class="event-price free">Miễn Phí</span>
                 </div>
                 <div class="event-content">
-                    <h3 class="event-title">Lễ Hội Đèn Lồng Hội An - Rằm Tháng Giêng</h3>
+                    <h3 class="event-title">Đêm Quan Sát Thiên Nhiên - Khu D</h3>
                     <div class="event-meta">
                         <div class="event-meta-item">
                             <i class="bi bi-calendar-event"></i>
@@ -178,10 +179,10 @@
                         </div>
                         <div class="event-meta-item">
                             <i class="bi bi-geo-alt"></i>
-                            <span>Hội An, Quảng Nam</span>
+                            <span>Khu D - Khu sinh thái</span>
                         </div>
                     </div>
-                    <p class="event-description">Đêm hội đèn lồng rực rỡ tại phố cổ Hội An, thả đèn hoa đăng trên sông Hoài và thưởng thức các món ăn truyền thống trong không khí lễ hội.</p>
+                    <p class="event-description">Khám phá đời sống động vật về đêm, quan sát các loài chim và côn trùng, tìm hiểu về hệ sinh thái địa phương trong không gian yên tĩnh.</p>
                     <div class="event-actions">
                         <a href="#" class="event-btn event-btn-primary">Tham Gia</a>
                         <a href="#" class="event-btn event-btn-secondary">Tìm Hiểu</a>
@@ -189,14 +190,14 @@
                 </div>
             </article>
 
-            <article class="event-card" data-category="tour">
+            <article class="event-card" data-category="entertainment">
                 <div class="event-card-image">
-                    <img src="https://images.unsplash.com/photo-1528127269322-539801943592?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Tour Phú Quốc">
+                    <img src="https://images.unsplash.com/photo-1528127269322-539801943592?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Khu thể thao nước">
                     <span class="event-status upcoming">Sắp Diễn Ra</span>
-                    <span class="event-price">2.500.000 VNĐ</span>
+                    <span class="event-price">80.000 VNĐ</span>
                 </div>
                 <div class="event-content">
-                    <h3 class="event-title">Tour Đảo Ngọc Phú Quốc 4N3Đ</h3>
+                    <h3 class="event-title">Giải Bơi Lội Mùa Hè - Khu B</h3>
                     <div class="event-meta">
                         <div class="event-meta-item">
                             <i class="bi bi-calendar-event"></i>
@@ -204,25 +205,25 @@
                         </div>
                         <div class="event-meta-item">
                             <i class="bi bi-geo-alt"></i>
-                            <span>Phú Quốc, Kiên Giang</span>
+                            <span>Khu B - Khu thể thao nước</span>
                         </div>
                     </div>
-                    <p class="event-description">Khám phá đảo ngọc với những bãi biển tuyệt đẹp, tham quan vườn tiêu, làng chài và thưởng thức hải sản tươi sống tại chợ đêm Dinh Cậu.</p>
+                    <p class="event-description">Tham gia giải bơi lội với nhiều nội dung thi đấu phù hợp cho mọi lứa tuổi, cùng các hoạt động thể thao dưới nước thú vị.</p>
                     <div class="event-actions">
-                        <a href="#" class="event-btn event-btn-primary">Đặt Ngay</a>
-                        <a href="#" class="event-btn event-btn-secondary">Xem Tour</a>
+                        <a href="#" class="event-btn event-btn-primary">Đăng Ký</a>
+                        <a href="#" class="event-btn event-btn-secondary">Xem Chi Tiết</a>
                     </div>
                 </div>
             </article>
 
-            <article class="event-card" data-category="festival">
+            <article class="event-card" data-category="nature">
                 <div class="event-card-image">
-                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Lễ hội Nghinh Ông">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Khu sinh thái">
                     <span class="event-status upcoming">Sắp Diễn Ra</span>
-                    <span class="event-price free">Miễn Phí</span>
+                    <span class="event-price">120.000 VNĐ</span>
                 </div>
                 <div class="event-content">
-                    <h3 class="event-title">Lễ Hội Nghinh Ông - Cầu Ngư An Thịnh</h3>
+                    <h3 class="event-title">Tour Khám Phá Sinh Thái - Khu D</h3>
                     <div class="event-meta">
                         <div class="event-meta-item">
                             <i class="bi bi-calendar-event"></i>
@@ -230,10 +231,10 @@
                         </div>
                         <div class="event-meta-item">
                             <i class="bi bi-geo-alt"></i>
-                            <span>Phan Thiết, Bình Thuận</span>
+                            <span>Khu D - Khu bảo tồn sinh thái</span>
                         </div>
                     </div>
-                    <p class="event-description">Tham gia lễ hội truyền thống của ngư dân miền Trung, chứng kiến lễ rước cá Ông và thưởng thức các món hải sản đặc sản vùng biển.</p>
+                    <p class="event-description">Khám phá đa dạng sinh học với hướng dẫn viên chuyên nghiệp, tìm hiểu về các loài động thực vật bản địa và tham gia bảo vệ môi trường.</p>
                     <div class="event-actions">
                         <a href="#" class="event-btn event-btn-primary">Tham Gia</a>
                         <a href="#" class="event-btn event-btn-secondary">Tìm Hiểu</a>

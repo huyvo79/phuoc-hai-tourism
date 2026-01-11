@@ -9,97 +9,97 @@
     <div class="container">
         <!-- Hero Section -->
         <div class="news-hero">
-            <h1>Tin Tức Du Lịch</h1>
-            <p>Khám phá những điểm đến tuyệt vời, kinh nghiệm du lịch và xu hướng mới nhất trong thế giới du lịch Việt Nam</p>
+            <h1>Tin Tức Khu Du Lịch</h1>
+            <p>Cập nhật những thông tin mới nhất về các hoạt động, sự kiện và dịch vụ tại khu du lịch của chúng tôi</p>
         </div>
 
         <!-- Filter Tabs -->
         <div class="news-filters">
             <button class="filter-btn active" data-category="all">Tất Cả</button>
-            <button class="filter-btn" data-category="destination">Điểm Đến</button>
-            <button class="filter-btn" data-category="experience">Trải Nghiệm</button>
-            <button class="filter-btn" data-category="food">Ẩm Thực</button>
-            <button class="filter-btn" data-category="culture">Văn Hóa</button>
+            <button class="filter-btn" data-category="announcement">Thông Báo</button>
+            <button class="filter-btn" data-category="activity">Hoạt Động</button>
+            <button class="filter-btn" data-category="service">Dịch Vụ</button>
+            <button class="filter-btn" data-category="promotion">Khuyến Mãi</button>
         </div>
 
         <!-- News Grid -->
         <div class="news-grid">
             <!-- Featured Article -->
-            <article class="news-card featured-article" data-category="destination">
+            <article class="news-card featured-article" data-category="announcement">
                 <div class="news-card-image">
-                    <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Vịnh Hạ Long">
-                    <span class="news-category">Điểm Đến</span>
+                    <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Khu du lịch mới">
+                    <span class="news-category">Thông Báo</span>
                     <span class="news-date">15 Tháng 1, 2024</span>
                 </div>
                 <div class="news-content">
-                    <h2 class="news-title">Vịnh Hạ Long - Kỳ Quan Thiên Nhiên Thế Giới Tại Việt Nam</h2>
-                    <p class="news-excerpt">Khám phá vẻ đẹp huyền bí của Vịnh Hạ Long với hàng nghìn đảo đá vôi nhô lên từ mặt nước xanh biếc. Tìm hiểu lịch sử hình thành, những hoạt động thú vị và kinh nghiệm du lịch tại kỳ quan thiên nhiên thế giới này.</p>
+                    <h2 class="news-title">Khai Trương Khu Vui Chơi Giải Trí Mới - Khu A</h2>
+                    <p class="news-excerpt">Chúng tôi vui mừng thông báo khai trương khu vui chơi giải trí hiện đại với nhiều trò chơi hấp dẫn, phục vụ nhu cầu giải trí của cả gia đình. Khu A sẽ chính thức mở cửa từ ngày 20/1/2024.</p>
                     <a href="#" class="read-more-btn">Đọc Thêm</a>
                 </div>
             </article>
 
             <!-- Regular Articles -->
-            <article class="news-card" data-category="experience">
+            <article class="news-card" data-category="activity">
                 <div class="news-card-image">
-                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Sapa">
-                    <span class="news-category">Trải Nghiệm</span>
+                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Hoạt động thể thao">
+                    <span class="news-category">Hoạt Động</span>
                     <span class="news-date">12 Tháng 1, 2024</span>
                 </div>
                 <div class="news-content">
-                    <h3 class="news-title">Trekking Sapa: Chinh Phục Đỉnh Fansipan Nóc Nhà Đông Dương</h3>
-                    <p class="news-excerpt">Hành trình chinh phục đỉnh Fansipan cao 3.143m với những thử thách thú vị và cảnh quan tuyệt đẹp. Chia sẻ kinh nghiệm chuẩn bị, lộ trình và những điều cần lưu ý.</p>
+                    <h3 class="news-title">Khai Mạc Giải Bóng Đá Mini Khu Du Lịch 2024</h3>
+                    <p class="news-excerpt">Giải đấu bóng đá mini dành cho du khách và nhân viên khu du lịch chính thức khai mạc tại sân thể thao Khu B. Đây là cơ hội tuyệt vời để giao lưu và rèn luyện sức khỏe.</p>
                     <a href="#" class="read-more-btn">Đọc Thêm</a>
                 </div>
             </article>
 
-            <article class="news-card" data-category="food">
+            <article class="news-card" data-category="service">
                 <div class="news-card-image">
-                    <img src="https://images.unsplash.com/photo-1559181567-c3190ca9959b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2064&q=80" alt="Phở Việt Nam">
-                    <span class="news-category">Ẩm Thực</span>
+                    <img src="https://images.unsplash.com/photo-1559181567-c3190ca9959b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2064&q=80" alt="Nhà hàng">
+                    <span class="news-category">Dịch Vụ</span>
                     <span class="news-date">10 Tháng 1, 2024</span>
                 </div>
                 <div class="news-content">
-                    <h3 class="news-title">Hành Trình Khám Phá Ẩm Thực Đường Phố Hà Nội</h3>
-                    <p class="news-excerpt">Từ tô phở nóng hổi buổi sáng đến chén chè đậu xanh mát lạnh buổi chiều, khám phá tinh hoa ẩm thực đường phố Thủ đô với những món ăn truyền thống đậm đà hương vị.</p>
+                    <h3 class="news-title">Ra Mắt Thực Đơn Mới Tại Nhà Hàng Khu Trung Tâm</h3>
+                    <p class="news-excerpt">Nhà hàng chính của khu du lịch giới thiệu thực đơn mới với các món ăn đặc sản địa phương và quốc tế, mang đến trải nghiệm ẩm thực phong phú cho du khách.</p>
                     <a href="#" class="read-more-btn">Đọc Thêm</a>
                 </div>
             </article>
 
-            <article class="news-card" data-category="culture">
+            <article class="news-card" data-category="promotion">
                 <div class="news-card-image">
-                    <img src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Hội An">
-                    <span class="news-category">Văn Hóa</span>
+                    <img src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Khuyến mãi">
+                    <span class="news-category">Khuyến Mãi</span>
                     <span class="news-date">8 Tháng 1, 2024</span>
                 </div>
                 <div class="news-content">
-                    <h3 class="news-title">Hội An - Thành Phố Cổ Với Nét Đẹp Văn Hóa Đa Dạng</h3>
-                    <p class="news-excerpt">Tìm hiểu về lịch sử hình thành và phát triển của phố cổ Hội An, nơi giao thoa văn hóa Việt - Trung - Nhật tạo nên một bức tranh văn hóa độc đáo và phong phú.</p>
+                    <h3 class="news-title">Ưu Đãi Đặc Biệt Tháng 1 - Giảm 30% Vé Tham Quan</h3>
+                    <p class="news-excerpt">Chương trình khuyến mãi đặc biệt dành cho du khách trong tháng 1, giảm giá 30% cho tất cả vé tham quan các khu vực và 20% cho dịch vụ ăn uống.</p>
                     <a href="#" class="read-more-btn">Đọc Thêm</a>
                 </div>
             </article>
 
-            <article class="news-card" data-category="destination">
+            <article class="news-card" data-category="service">
                 <div class="news-card-image">
-                    <img src="https://images.unsplash.com/photo-1528127269322-539801943592?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Phú Quốc">
-                    <span class="news-category">Điểm Đến</span>
+                    <img src="https://images.unsplash.com/photo-1528127269322-539801943592?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Khu nghỉ dưỡng">
+                    <span class="news-category">Dịch Vụ</span>
                     <span class="news-date">5 Tháng 1, 2024</span>
                 </div>
                 <div class="news-content">
-                    <h3 class="news-title">Phú Quốc - Đảo Ngọc Với Bãi Biển Tuyệt Đẹp</h3>
-                    <p class="news-excerpt">Khám phá vẻ đẹp hoang sơ của đảo Phú Quốc với những bãi biển cát trắng, nước biển trong xanh và hệ sinh thái biển phong phú. Cùng tìm hiểu các hoạt động du lịch hấp dẫn tại đây.</p>
+                    <h3 class="news-title">Nâng Cấp Khu Nghỉ Dưỡng - Thêm Nhiều Tiện Ích Mới</h3>
+                    <p class="news-excerpt">Khu nghỉ dưỡng đã hoàn thành việc nâng cấp với spa, phòng gym hiện đại và khu vực thư giãn bên hồ bơi, mang đến trải nghiệm nghỉ dưỡng cao cấp.</p>
                     <a href="#" class="read-more-btn">Đọc Thêm</a>
                 </div>
             </article>
 
-            <article class="news-card" data-category="experience">
+            <article class="news-card" data-category="activity">
                 <div class="news-card-image">
-                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Mekong Delta">
-                    <span class="news-category">Trải Nghiệm</span>
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Hoạt động sinh thái">
+                    <span class="news-category">Hoạt Động</span>
                     <span class="news-date">3 Tháng 1, 2024</span>
                 </div>
                 <div class="news-content">
-                    <h3 class="news-title">Du Ngoạn Đồng Bằng Sông Cửu Long Trên Thuyền</h3>
-                    <p class="news-excerpt">Trải nghiệm cuộc sống sông nước miền Tây qua chuyến du ngoạn trên các kênh rạch, thăm vườn trái cây và khám phá chợ nổi độc đáo của vùng đất phù sa màu mỡ.</p>
+                    <h3 class="news-title">Chương Trình Giáo Dục Môi Trường Tại Khu D</h3>
+                    <p class="news-excerpt">Khởi động chương trình giáo dục môi trường dành cho học sinh và du khách, với các hoạt động trồng cây, làm sạch môi trường và tìm hiểu về bảo tồn thiên nhiên.</p>
                     <a href="#" class="read-more-btn">Đọc Thêm</a>
                 </div>
             </article>
