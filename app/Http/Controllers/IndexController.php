@@ -49,4 +49,8 @@ class IndexController extends Controller
    {
       return view('pages.posts_details');
    }
+   public function archive()
+   {
+      return view('ui-archive.archive');
+   }
 }

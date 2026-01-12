@@ -45,4 +45,5 @@ Route::get('/events', [App\Http\Controllers\IndexController::class, 'events'])->
 Route::get('/plan', [App\Http\Controllers\IndexController::class, 'plan'])->name('home.plan');
 Route::get('/explore', [App\Http\Controllers\IndexController::class, 'explore'])->name('home.explore');
 Route::get('/single', [App\Http\Controllers\IndexController::class, 'single'])->name('single')->middleware('track.visitor');
+Route::get('/archive', [App\Http\Controllers\IndexController::class, 'archive'])->name('archive');
 
