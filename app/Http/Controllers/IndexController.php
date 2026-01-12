@@ -16,14 +16,37 @@ use App\Models\Supplier;
 
 class IndexController extends Controller
 {
-    public function index()
-    {
-       return view('ui-index.index');
-    }
-    public function single()
-    {
-       return view('ui-single.single');
-    }
-
-
+   public function index()
+   {
+      return view('ui-index.index');
+   }
+   public function single()
+   {
+      return view('ui-single.single');
+   }
+   public function contact()
+   {
+      return view('pages.contact');
+   }
+   public function news()
+   {
+     // $posts = Post::orderBy('created_at', 'desc')->paginate(5);
+      return view('pages.news');
+   }
+   public function events()
+   {
+      return view('pages.events');
+   }
+   public function plan()
+   {
+      return view('pages.plan');
+   }
+   public function explore()
+   {
+      return view('pages.explore');
+   }
+   public function post_details()
+   {
+      return view('pages.posts_details');
+   }
 }
