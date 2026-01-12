@@ -61,7 +61,7 @@
     </section>
 
     <!-- Section 2: Image Slider -->
-    <section class="slider-section">
+    <section class="slider-section" id="location-highlights">
         <div class="slider-header">
             <h2>Những điểm đến nổi bật</h2>
             <p>Khám phá những địa danh được yêu thích nhất Việt Nam</p>
