@@ -1,57 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* ==================== HEADER SCROLL EFFECT ==================== */
-    const header = document.getElementById('header');
-    if (header) {
-        const handleScroll = () => {
-            header.classList.toggle('scrolled', window.scrollY > 100);
-        };
-        handleScroll();
-        window.addEventListener('scroll', handleScroll);
-    }
+    // --- LƯU Ý: Phần xử lý Header và Menu Mobile đã được chuyển sang file js/header.js
+    // để tương thích với giao diện Tailwind mới.
 
-    /* ==================== MOBILE MENU ==================== */
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileOverlay = document.getElementById('mobileOverlay');
-
-    if (menuToggle && mobileMenu && mobileOverlay) {
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('active');
-            mobileOverlay.classList.toggle('active');
-        });
-
-        mobileOverlay.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            mobileOverlay.classList.remove('active');
-        });
-
-        document.querySelectorAll('.mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-                mobileOverlay.classList.remove('active');
-            });
-        });
-    }
-
-    /* ==================== SEARCH MOBILE ==================== */
-    const searchToggle = document.querySelector('.search-btn');
-    const mobileSearch = document.getElementById('mobileSearch');
-
-    if (searchToggle && mobileSearch) {
-        searchToggle.addEventListener('click', e => {
-            e.stopPropagation();
-            mobileSearch.classList.toggle('active');
-        });
-
-        document.addEventListener('click', () => {
-            mobileSearch.classList.remove('active');
-        });
-
-        mobileSearch.addEventListener('click', e => e.stopPropagation());
-    }
-
-    /* ==================== SCROLL ANIMATION ==================== */
+    /* ==================== SCROLL ANIMATION (HIỆU ỨNG HIỆN KHI CUỘN) ==================== */
+    // Áp dụng cho phần Intro và ảnh
     const animatedElements = document.querySelectorAll('.intro-images, .intro-content');
 
     if (animatedElements.length) {
@@ -66,7 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
         animatedElements.forEach(el => observer.observe(el));
     }
 
-    /* ==================== COUNTER ANIMATION ==================== */
+    /* ==================== COUNTER ANIMATION (HIỆU ỨNG SỐ NHẢY) ==================== */
+    // Áp dụng cho phần thống kê (300+, 1000+, 10+)
     const counters = document.querySelectorAll('.stat-number');
     let countersAnimated = false;
 
@@ -78,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const target = parseInt(counter.dataset.target, 10);
             if (!target) return;
 
-            const duration = 2000;
+            const duration = 2000; // Thời gian chạy (ms)
             const step = target / (duration / 16);
             let current = 0;
 
@@ -108,43 +62,65 @@ document.addEventListener('DOMContentLoaded', () => {
         counters.forEach(el => counterObserver.observe(el));
     }
 
-    /* ==================== CATEGORY TABS ==================== */
+    /* ==================== CATEGORY TABS (CHUYỂN TAB KHÁM PHÁ) ==================== */
+    // Áp dụng cho phần "Khám phá theo chủ đề"
     const categoryTabs = document.querySelectorAll('.category-tab');
     const categoryContents = document.querySelectorAll('.category-content');
     const categorySelect = document.getElementById('categorySelect');
 
-    if (categoryTabs.length && categoryContents.length && categorySelect) {
+    if (categoryTabs.length && categoryContents.length) {
 
         const switchCategory = id => {
+            // Xử lý nút bấm Desktop
             categoryTabs.forEach(tab =>
                 tab.classList.toggle('active', tab.dataset.category === id)
             );
 
+            // Xử lý nội dung hiển thị
             categoryContents.forEach(content =>
                 content.classList.toggle('active', content.dataset.content === id)
             );
 
-            categorySelect.value = id;
+            // Đồng bộ với Select box (Mobile)
+            if (categorySelect) categorySelect.value = id;
         };
 
+        // Click vào Tab (Desktop)
         categoryTabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 switchCategory(tab.dataset.category);
             });
         });
 
-        categorySelect.addEventListener('change', e => {
-            switchCategory(e.target.value);
-        });
+        // Chọn Option (Mobile)
+        if (categorySelect) {
+            categorySelect.addEventListener('change', e => {
+                switchCategory(e.target.value);
+            });
+        }
     }
 
-    /* ==================== SMOOTH SCROLL ==================== */
+    /* ==================== SMOOTH SCROLL (CUỘN MƯỢT) ==================== */
+    // Xử lý khi click vào các link neo (vd: #explore)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', e => {
-            const target = document.querySelector(anchor.getAttribute('href'));
+            const href = anchor.getAttribute('href');
+            if (href === '#') return; // Bỏ qua nếu chỉ là dấu #
+
+            const target = document.querySelector(href);
             if (!target) return;
+
             e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // Tính toán vị trí trừ đi chiều cao Header (để không bị che khuất)
+            const headerHeight = document.getElementById('main-header')?.offsetHeight || 80;
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
         });
     });
 
