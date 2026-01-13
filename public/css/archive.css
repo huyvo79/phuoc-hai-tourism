@@ -176,12 +176,15 @@
 .page-single .nav-menu a,
 .page-single .search-btn, .page-single .search-box input::placeholder {
     color: var(--text-dark);
-    border: black;
 }
 
 .page-single .search-box input {
     color: black;
 }
+  .page-single .search-box {
+      border: 1px solid black;
+      border-radius: 20px;
+  }
 
 .page-single .mobile-search-trigger {
     color: var(--text-dark);

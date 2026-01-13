@@ -24,10 +24,6 @@ class IndexController extends Controller
    {
       return view('ui-single.single');
    }
-   public function contact()
-   {
-      return view('pages.contact');
-   }
    public function archive()
    {
       return view('ui-archive.archive');
