@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorePostRequest;  
+use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
-use App\Interfaces\PostServiceInterface; 
+use App\Interfaces\PostServiceInterface;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -33,7 +34,7 @@ class PostController extends Controller
     {
         // Lấy dữ liệu đã validate từ Request
         $data = $request->validated();
-        
+
         // Gọi Service để xử lý logic (tách ảnh, lưu db...)
         $post = $this->postService->createPost($data);
 
@@ -58,7 +59,7 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, $id): JsonResponse
     {
         $data = $request->validated();
-        
+
         $post = $this->postService->updatePost($id, $data);
 
         if (!$post) {
@@ -80,5 +81,18 @@ class PostController extends Controller
         }
 
         return response()->json(['message' => 'Xóa bài viết thành công']);
+    }
+
+    public function search(Request $request): JsonResponse
+    {
+        $keyword = $request->query('q');
+
+        if (!$keyword || strlen(trim($keyword)) < 2) {
+            return response()->json([]); // Không tìm nếu từ khóa quá ngắn
+        }
+
+        $posts = $this->postService->searchPosts($keyword);
+
+        return response()->json($posts);
     }
 }

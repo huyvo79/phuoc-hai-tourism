@@ -9,4 +9,5 @@ interface PostServiceInterface
     public function createPost(array $data);
     public function updatePost($id, array $data);
     public function deletePost($id);
+    public function searchPosts($keyword);
 }
