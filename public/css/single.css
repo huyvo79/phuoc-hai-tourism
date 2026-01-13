@@ -42,7 +42,7 @@
   .content p {
       margin-bottom: 16px;
       color: #475569;
-        font-size: 1.3rem;
+      font-size: 1.3rem;
   }
 
   /* ===== SIDEBAR (LỚN HƠN) ===== */
@@ -101,15 +101,17 @@
           font-size: 1.6rem;
       }
 
-      .container .content p{
-            font-size: 1.2rem;
+      .container .content p {
+          font-size: 1.2rem;
       }
-      .sidebar .related-item img{
-        height: 220px;
+
+      .sidebar .related-item img {
+          height: 220px;
       }
-      .sidebar .related-item h4{
-        font-size: 1.5rem;
-        text-align: center;
+
+      .sidebar .related-item h4 {
+          font-size: 1.5rem;
+          text-align: center;
       }
   }
 
@@ -123,6 +125,10 @@
   .page-single .logo,
   .page-single .nav-menu a,
   .page-single .search-btn {
+      color: var(--text-dark);
+  }
+
+  .page-single .mobile-search-trigger {
       color: var(--text-dark);
   }
 
