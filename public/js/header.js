@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
             header.classList.remove('bg-transparent', 'text-white', 'py-4');
             header.classList.add('bg-white/90', 'backdrop-blur-md', 'text-slate-900', 'shadow-md', 'py-2');
         } else {
-            header.classList.add('bg-transparent', 'text-white', 'py-4');
+            header.classList.add('bg-transparent', 'text-black', 'py-4');
             header.classList.remove('bg-white/90', 'backdrop-blur-md', 'text-slate-900', 'shadow-md', 'py-2');
         }
     };
