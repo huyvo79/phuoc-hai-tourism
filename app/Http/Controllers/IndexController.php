@@ -28,25 +28,8 @@ class IndexController extends Controller
    {
       return view('pages.contact');
    }
-   public function news()
+   public function archive()
    {
-     // $posts = Post::orderBy('created_at', 'desc')->paginate(5);
-      return view('pages.news');
-   }
-   public function events()
-   {
-      return view('pages.events');
-   }
-   public function plan()
-   {
-      return view('pages.plan');
-   }
-   public function explore()
-   {
-      return view('pages.explore');
-   }
-   public function post_details()
-   {
-      return view('pages.posts_details');
+      return view('ui-archive.archive');
    }
 }
