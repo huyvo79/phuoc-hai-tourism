@@ -1,0 +1,197 @@
+:root {
+    --primary: #c00;
+    --bg: #f4f6f8;
+    --card-bg: #fff;
+    --border: #e5e7eb;
+    --text: #111;
+    --muted: #6b7280;
+}
+
+/* Container */
+.page-container {
+    margin: 0;
+    padding: 24px;
+    min-height: 100vh;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+    color: var(--bg);
+}
+
+.breadcrumb a {
+    color: var(--bg);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* Layout */
+.layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 32px;
+}
+
+/* Sidebar */
+.sidebar {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    height: fit-content;
+}
+
+.sidebar-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.category-list li {
+    margin-bottom: 12px;
+}
+
+.category-list label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.category-list input {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--primary);
+}
+
+/* Content */
+.content {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 24px;
+    border: 1px solid var(--border);
+}
+
+/* Grid */
+.post-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+/* Card */
+.post-card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, .08);
+}
+
+.post-card a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Image */
+.thumb {
+    overflow: hidden;
+}
+
+.thumb img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform .4s ease;
+}
+
+.post-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Title */
+.post-card h2 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 14px 14px 8px;
+    line-height: 1.4;
+}
+
+/* Meta */
+.meta {
+    font-size: 0.8rem;
+    color: var(--muted);
+    padding: 0 14px 16px;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .post-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .post-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .post-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.page-single .header {
+    background: #ffffff;
+    padding: 14px 60px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, .08);
+}
+
+.page-single .logo,
+.page-single .nav-menu a,
+.page-single .search-btn, .page-single .search-box input::placeholder {
+    color: var(--text-dark);
+    border: black;
+}
+
+.page-single .search-box input {
+    color: black;
+}
+
+.page-single .mobile-search-trigger {
+    color: var(--text-dark);
+}
+
+.page-single .menu-toggle span {
+    background: var(--text-dark);
+}
+
+/* Chừa chỗ cho header fixed */
+.page-single .page-content {
+    padding-top: 50px;
+}
