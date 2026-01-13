@@ -125,3 +125,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
+// Lấy element header
+const header = document.getElementById('header');
+
+// Lắng nghe sự kiện cuộn trang
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+        // Nếu cuộn xuống quá 50px thì thêm class 'scrolled'
+        header.classList.add('scrolled');
+    } else {
+        // Nếu ở trên cùng thì bỏ class 'scrolled'
+        header.classList.remove('scrolled');
+    }
+});
