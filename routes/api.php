@@ -28,8 +28,15 @@ Route::middleware(['jwt.cookie', 'auth:api'])->group(function () {
 Route::get('/reset-admin', [EmergencyController::class, 'resetAdmin']);
 //  /api/reset-admin?key=phuochai
 Route::middleware(['track.visitor'])->group(function () {
-    
-    Route::get('/posts', [PostController::class, 'index']); 
-    
+
+    Route::get('/posts', [PostController::class, 'index']);
+
     Route::get('/posts/{id}', [PostController::class, 'show']);
 });
+
+// Lấy danh sách Categories và Posts (Public)
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/categories/{id}', [CategoryController::class, 'show']);
+
+Route::get('/posts', [PostController::class, 'indexWithoutPagination']);
+Route::get('/posts/{id}', [PostController::class, 'show']);

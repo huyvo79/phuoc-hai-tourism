@@ -21,6 +21,11 @@ class PostService implements PostServiceInterface
         return $this->postRepository->getAll();
     }
 
+    public function getAllPostsWithoutPagination()
+    {
+        return $this->postRepository->getAllWithoutPagination();
+    }
+
     public function getPostById($id)
     {
         return $this->postRepository->find($id);

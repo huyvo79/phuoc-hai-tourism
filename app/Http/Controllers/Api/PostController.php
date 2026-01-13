@@ -23,6 +23,12 @@ class PostController extends Controller
         return response()->json($posts);
     }
 
+    public function indexWithoutPagination(): JsonResponse
+    {
+        $posts = $this->postService->getAllPostsWithoutPagination();
+        return response()->json($posts);
+    }
+
     public function store(StorePostRequest $request): JsonResponse
     {
         // Lấy dữ liệu đã validate từ Request
