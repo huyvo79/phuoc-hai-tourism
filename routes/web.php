@@ -38,6 +38,5 @@ Route::prefix('admin')->group(function () {
     });
 });
 Route::get('/single', [App\Http\Controllers\IndexController::class, 'single'])->name('single'); 
-Route::get('/contact', [App\Http\Controllers\IndexController::class, 'contact'])->name('home.contact');
 Route::get('/archive', [App\Http\Controllers\IndexController::class, 'archive'])->name('archive');
 
