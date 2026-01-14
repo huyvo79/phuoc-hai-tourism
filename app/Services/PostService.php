@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Interfaces\PostServiceInterface;
@@ -6,6 +7,7 @@ use App\Interfaces\PostRepositoryInterface;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 
 class PostService implements PostServiceInterface
 {
@@ -33,58 +35,74 @@ class PostService implements PostServiceInterface
 
     public function createPost(array $data)
     {
-        if (isset($data['title'])) {
-            $data['slug'] = Str::slug($data['title']) . '-' . time();
-        }
+        return DB::transaction(function () use ($data) {
+            if (isset($data['title'])) {
+                $data['slug'] = Str::slug($data['title']) . '-' . time();
+            }
 
-        if (empty($data['category_id'])) {
-            $data['category_id'] = 1;
-        }
+            if (empty($data['category_id'])) {
+                $data['category_id'] = 1;
+            }
 
-        if (isset($data['thumbnail']) && $data['thumbnail'] instanceof UploadedFile) {
-            $file = $data['thumbnail'];
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs('uploads/thumbnails', $filename, 'public');
-            $data['thumbnail'] = '/storage/' . $path;
-        }
+            if (isset($data['thumbnail']) && $data['thumbnail'] instanceof UploadedFile) {
+                $file = $data['thumbnail'];
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('uploads/thumbnails', $filename, 'public');
+                $data['thumbnail'] = '/storage/' . $path;
+            }
 
-        if (isset($data['content'])) {
-            $data['content'] = $this->processContentImages($data['content']);
-        }
+            if (isset($data['content'])) {
+                $data['content'] = $this->processContentImages($data['content']);
+            }
 
-        return $this->postRepository->create($data);
+            $post = $this->postRepository->create($data);
+
+            if (isset($data['related_ids'])) {
+                $post->relatedPosts()->sync($data['related_ids']);
+            }
+
+            return $post;
+        });
     }
 
     public function updatePost($id, array $data)
     {
-        $post = $this->postRepository->find($id);
-        if (!$post) {
-            return null;
-        }
-
-        if (array_key_exists('category_id', $data) && empty($data['category_id'])) {
-            $data['category_id'] = 1;
-        }
-
-        if (isset($data['thumbnail']) && $data['thumbnail'] instanceof UploadedFile) {
-            if ($post->thumbnail) {
-                $oldPath = str_replace('/storage/', '', $post->thumbnail);
-                if (Storage::disk('public')->exists($oldPath)) {
-                    Storage::disk('public')->delete($oldPath);
-                }
+        return DB::transaction(function () use ($id, $data) {
+            $post = $this->postRepository->find($id);
+            if (!$post) {
+                return null;
             }
 
-            $file = $data['thumbnail'];
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs('uploads/thumbnails', $filename, 'public');
-            $data['thumbnail'] = '/storage/' . $path;
-        }
+            if (array_key_exists('category_id', $data) && empty($data['category_id'])) {
+                $data['category_id'] = 1;
+            }
 
-        if (isset($data['content'])) {
-            $data['content'] = $this->processContentImages($data['content']);
-        }
+            if (isset($data['thumbnail']) && $data['thumbnail'] instanceof UploadedFile) {
+                if ($post->thumbnail) {
+                    $oldPath = str_replace('/storage/', '', $post->thumbnail);
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
+                    }
+                }
 
-        return $this->postRepository->update($id, $data);
+                $file = $data['thumbnail'];
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('uploads/thumbnails', $filename, 'public');
+                $data['thumbnail'] = '/storage/' . $path;
+            }
+
+            if (isset($data['content'])) {
+                $data['content'] = $this->processContentImages($data['content']);
+            }
+
+            $updatedPost = $this->postRepository->update($id, $data);
+
+            if (isset($data['related_ids'])) {
+                $updatedPost->relatedPosts()->sync($data['related_ids']);
+            }
+
+            return $updatedPost;
+        });
     }
 
     public function deletePost($id)
@@ -97,7 +115,6 @@ class PostService implements PostServiceInterface
 
         if ($post->thumbnail) {
             $thumbnailPath = str_replace('/storage/', '', $post->thumbnail);
-
             if (Storage::disk('public')->exists($thumbnailPath)) {
                 Storage::disk('public')->delete($thumbnailPath);
             }
