@@ -178,4 +178,9 @@ class PostService implements PostServiceInterface
     {
         return $this->postRepository->search($keyword);
     }
+
+    public function getPostBySlug($slug)
+    {
+        return $this->postRepository->findBySlug($slug);
+    }
 }

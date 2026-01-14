@@ -67,4 +67,12 @@ class PostRepository implements PostRepositoryInterface
             ->limit($limit)
             ->get();
     }
+
+    public function findBySlug(string $slug)
+    {
+        return Post::with(['category', 'relatedPosts'])
+            ->where('slug', $slug)
+            ->first();
+    }
+
 }
