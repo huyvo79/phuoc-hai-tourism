@@ -17,5 +17,12 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        DB::table('users')->insert([
+            'username' => 'admin1',       // Theo thiết kế bảng users 
+            'name' => 'Quản Trị Viên 1',
+            'password' => Hash::make('999999'), // Mật khẩu hash
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }
