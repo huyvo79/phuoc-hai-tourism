@@ -139,7 +139,29 @@ tinymce.init({
     plugins: 'image link lists table code preview fullscreen wordcount',
     toolbar: 'undo redo | blocks | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image | code preview fullscreen',
     branding: false,
-    paste_data_images: true
+    paste_data_images: true,
+
+    file_picker_types: 'image',
+    file_picker_callback: function (cb, value, meta) {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+
+        input.onchange = function () {
+            const file = this.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function () {
+                cb(reader.result, {
+                    title: file.name
+                });
+            };
+
+            reader.readAsDataURL(file);
+        };
+
+        input.click();
+    }
 });
 
 function previewImage(input) {

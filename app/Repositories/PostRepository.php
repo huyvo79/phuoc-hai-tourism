@@ -70,9 +70,18 @@ class PostRepository implements PostRepositoryInterface
 
     public function findBySlug(string $slug)
     {
-        return Post::with(['category', 'relatedPosts'])
+        return Post::with([
+            'category',
+            'relatedPosts' => function ($query) {
+                $query->select('posts.id', 'posts.title', 'posts.slug', 'posts.thumbnail')
+                    ->orderByDesc('posts.priority')
+                    ->orderByDesc('posts.created_at') 
+                    ->limit(10);
+            }
+        ])
             ->where('slug', $slug)
             ->first();
     }
+
 
 }
