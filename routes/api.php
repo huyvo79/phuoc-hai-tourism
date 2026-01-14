@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\EmergencyController;
 use App\Http\Controllers\Api\DashboardController;
 
+Route::get('/posts/search', [PostController::class, 'search']);
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
@@ -40,3 +41,4 @@ Route::get('/categories/{id}', [CategoryController::class, 'show']);
 
 Route::get('/posts', [PostController::class, 'indexWithoutPagination']);
 Route::get('/posts/{id}', [PostController::class, 'show']);
+

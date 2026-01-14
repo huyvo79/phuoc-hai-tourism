@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories;
 
-use App\Interfaces\PostRepositoryInterface; 
+use App\Interfaces\PostRepositoryInterface;
 use App\Models\Post;
 
 class PostRepository implements PostRepositoryInterface
@@ -35,7 +35,7 @@ class PostRepository implements PostRepositoryInterface
     public function update($id, array $attributes)
     {
         $post = Post::find($id);
-        
+
         if ($post) {
             $post->update($attributes);
 
@@ -45,7 +45,7 @@ class PostRepository implements PostRepositoryInterface
 
             return $post;
         }
-        
+
         return null;
     }
 
@@ -57,4 +57,31 @@ class PostRepository implements PostRepositoryInterface
         }
         return false;
     }
+
+    public function search($keyword, $limit = 5)
+    {
+        return Post::where('title', 'LIKE', "%{$keyword}%")
+            ->orWhere('summary', 'LIKE', "%{$keyword}%")
+            ->select('id', 'title', 'slug', 'thumbnail', 'summary')
+            ->orderBy('created_at', 'desc')
+            ->limit($limit)
+            ->get();
+    }
+
+    public function findBySlug(string $slug)
+    {
+        return Post::with([
+            'category',
+            'relatedPosts' => function ($query) {
+                $query->select('posts.id', 'posts.title', 'posts.slug', 'posts.thumbnail')
+                    ->orderByDesc('posts.priority')
+                    ->orderByDesc('posts.created_at') 
+                    ->limit(10);
+            }
+        ])
+            ->where('slug', $slug)
+            ->first();
+    }
+
+
 }

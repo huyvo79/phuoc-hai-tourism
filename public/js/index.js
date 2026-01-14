@@ -224,7 +224,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // 2. Thêm đường dẫn (Thay '/chi-tiet/' bằng route thực tế của bạn, ví dụ: /post/ hoặc /tour/)
             // Ưu tiên dùng slug nếu có, nếu không thì dùng id
             // card.href = `/single/${post.slug || post.id}`;
-            card.href = `/single`;
+            card.href = `/bai-viet/${post.slug}`;
+
 
             card.className = 'category-card';
 

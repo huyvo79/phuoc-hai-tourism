@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Frontend\PostController as FrontendPostController;
 
 Route::get('/', function () {
     return view('ui-index.index');
@@ -37,6 +38,12 @@ Route::prefix('admin')->group(function () {
         Route::delete('categories/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
     });
 });
-Route::get('/single', [App\Http\Controllers\IndexController::class, 'single'])->name('single'); 
-Route::get('/archive', [App\Http\Controllers\IndexController::class, 'archive'])->name('archive');
+Route::get('/archive', [App\Http\Controllers\IndexController::class, 'archive'])->name('archive')->middleware('track.visitor');
+
+Route::middleware('track.visitor')->group(function () {
+
+    Route::get('/bai-viet/{slug}', [FrontendPostController::class, 'show'])
+        ->name('posts.show');
+
+});
 
