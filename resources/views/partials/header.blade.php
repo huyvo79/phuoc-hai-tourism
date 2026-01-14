@@ -1,14 +1,25 @@
 <!-- Header -->
+<link rel="stylesheet" href="{{ asset('css/header.css') }}">
 <header class="header" id="header">
-    <a href="{{ route('home') }}" class="logo">PhuocHai</a>
+    <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="logo-group">
+        <img src="images/doan.png" alt="Logo phụ 1" class="extra-logo1">
+        <img src="images/tnvn.png" alt="Logo phụ 2" class="extra-logo2">
+        
+        <a href="/" class="logo">Phước Hải</a>
+    </div>
 
     <nav class="nav-container">
         <ul class="nav-menu">
-            <li><a href="{{ route('home.explore') }}">Khám phá</a></li>
-            <li><a href="{{ route('home.plan') }}">Kế hoạch</a></li>
-            <li><a href="{{ route('home.events') }}">Sự kiện</a></li>
-            <li><a href="{{ route('home.news') }}">Tin tức</a></li>
-            <li><a href="{{ route('home.contact') }}">Liên hệ</a></li>
+            <li><a href="/#explore">Về phước hải</a></li>
+            <li><a href="/#location-highlights">Điểm đến nổi bật</a></li>
+            <li><a href="/#categories">khám phá</a></li>
+            <li><a href="/#contact">Liên hệ</a></li>
         </ul>
     </nav>
 
@@ -20,14 +31,14 @@
                 <line x1="16.5" y1="16.5" x2="22" y2="22" stroke="currentColor" stroke-width="2" />
             </svg>
         </button>
-
     </div>
 
-    <div class="menu-toggle" id="menuToggle">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
+    <button class="mobile-search-trigger" id="mobileSearchBtn">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="7" />
+            <line x1="16.5" y1="16.5" x2="22" y2="22" />
+        </svg>
+    </button>
 </header>
 <div class="mobile-search" id="mobileSearch">
     <div class="mobile-search-inner">
@@ -44,10 +55,10 @@
 <div class="mobile-overlay" id="mobileOverlay"></div>
 <div class="mobile-menu" id="mobileMenu">
     <ul>
-          <li><a href="{{ route('home.explore') }}">Khám phá</a></li>
-            <li><a href="{{ route('home.plan') }}">Kế hoạch</a></li>
-            <li><a href="{{ route('home.events') }}">Sự kiện</a></li>
-            <li><a href="{{ route('home.news') }}">Tin tức</a></li>
-            <li><a href="{{ route('home.contact') }}">Liên hệ</a></li>
+        <li><a href="/#explore">Về phước hải</a></li>
+        <li><a href="/#location-highlights">Điểm đến nổi bật</a></li>
+        <li><a href="/#categories">khám phá</a></li>
+        <li><a href="/#contact">Liên hệ</a></li>
     </ul>
 </div>
+<script src="{{ asset('js/header.js') }}"></script>

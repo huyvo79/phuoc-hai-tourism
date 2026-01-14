@@ -11,6 +11,11 @@ class PostRepository implements PostRepositoryInterface
         return Post::with('category')->orderBy('created_at', 'desc')->paginate(10);
     }
 
+    public function getAllWithoutPagination()
+    {
+        return Post::with('category')->orderBy('created_at', 'desc')->get();
+    }
+
     public function find($id)
     {
         return Post::with(['category', 'images', 'relatedPosts'])->find($id);

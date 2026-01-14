@@ -42,7 +42,7 @@
   .content p {
       margin-bottom: 16px;
       color: #475569;
-        font-size: 1.3rem;
+      font-size: 1.3rem;
   }
 
   /* ===== SIDEBAR (LỚN HƠN) ===== */
@@ -86,6 +86,11 @@
       font-weight: 500;
   }
 
+  .sidebar h2 {
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+  }
+
 
   .related-item:hover {
       transform: translateX(8px);
@@ -101,15 +106,17 @@
           font-size: 1.6rem;
       }
 
-      .container .content p{
-            font-size: 1.2rem;
+      .container .content p {
+          font-size: 1.2rem;
       }
-      .sidebar .related-item img{
-        height: 220px;
+
+      .sidebar .related-item img {
+          height: 220px;
       }
-      .sidebar .related-item h4{
-        font-size: 1.5rem;
-        text-align: center;
+
+      .sidebar .related-item h4 {
+          font-size: 1.5rem;
+          text-align: center;
       }
   }
 
@@ -122,7 +129,18 @@
 
   .page-single .logo,
   .page-single .nav-menu a,
-  .page-single .search-btn {
+  .page-single .search-btn,
+  .page-single .search-box input::placeholder {
+      color: var(--text-dark);
+
+  }
+
+  .page-single .search-box {
+      border: 1px solid black;
+      border-radius: 20px;
+  }
+
+  .page-single .mobile-search-trigger {
       color: var(--text-dark);
   }
 
