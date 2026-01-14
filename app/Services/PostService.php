@@ -160,8 +160,9 @@ class PostService implements PostServiceInterface
             if (preg_match('/data:image\/(\w+);base64,/', $src, $type)) {
                 $data = substr($src, strpos($src, ',') + 1);
                 $data = base64_decode($data);
-                
-                if ($data === false) continue;
+
+                if ($data === false)
+                    continue;
 
                 $imageName = 'content_' . time() . '_' . Str::random(10) . '.' . strtolower($type[1]);
                 $path = 'uploads/content/' . $imageName;
@@ -171,5 +172,10 @@ class PostService implements PostServiceInterface
             }
         }
         return $dom->saveHTML();
+    }
+
+    public function searchPosts($keyword)
+    {
+        return $this->postRepository->search($keyword);
     }
 }

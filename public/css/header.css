@@ -51,11 +51,13 @@ body {
     width: auto;
     object-fit: contain;
 }
+
 .extra-logo2 {
     height: 35px;
     width: auto;
     object-fit: contain;
 }
+
 /* --- DESKTOP MENU --- */
 .nav-menu {
     display: flex;
@@ -403,4 +405,102 @@ body {
     .search-box {
         display: none !important;
     }
+}
+
+/* ==================== LIVE SEARCH DROPDOWN ==================== */
+.search-box,
+.mobile-search-inner {
+    position: relative;
+    /* Để dropdown căn theo cha */
+}
+
+.search-results {
+    position: absolute;
+    top: 100%;
+    /* Nằm ngay dưới input */
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    margin-top: 10px;
+    overflow: hidden;
+    z-index: 10005;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Hiển thị khi có dữ liệu (JS sẽ add class này) */
+.search-results.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Từng dòng kết quả */
+.search-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid #f1f5f9;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.search-item:last-child {
+    border-bottom: none;
+}
+
+.search-item:hover {
+    background: #f8fafc;
+}
+
+/* Ảnh thumbnail trong search */
+.search-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 12px;
+    background: #eee;
+}
+
+.search-info h4 {
+    font-size: 15px;
+    color: #334155;
+    margin-bottom: 3px;
+    font-weight: 600;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.search-info span {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+/* Trạng thái Loading hoặc Không tìm thấy */
+.search-message {
+    padding: 20px;
+    text-align: center;
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* Scrollbar đẹp cho dropdown */
+.search-results::-webkit-scrollbar {
+    width: 6px;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
 }

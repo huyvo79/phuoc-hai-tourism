@@ -1,5 +1,5 @@
 <?php
-namespace App\Interfaces; 
+namespace App\Interfaces;
 interface PostRepositoryInterface
 {
     public function getAll();
@@ -8,4 +8,5 @@ interface PostRepositoryInterface
     public function create(array $attributes);
     public function update($id, array $attributes);
     public function delete($id);
+    public function search($keyword, $limit = 5);
 }

@@ -37,6 +37,6 @@ Route::prefix('admin')->group(function () {
         Route::delete('categories/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
     });
 });
-Route::get('/single', [App\Http\Controllers\IndexController::class, 'single'])->name('single'); 
-Route::get('/archive', [App\Http\Controllers\IndexController::class, 'archive'])->name('archive');
+Route::get('/single', [App\Http\Controllers\IndexController::class, 'single'])->name('single')->middleware('track.visitor'); 
+Route::get('/archive', [App\Http\Controllers\IndexController::class, 'archive'])->name('archive')->middleware('track.visitor');
 
