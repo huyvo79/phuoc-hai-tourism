@@ -62,7 +62,7 @@ class PostRepository implements PostRepositoryInterface
     {
         return Post::where('title', 'LIKE', "%{$keyword}%")
             ->orWhere('summary', 'LIKE', "%{$keyword}%")
-            ->select('id', 'title', 'slug', 'thumbnail', 'created_at')
+            ->select('id', 'title', 'slug', 'thumbnail', 'summary')
             ->orderBy('created_at', 'desc')
             ->limit($limit)
             ->get();

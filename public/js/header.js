@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const url = `/bai-viet/${post.slug}`;
             // Xử lý ảnh (nếu ko có ảnh thì dùng placeholder)
             const imgUrl = post.thumbnail ? post.thumbnail : '/images/placeholder.jpg';
-            const date = new Date(post.created_at).toLocaleDateString('vi-VN');
+            const summary = post.summary ? post.summary.substring(0, 30) + '...': '';
 
             const item = document.createElement('a');
             item.href = url;
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <img src="${imgUrl}" alt="${post.title}">
                 <div class="search-info">
                     <h4>${post.title}</h4>
-                    <span>${date}</span>
+                    <span>${summary}</span>
                 </div>
             `;
             container.appendChild(item);
