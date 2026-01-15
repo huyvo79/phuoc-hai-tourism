@@ -86,6 +86,15 @@
                         </div>
 
                         <div class="bg-indigo-50 p-5 rounded-xl border border-indigo-100 shadow-sm">
+                            <div class="flex justify-between items-center mb-3 border-b border-indigo-100 pb-2">
+                                <h3 class="text-sm font-semibold text-indigo-600">Tọa độ (Maps)</h3>
+                                <a href="https://www.google.com/maps" target="_blank" class="text-[10px] text-blue-600 hover:underline flex items-center gap-1 font-medium">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                    Lấy tọa độ
+                                </a>
+                            </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-[10px] font-medium text-gray-500 uppercase">Vĩ độ</label>
