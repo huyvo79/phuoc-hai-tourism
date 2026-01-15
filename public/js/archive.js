@@ -139,48 +139,40 @@ async function loadPosts() {
     const grid = document.getElementById('postGrid');
     if (!grid) return;
 
-    try {
-        const res = await fetch('/api/posts', {
-            headers: { Accept: 'application/json' }
-        });
+    const res = await fetch('/api/posts', {
+        headers: { Accept: 'application/json' }
+    });
 
-        const posts = await res.json(); // 👈 API trả mảng trực tiếp
-        console.log('POST API:', posts);
+    const posts = await res.json();
 
-        grid.innerHTML = '';
+    grid.innerHTML = '';
 
-        posts.forEach(post => {
+    posts
+        // ❌ BỎ CHƯA PHÂN LOẠI
+        .filter(post => post.category && post.category.id !== 1)
+        .forEach(post => {
             const article = document.createElement('article');
             article.className = 'post-card';
 
-            // ⚠️ API của bạn CHƯA có category object
+            // ⚠️ GÁN data-category để filter checkbox
             article.dataset.category = post.category.slug;
-
-            const thumb = post.thumbnail
-                ? post.thumbnail
-                : `https://picsum.photos/400/300?random=${post.id}`;
 
             article.innerHTML = `
                 <a href="/posts/${post.slug}">
                     <div class="thumb">
-                        <img src="${thumb}" alt="${post.title}">
+                        <img src="${post.thumbnail}" alt="${post.title}">
                     </div>
                     <h2>${post.title}</h2>
                     <div class="meta">
-                        ${new Date(post.created_at).toLocaleDateString('vi-VN')}
-                        · ${post.summary ?? ''}
+                        ${post.created_at} · ${post.category.name}
                     </div>
                 </a>
             `;
 
             grid.appendChild(article);
         });
-
-    } catch (e) {
-        console.error(e);
-        grid.innerHTML = '<p>Lỗi tải bài viết</p>';
-    }
 }
+
 
 
 
