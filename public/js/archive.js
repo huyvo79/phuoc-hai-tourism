@@ -139,39 +139,52 @@ async function loadPosts() {
     const grid = document.getElementById('postGrid');
     if (!grid) return;
 
-    const res = await fetch('/api/posts', {
-        headers: { Accept: 'application/json' }
-    });
-
-    const posts = await res.json();
-
-    grid.innerHTML = '';
-
-    posts
-        // ❌ BỎ CHƯA PHÂN LOẠI
-        .filter(post => post.category && post.category.id !== 1)
-        .forEach(post => {
-            const article = document.createElement('article');
-            article.className = 'post-card';
-
-            // ⚠️ GÁN data-category để filter checkbox
-            article.dataset.category = post.category.slug;
-
-            article.innerHTML = `
-                <a href="/posts/${post.slug}">
-                    <div class="thumb">
-                        <img src="${post.thumbnail}" alt="${post.title}">
-                    </div>
-                    <h2>${post.title}</h2>
-                    <div class="meta">
-                        ${post.created_at} · ${post.category.name}
-                    </div>
-                </a>
-            `;
-
-            grid.appendChild(article);
+    try {
+        const res = await fetch('/api/posts', {
+            headers: { Accept: 'application/json' }
         });
+
+        if (!res.ok) throw new Error('API error');
+
+        const json = await res.json();
+        const posts = Array.isArray(json.data) ? json.data : json;
+
+        grid.innerHTML = '';
+
+        posts
+            // ❌ BỎ CHƯA PHÂN LOẠI (id = 1)
+            .filter(post => post.category && Number(post.category.id) !== 1)
+            .forEach(post => {
+                const article = document.createElement('article');
+                article.className = 'post-card';
+
+                // ✅ GÁN data-category (slug)
+                article.dataset.category = post.category.slug;
+
+                const image = post.thumbnail || '/images/default.jpg';
+                const date = new Date(post.created_at).toLocaleDateString('vi-VN');
+
+                article.innerHTML = `
+                    <a href="/bai-viet/${post.slug}">
+                        <div class="thumb">
+                            <img src="${image}" alt="${post.title}">
+                        </div>
+                        <h2>${post.title}</h2>
+                        <div class="meta">
+                            ${date} · ${post.category.name}
+                        </div>
+                    </a>
+                `;
+
+                grid.appendChild(article);
+            });
+
+    } catch (e) {
+        console.error(e);
+        grid.innerHTML = '<p>Lỗi tải bài viết</p>';
+    }
 }
+
 
 
 
