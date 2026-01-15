@@ -18,22 +18,20 @@ class CategoryController extends Controller
         $request->validate([
             'page' => 'nullable|integer|min:1',
             'per_page' => 'nullable|integer|in:5,10,15,20',
+            'search' => 'nullable|string',
         ]);
 
+        $filters = [
+            'search' => $request->get('search'),
+        ];
+
         $perPage = $request->get('per_page', 5);
-        $search = $request->get('search');
-
-        $query = Category::query();
-
-        if ($search) {
-            $query->where('name', 'like', "%{$search}%")
-                ->orWhere('id', $search);
-        }
 
         return response()->json(
-            $query->orderBy('id', 'desc')->paginate($perPage)
+            $this->categoryService->getPaginatedCategories($filters, $perPage)
         );
     }
+
 
     public function create()
     {

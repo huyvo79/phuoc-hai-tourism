@@ -13,7 +13,7 @@ class CategoryRepository implements CategoryRepositoryInterface{
 
     public function paginate(array $filters = [], int $perPage = 5): LengthAwarePaginator
     {
-        $query = Category::query();
+        $query = Category::where('id', '!=', 1);
 
          // 🔍 SEARCH: theo ID hoặc Name
         if (!empty($filters['search'])) {
