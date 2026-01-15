@@ -23,7 +23,7 @@
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadCategories();
+    loadAllCategories();
     loadPosts();
 });
 
@@ -50,6 +50,53 @@ async function loadCategories() {
             li.innerHTML = `
                 <label>
                     <input type="checkbox" class="filter-checkbox" value="${cat.slug}">
+                    ${cat.name}
+                </label>
+            `;
+            list.appendChild(li);
+        });
+
+    } catch (e) {
+        console.error(e);
+        list.innerHTML = '<li>Lỗi tải danh mục</li>';
+    }
+}
+
+async function loadAllCategories() {
+    const list = document.getElementById('categoryList');
+    if (!list) return;
+
+    try {
+        let allCategories = [];
+        let page = 1;
+        let lastPage = 1;
+
+        do {
+            const res = await fetch(`/api/categories?page=${page}`, {
+                headers: { Accept: 'application/json' }
+            });
+
+            const json = await res.json();
+
+            allCategories = allCategories.concat(json.data || []);
+            lastPage = json.last_page || 1;
+            page++;
+
+        } while (page <= lastPage);
+
+        // ❌ Ẩn "Chưa phân loại"
+        allCategories = allCategories.filter(cat => cat.id !== 1);
+
+        // Render
+        list.innerHTML = '';
+
+        allCategories.forEach(cat => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <label>
+                    <input type="checkbox"
+                           class="filter-checkbox"
+                           value="${cat.slug}">
                     ${cat.name}
                 </label>
             `;
