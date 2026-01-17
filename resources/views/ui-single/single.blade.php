@@ -31,11 +31,12 @@
                 @endif
 
                 {{-- Google Map (nếu có iframe lưu trong DB) --}}
-                @if(!empty($post->map_iframe))
-                    <div class="post-map">
-                        {!! $post->map_iframe !!}
-                    </div>
+                @if(!empty($post->latitude) && !empty($post->longitude))
+                    <iframe width="100%" height="400" style="border:0" loading="lazy" allowfullscreen
+                        src="https://www.google.com/maps?q={{ $post->latitude }},{{ $post->longitude }}&output=embed">
+                    </iframe>
                 @endif
+
 
             </div>
 
