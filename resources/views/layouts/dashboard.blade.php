@@ -60,7 +60,7 @@
                 {{ request()->routeIs('post-images.index') ? 'active bg-slate-700/50 text-white shadow-lg shadow-purple-500/10' : 'text-gray-400 hover:text-white' }}">
                     
                     <i class="fas fa-images w-5 {{ request()->routeIs('post-images.index') ? 'text-purple-400' : '' }}"></i>
-                    <span>Hình ảnh Bài viết</span>
+                    <span>Bài viết Nổi Bật</span>
                 </a>
 
                 <div class="border-t border-white/10 my-4"></div>

@@ -9,7 +9,7 @@
             <div class="text-center mb-8">
                 <h1
                     class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                    Danh sách Hình Ảnh Của Bài viết
+                    Danh sách Bài viết Nổi Bật
                 </h1>
                 <p class="text-gray-300 mt-2 text-sm">Quản lý hình ảnh của bài viết </p>
             </div>
@@ -23,7 +23,7 @@
                                 clip-rule="evenodd"></path>
                         </svg>
                     </div>
-                    <input type="text" id="searchInput"
+                    <input type="text" id="searchInput" autofocus
                         class="block w-full p-2.5 pl-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-white focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
                         placeholder="Tìm theo tên bài viết..." value="{{ request('search') }}">
                 </div>
@@ -58,7 +58,7 @@
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">HÌNH ẢNH
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-right">
                                 HÀNH ĐỘNG</th>
                         </tr>
                     </thead>
@@ -70,16 +70,8 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <img src="{{ asset('storage/' . $postImage->image) }}" alt="Hình ảnh" class="w-16 h-16 object-cover rounded-lg shadow-sm">
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <div class="flex items-center gap-2">
-                                        <a href="{{ route('post-images.show', $postImage) }}"
-                                            class="text-indigo-600 hover:text-indigo-900 p-1 rounded-md hover:bg-indigo-50 transition-colors"
-                                            title="Xem chi tiết">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                            </svg>
-                                        </a>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-right">
+                                    <div class="flex items-center justify-end gap-2">
                                         <a href="{{ route('post-images.edit', $postImage) }}"
                                             class="text-blue-600 hover:text-blue-900 p-1 rounded-md hover:bg-blue-50 transition-colors"
                                             title="Chỉnh sửa">
@@ -107,10 +99,10 @@
                     <span class="hidden sm:inline">Hiển thị</span>
                     <select onchange="changeLimit(this.value)"
                         class="block w-14 rounded-lg border-gray-300 py-1.5 text-sm text-indigo-600 font-medium shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white border cursor-pointer">
-                        <option value="5">5</option>
-                        <option value="10" selected>10</option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
+                        <option value="5" {{ request('limit') == 5 ? 'selected' : '' }}>5</option>
+                        <option value="10" {{ request('limit') == 10 || !request('limit') ? 'selected' : '' }}>10</option>
+                        <option value="15" {{ request('limit') == 15 ? 'selected' : '' }}>15</option>
+                        <option value="20" {{ request('limit') == 20 ? 'selected' : '' }}>20</option>
                     </select>
                     <span class="hidden sm:inline">
                         dòng trên tổng số <span class="font-medium text-indigo-600" id="pageTotal">{{ $postImages->total() }}</span> dòng
@@ -203,6 +195,15 @@
             window.searchTimeout = setTimeout(() => {
                 window.location.href = url.toString();
             }, 500);
+        });
+
+        // Focus at end of text if value exists
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput.value) {
+                searchInput.focus();
+                searchInput.setSelectionRange(searchInput.value.length, searchInput.value.length);
+            }
         });
     </script>
 @endsection

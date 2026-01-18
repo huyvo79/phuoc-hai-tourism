@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'TechStore - Cửa hàng công nghệ hàng đầu Việt Nam')</title>
+    <title>@yield('title', 'Du Lịch Phước Hải')</title>
     <meta name="description"
-        content="@yield('description', 'TechStore - Chuyên bán điện thoại, laptop, tai nghe chính hãng với giá tốt nhất. Bảo hành uy tín, giao hàng nhanh toàn quốc.')">
+        content="@yield('description', 'Chào Mừng Đến Với Phước Hải - Viên Ngọc Thô Của Bà Rịa - Vũng Tàu. Khám Phá Những Điểm Đến Nổi Bật, Văn Hóa Đặc Sắc Và Trải Nghiệm Du Lịch Độc Đáo Tại Làng Chài Truyền Thống Này.')">
 
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
@@ -18,13 +18,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-    <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
-    <!-- <link rel="shortcut icon" href="/favicon.ico" /> -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <!-- <link rel="manifest" href="/site.webmanifest" /> -->
 
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 </head>
 
 <body class="@yield('body_class')">
