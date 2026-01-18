@@ -15,7 +15,6 @@
 
     <nav class="nav-container">
         <ul class="nav-menu">
-            <li><a href="/#explore">Về phước hải</a></li>
             <li><a href="/#location-highlights">Điểm đến nổi bật</a></li>
             <li><a href="/#categories">khám phá</a></li>
             <li><a href="/#contact">Liên hệ</a></li>

@@ -68,7 +68,7 @@
     <section class="slider-section" id="location-highlights">
         <div class="slider-header">
             <h2>Những điểm đến nổi bật</h2>
-            <p>Khám phá những địa danh được yêu thích nhất Việt Nam</p>
+            <p>Khám phá những địa danh được yêu thích nhất Phước Hải</p>
         </div>
         <div class="slider-container">
             <div class="slider-track">
