@@ -35,7 +35,18 @@
 
         <div class="mb-4">
             <label for="image" class="block text-gray-700 text-sm font-bold mb-2">New Image (leave blank to keep current):</label>
-            <input type="file" name="image" id="image" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50">
+                <div class="space-y-2 text-center">
+                    <img id="previewImg" class="mx-auto max-h-48 hidden rounded-lg mb-3 shadow-md">
+                    <div class="flex text-sm text-gray-600 justify-center">
+                        <label for="image" class="relative cursor-pointer bg-white rounded-md font-bold text-indigo-600 hover:text-indigo-500">
+                            <span>Chọn hình ảnh mới</span>
+                            <input type="file" name="image" id="image" class="sr-only" accept="image/*" onchange="previewImage(this)">
+                        </label>
+                    </div>
+                    <p class="text-xs text-gray-500">PNG, JPG, GIF tối đa 2MB (để trống để giữ ảnh cũ)</p>
+                </div>
+            </div>
         </div>
 
         <div class="flex items-center justify-between">
@@ -48,4 +59,18 @@
         </div>
     </form>
 </div>
+
+<script>
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => {
+            const img = document.getElementById('previewImg');
+            img.src = e.target.result;
+            img.classList.remove('hidden');
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
 @endsection
