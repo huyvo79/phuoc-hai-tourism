@@ -183,7 +183,7 @@ body {
     top: 70px;
     left: -100%;
     /* Ẩn sang trái */
-    width: 50%;
+    width: 70%;
     max-width: 400px;
     height: 100vh;
     background: var(--white);
