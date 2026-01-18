@@ -19,6 +19,7 @@
             <li><a href="/#location-highlights">Điểm đến nổi bật</a></li>
             <li><a href="/#categories">khám phá</a></li>
             <li><a href="/#contact">Liên hệ</a></li>
+            <li><a href="{{ asset('archive') }}">Danh Mục</a></li>
         </ul>
     </nav>
 
@@ -60,6 +61,7 @@
         <li><a href="/#location-highlights">Điểm đến nổi bật</a></li>
         <li><a href="/#categories">khám phá</a></li>
         <li><a href="/#contact">Liên hệ</a></li>
+        <li><a href="{{ asset('archive') }}">Danh Mục</a></li>
     </ul>
 </div>
 <script src="{{ asset('js/header.js') }}"></script>
