@@ -195,76 +195,82 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; }
     .footer-container { grid-template-columns: 1fr 1fr; }
 }
 
+/* ==================== MOBILE OPTIMIZED (<=768px) ==================== */
 @media (max-width: 768px) {
 
-    /* ===== SECTION PADDING ===== */
+    /* ===== GLOBAL SECTION PADDING ===== */
+    .hero,
     .intro-section,
     .categories-section,
-    .slider-section {
-        padding: 60px 20px;
+    .slider-section,
+    .footer {
+        padding: 40px 16px;
     }
 
     /* ===== HERO ===== */
     .hero {
-        min-height: 100vh;
+        min-height: 85vh;
         height: auto;
     }
 
     .hero-content h1 {
-        font-size: 36px;
+        font-size: 32px;
         line-height: 1.2;
+        margin-bottom: 14px;
     }
 
     .hero-content p {
-        font-size: 16px;
-        margin-bottom: 30px;
+        font-size: 15px;
+        margin-bottom: 20px;
     }
 
     .hero-btn {
-        padding: 14px 32px;
-        font-size: 15px;
+        padding: 12px 28px;
+        font-size: 14px;
     }
 
     .scroll-indicator {
-        bottom: 20px;
+        bottom: 16px;
     }
 
     /* ===== INTRO ===== */
     .intro-container {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 28px;
     }
 
-    .intro-images {
-        width: 100%;
-    }
-
+    .intro-images,
     .intro-img-main {
         width: 100%;
     }
 
     .intro-img-secondary {
         width: 45%;
-        bottom: -20px;
-        right: -10px;
+        bottom: -16px;
+        right: -8px;
     }
 
     .intro-content h2 {
-        font-size: 30px;
+        font-size: 26px;
+        margin-bottom: 12px;
+    }
+
+    .intro-content p {
+        margin-bottom: 16px;
     }
 
     /* ===== STATS ===== */
     .stats-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 20px;
+        gap: 16px;
     }
 
     .stat-item {
-        padding: 20px 12px;
+        padding: 16px 10px;
     }
 
     .stat-number {
-        font-size: 32px;
+        font-size: 28px;
     }
 
     /* ===== SLIDER ===== */
@@ -273,49 +279,49 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; }
     }
 
     .slide-item {
-        width: 240px;
-        height: 260px;
-        border-radius: 16px;
+        width: 220px;
+        height: 240px;
+        border-radius: 14px;
     }
 
     .slide-overlay {
-        padding: 20px;
-        font-size: 14px;
+        padding: 16px;
+        font-size: 13px;
     }
 
-    /* Fix animation tràn */
     @keyframes scroll {
         0% { transform: translateX(0); }
-        100% { transform: translateX(calc(-240px * 4 - 80px)); }
+        100% { transform: translateX(calc(-220px * 4 - 64px)); }
     }
 
     /* ===== CATEGORIES ===== */
     .categories-header h1 {
-        font-size: 32px;
+        font-size: 28px;
+        margin-bottom: 16px;
     }
 
     .category-select {
-        font-size: 15px;
-        padding: 14px 16px;
+        font-size: 14px;
+        padding: 12px 14px;
     }
 
     .category-grid {
         grid-template-columns: 1fr;
-        gap: 24px;
+        gap: 20px;
     }
 
     .category-card-img {
-        height: 200px;
+        height: 180px;
     }
 
     /* ===== FOOTER ===== */
     .footer {
-        padding: 60px 20px 30px;
+        padding: 40px 16px 24px;
     }
 
     .footer-container {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 28px;
         text-align: center;
     }
 
@@ -323,3 +329,4 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; }
         justify-content: center;
     }
 }
+
