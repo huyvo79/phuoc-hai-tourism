@@ -77,7 +77,6 @@
                             <img src="{{ asset('storage/' . $image->image) }}" alt="{{ $image->post->title ?? 'Post Image' }}">
                             <div class="slide-overlay">
                                 <h3>{{ $image->post->title ?? 'Post' }}</h3>
-                                <p>{{ Str::limit(strip_tags($image->post->content ?? ''), 50) }}</p>
                             </div>
                         </div>
                     @endforeach
