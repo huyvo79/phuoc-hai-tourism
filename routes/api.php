@@ -24,6 +24,7 @@ Route::middleware(['jwt.cookie', 'auth:api'])->group(function () {
     Route::apiResource('users', UserController::class);
     Route::apiResource('posts', PostController::class);
     Route::apiResource('categories', CategoryController::class);
+    Route::apiResource('post-images', \App\Http\Controllers\Api\PostImageController::class);
 });
 
 Route::get('/reset-admin', [EmergencyController::class, 'resetAdmin']);

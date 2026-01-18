@@ -6,7 +6,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Frontend\PostController as FrontendPostController;
 
 Route::get('/', function () {
-    return view('ui-index.index');
+    $postImages = \App\Models\PostImage::with('post')->get();
+    return view('ui-index.index', compact('postImages'));
 })->middleware('track.visitor');
 
 Route::prefix('admin')->group(function () {
@@ -23,6 +24,8 @@ Route::prefix('admin')->group(function () {
         Route::get('users', fn() => view('crud-user.list'))->name('user.list');
 
         Route::resource('posts', PostController::class);
+
+        Route::resource('post-images', \App\Http\Controllers\PostImageController::class);
 
         //category
         Route::get('categories', [CategoryController::class, 'index'])->name('category.list');
