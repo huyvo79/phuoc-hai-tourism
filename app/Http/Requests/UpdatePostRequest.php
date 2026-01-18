@@ -14,18 +14,14 @@ class UpdatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'sometimes|required|string|max:255',
-            'category_id' => 'nullable|exists:categories,id',
-            'summary' => 'nullable|string',
-            'content' => 'sometimes|required|string',
-            'thumbnail' => 'nullable|image|max:2048', 
-            'priority' => 'integer|min:0',
-
-            // Validate Tọa độ (cho phép sửa đổi)
+            'title' => 'required|string|max:255',
+            'summary' => 'nullable|string|max:500',
+            'content' => 'required|string',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'priority' => 'nullable|integer|min:0',
+            'category_id' => 'required|exists:categories,id',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
-
-            // Validate Bài viết liên quan (cho phép sửa đổi)
             'related_ids' => 'nullable|array',
             'related_ids.*' => 'exists:posts,id',
         ];
@@ -35,29 +31,30 @@ class UpdatePostRequest extends FormRequest
     {
         return [
             'title.required' => 'Tiêu đề bài viết không được để trống.',
-            'title.max' => 'Tiêu đề quá dài, vui lòng nhập dưới 255 ký tự.',
-            'title.string' => 'Tiêu đề phải là chuỗi ký tự.',
-
-            'category_id.exists' => 'Danh mục đã chọn không tồn tại trong hệ thống.',
-
-            'content.required' => 'Nội dung chi tiết không được để trống.',
-            'content.string' => 'Nội dung phải là dạng văn bản.',
-
-            'thumbnail.image' => 'File tải lên bắt buộc phải là hình ảnh (jpg, jpeg, png...).',
-            'thumbnail.max' => 'Dung lượng ảnh quá lớn. Vui lòng chọn ảnh dưới 2MB.',
-
-            'priority.integer' => 'Độ ưu tiên phải là một số nguyên.',
-            'priority.min' => 'Độ ưu tiên không được nhỏ hơn 0.',
-
-            // Thông báo lỗi cho Tọa độ
-            'latitude.numeric' => 'Vĩ độ phải là một số.',
-            'latitude.between' => 'Vĩ độ phải nằm trong khoảng từ -90 đến 90.',
-            'longitude.numeric' => 'Kinh độ phải là một số.',
-            'longitude.between' => 'Kinh độ phải nằm trong khoảng từ -180 đến 180.',
-
-            // Thông báo lỗi cho Bài liên quan
-            'related_ids.array' => 'Dữ liệu bài viết liên quan không hợp lệ.',
-            'related_ids.*.exists' => 'Một trong các bài viết liên quan đã chọn không tồn tại.',
+            'title.string' => 'Tiêu đề bài viết phải là dạng chuỗi.',
+            'title.max' => 'Tiêu đề bài viết không được vượt quá 255 ký tự.',
+            
+            'summary.max' => 'Tóm tắt bài viết không được vượt quá 500 ký tự.',
+            
+            'content.required' => 'Nội dung bài viết không được để trống.',
+            
+            'category_id.required' => 'Vui lòng chọn danh mục.',
+            'category_id.exists' => 'Danh mục đã chọn không tồn tại.',
+            
+            'thumbnail.image' => 'Tệp tải lên phải là hình ảnh.',
+            'thumbnail.mimes' => 'Hình ảnh phải có định dạng: jpeg, png, jpg, gif.',
+            'thumbnail.max' => 'Dung lượng ảnh bìa không được lớn hơn 2MB.',
+            
+            'priority.integer' => 'Độ ưu tiên phải là số nguyên.',
+            'priority.min' => 'Độ ưu tiên phải lớn hơn hoặc bằng 0.',
+            
+            'latitude.numeric' => 'Vĩ độ phải là giá trị số.',
+            'latitude.between' => 'Vĩ độ phải nằm trong khoảng -90 đến 90.',
+            
+            'longitude.numeric' => 'Kinh độ phải là giá trị số.',
+            'longitude.between' => 'Kinh độ phải nằm trong khoảng -180 đến 180.',
+            
+            'related_ids.*.exists' => 'Bài viết liên quan đã chọn không hợp lệ.'
         ];
     }
 }

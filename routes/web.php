@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Frontend\PostController as FrontendPostController;
 
 Route::get('/', function () {
-    return view('ui-index.index');
+    $postImages = \App\Models\PostImage::with('post')->get();
+    return view('ui-index.index', compact('postImages'));
 })->middleware('track.visitor');
 
 Route::prefix('admin')->group(function () {
@@ -23,6 +25,8 @@ Route::prefix('admin')->group(function () {
 
         Route::resource('posts', PostController::class);
 
+        Route::resource('post-images', \App\Http\Controllers\PostImageController::class);
+
         //category
         Route::get('categories', [CategoryController::class, 'index'])->name('category.list');
 
@@ -37,6 +41,12 @@ Route::prefix('admin')->group(function () {
         Route::delete('categories/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
     });
 });
-Route::get('/single', [App\Http\Controllers\IndexController::class, 'single'])->name('single')->middleware('track.visitor'); 
 Route::get('/archive', [App\Http\Controllers\IndexController::class, 'archive'])->name('archive')->middleware('track.visitor');
+
+Route::middleware('track.visitor')->group(function () {
+
+    Route::get('/bai-viet/{slug}', [FrontendPostController::class, 'show'])
+        ->name('posts.show');
+
+});
 

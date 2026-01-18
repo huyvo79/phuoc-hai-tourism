@@ -186,7 +186,7 @@
     <div id="editModal" class="fixed inset-0 z-50 hidden">
         <div class="flex items-center justify-center min-h-screen bg-black bg-opacity-50">
             <div class="bg-white rounded-lg w-full max-w-md p-6">
-                <h3 class="text-lg font-semibold mb-4">Sửa danh mục</h3>
+                <h3 class="text-lg font-semibold mb-4 text-gray-700">Sửa danh mục</h3>
 
                 <input type="hidden" id="editId">
 
@@ -214,7 +214,7 @@
     <div id="createModal" class="fixed inset-0 z-50 hidden">
         <div class="flex items-center justify-center min-h-screen bg-black bg-opacity-50">
             <div class="bg-white rounded-lg w-full max-w-md p-6">
-                <h3 class="text-lg font-semibold mb-4">Thêm danh mục</h3>
+                <h3 class="text-lg font-semibold mb-4 text-gray-700">Thêm danh mục</h3>
 
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-1">

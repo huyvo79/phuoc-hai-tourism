@@ -4,6 +4,8 @@
 
 @section('content')
 
+    @php use Illuminate\Support\Str; @endphp
+
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
@@ -70,36 +72,14 @@
         </div>
         <div class="slider-container">
             <div class="slider-track">
-                @for($i = 0; $i < 2; $i++)
-                    <div class="slide-item">
-                        <img src="{{ asset('images/banhcanhcopho.png') }}" alt="Bánh Canh">
-                        <div class="slide-overlay">
-                            <h3>Bánh Canh Cô Phờ</h3>
-                            <p>Hải sản tươi, rất nhiều topping, vị đậm đà.</p>
+                    @foreach($postImages->reverse() as $image)
+                        <div class="slide-item">
+                            <img src="{{ asset('storage/' . $image->image) }}" alt="{{ $image->post->title ?? 'Post Image' }}">
+                            <div class="slide-overlay">
+                                <h3>{{ $image->post->title ?? 'Post' }}</h3>
+                            </div>
                         </div>
-                    </div>
-                    <div class="slide-item">
-                        <img src="{{ asset('images/bokelocan.png') }}" alt="Bờ Kè">
-                        <div class="slide-overlay">
-                            <h3>Bờ Kè Lộc An</h3>
-                            <p>Điểm check-in hóng gió biển tuyệt đẹp.</p>
-                        </div>
-                    </div>
-                    <div class="slide-item">
-                        <img src="{{ asset('images/chophuochai.png') }}" alt="Chợ">
-                        <div class="slide-overlay">
-                            <h3>Chợ Phước Hải</h3>
-                            <p>Thiên đường hải sản tươi sống giá rẻ.</p>
-                        </div>
-                    </div>
-                    <div class="slide-item">
-                        <img src="{{ asset('images/co-bong-homestay-phuoc-hai-1.jpg') }}" alt="Homestay">
-                        <div class="slide-overlay">
-                            <h3>Cô Bông Homestay</h3>
-                            <p>Homestay view biển, có hồ bơi cực chill.</p>
-                        </div>
-                    </div>
-                @endfor
+                    @endforeach
             </div>
         </div>
     </section>
