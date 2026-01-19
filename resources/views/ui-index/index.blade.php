@@ -4,8 +4,6 @@
 
 @section('content')
 
-    @php use Illuminate\Support\Str; @endphp
-
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 

@@ -34,7 +34,7 @@ async function loadCategories() {
     if (!list) return;
 
     try {
-        const res = await fetch('/api/categories', {
+        const res = await fetch('/api/category', {
             headers: { Accept: 'application/json' }
         });
 

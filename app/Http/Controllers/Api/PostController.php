@@ -24,12 +24,6 @@ class PostController extends Controller
         return response()->json($posts);
     }
 
-    public function indexWithoutPagination(): JsonResponse
-    {
-        $posts = $this->postService->getAllPostsWithoutPagination();
-        return response()->json($posts);
-    }
-
     public function store(StorePostRequest $request): JsonResponse
     {
         // Lấy dữ liệu đã validate từ Request
@@ -81,18 +75,5 @@ class PostController extends Controller
         }
 
         return response()->json(['message' => 'Xóa bài viết thành công']);
-    }
-
-    public function search(Request $request): JsonResponse
-    {
-        $keyword = $request->query('q');
-
-        if (!$keyword || strlen(trim($keyword)) < 2) {
-            return response()->json([]); // Không tìm nếu từ khóa quá ngắn
-        }
-
-        $posts = $this->postService->searchPosts($keyword);
-
-        return response()->json($posts);
     }
 }
