@@ -22,13 +22,19 @@ class PostImageController extends Controller
         }
 
         $postImages = $query->paginate($limit)->appends(request()->query());
+
+        if (request()->ajax()) {
+            return response()->json($postImages);
+        }
+
         return view('post_images.index', compact('postImages'));
     }
 
     public function create()
     {
         $posts = \App\Models\Post::all();
-        return view('post_images.create', compact('posts'));
+        $postImages = \App\Models\PostImage::all()->keyBy('post_id');
+        return view('post_images.create', compact('posts', 'postImages'));
     }
 
     public function store(Request $request)
@@ -45,14 +51,27 @@ class PostImageController extends Controller
             'image.max' => 'Hình ảnh không được vượt quá 2MB.',
         ]);
 
-        $imagePath = $request->file('image')->store('post_images', 'public');
+        $existingImage = PostImage::where('post_id', $request->post_id)->first();
 
-        PostImage::create([
-            'post_id' => $request->post_id,
-            'image' => $imagePath,
-        ]);
+        if ($existingImage) {
+            // Update existing image
+            Storage::disk('public')->delete($existingImage->image);
+            $imagePath = $request->file('image')->store('post_images', 'public');
+            $existingImage->update([
+                'image' => $imagePath,
+            ]);
+            $message = 'Hình ảnh bài viết đã được cập nhật thành công.';
+        } else {
+            // Create new image
+            $imagePath = $request->file('image')->store('post_images', 'public');
+            PostImage::create([
+                'post_id' => $request->post_id,
+                'image' => $imagePath,
+            ]);
+            $message = 'Hình ảnh bài viết đã được tạo thành công.';
+        }
 
-        return redirect()->route('post-images.index')->with('success', 'Hình ảnh bài viết đã được tạo thành công.');
+        return redirect()->route('post-images.index')->with('success', $message);
     }
 
     public function show(PostImage $postImage)
