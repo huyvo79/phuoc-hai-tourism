@@ -338,7 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (w <= 768) {
                 secondsPerSlide = 1.3;   // 📱 tablet / mobile lớn
             } else {
-                secondsPerSlide = 1;     // 🖥 desktop (nhanh hơn trước)
+                secondsPerSlide = 2.2;     // 🖥 desktop (nhanh hơn trước)
             }
 
             track.style.animationDuration = `${originalCount * secondsPerSlide}s`;
