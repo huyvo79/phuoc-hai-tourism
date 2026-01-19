@@ -19,12 +19,18 @@
 
         <div class="mb-4">
             <label for="post_id" class="block text-gray-700 text-sm font-bold mb-2">Bài viết:</label>
-            <select name="post_id" id="post_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            <select name="post_id" id="post_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required onchange="checkExistingImage()">
                 <option value="">Chọn bài viết</option>
                 @foreach($posts as $post)
                     <option value="{{ $post->id }}">{{ $post->title }}</option>
                 @endforeach
             </select>
+        </div>
+
+        <div id="existingImageContainer" class="mb-4 hidden">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Ảnh hiện tại:</label>
+            <img id="existingImg" class="max-h-48 rounded-lg shadow-md">
+            <p class="text-sm text-gray-600 mt-2">Ảnh này sẽ được thay thế bằng ảnh mới.</p>
         </div>
 
         <div class="mb-4">
@@ -44,7 +50,7 @@
         </div>
 
         <div class="flex items-center justify-between">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            <button type="submit" id="submitBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Tạo Hình ảnh Bài viết
             </button>
             <a href="{{ route('post-images.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
@@ -55,6 +61,24 @@
 </div>
 
 <script>
+const postImages = @json($postImages);
+
+function checkExistingImage() {
+    const postId = document.getElementById('post_id').value;
+    const container = document.getElementById('existingImageContainer');
+    const img = document.getElementById('existingImg');
+    const btn = document.getElementById('submitBtn');
+
+    if (postImages[postId]) {
+        img.src = '{{ asset("storage/") }}/' + postImages[postId].image;
+        container.classList.remove('hidden');
+        btn.textContent = 'Cập nhật Hình ảnh Bài viết';
+    } else {
+        container.classList.add('hidden');
+        btn.textContent = 'Tạo Hình ảnh Bài viết';
+    }
+}
+
 function previewImage(input) {
     if (input.files && input.files[0]) {
         const reader = new FileReader();

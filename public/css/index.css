@@ -99,7 +99,7 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; }
 .slider-header h2 { font-size: clamp(28px, 4vw, 42px); margin-bottom: 16px; }
 
 .slider-container { width: 100%; overflow: hidden; padding: 20px 0; }
-.slider-track { display: flex; gap: 30px; animation: scroll 14s linear infinite; width: max-content; }
+.slider-track { display: flex; gap: 30px; animation: scroll 50s linear infinite;; width: max-content; }
 .slider-track:hover { animation-play-state: paused; }
 
 .slide-item {
@@ -123,7 +123,7 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; }
 
 @keyframes scroll {
     0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-300px * 6 - 120px)); } /* Điều chỉnh tùy số lượng ảnh */
+    100% { transform: translateX(calc(-50%)); } /* Điều chỉnh tùy số lượng ảnh */
 }
 
 /* ==================== CATEGORIES SECTION ==================== */
@@ -209,7 +209,7 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; }
 
     /* ===== HERO ===== */
     .hero {
-        min-height: 85vh;
+        min-height: 100vh;
         height: auto;
     }
 
@@ -282,6 +282,7 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; }
         width: 220px;
         height: 240px;
         border-radius: 14px;
+        margin-bottom: 20px;
     }
 
     .slide-overlay {
@@ -289,10 +290,6 @@ h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; }
         font-size: 13px;
     }
 
-    @keyframes scroll {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(calc(-220px * 4 - 64px)); }
-    }
 
     /* ===== CATEGORIES ===== */
     .categories-header h1 {

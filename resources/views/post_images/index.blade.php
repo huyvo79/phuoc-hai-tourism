@@ -11,7 +11,7 @@
                     class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
                     Danh sách Bài viết Nổi Bật
                 </h1>
-                <p class="text-gray-300 mt-2 text-sm">Quản lý hình ảnh của bài viết </p>
+                <p class="text-gray-300 mt-2 text-sm">Quản lý nội dung bài viết nổi bật</p>
             </div>
 
             <div class="flex flex-col md:flex-row justify-between items-center bg-indigo-200 gap-4 p-2 rounded-xl">
@@ -23,9 +23,9 @@
                                 clip-rule="evenodd"></path>
                         </svg>
                     </div>
-                    <input type="text" id="searchInput" autofocus
+                    <input type="text" id="searchInput" value="{{ request('search') }}"
                         class="block w-full p-2.5 pl-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-white focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
-                        placeholder="Tìm theo tên bài viết..." value="{{ request('search') }}">
+                        placeholder="Tìm tiêu đề bài viết...">
                 </div>
 
                 <div class="w-full md:w-auto">
@@ -35,7 +35,7 @@
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
-                        Thêm ảnh mới cho bài viết
+                        Tạo ảnh bài viết nổi bật
                     </a>
                 </div>
             </div>
@@ -54,42 +54,19 @@
                         <tr>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TÊN BÀI VIẾT
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TÊN
+                                BÀI VIẾT
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">HÌNH ẢNH
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">HÌNH
+                                ẢNH
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-right">
+                            <th
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-right">
                                 HÀNH ĐỘNG</th>
                         </tr>
                     </thead>
-                    <tbody id="postImageTableBody" class="bg-white divide-y divide-gray-200">
-                        @foreach($postImages as $postImage)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $postImage->id }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $postImage->post->title ?? 'N/A' }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <img src="{{ asset('storage/' . $postImage->image) }}" alt="Hình ảnh" class="w-16 h-16 object-cover rounded-lg shadow-sm">
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-right">
-                                    <div class="flex items-center justify-end gap-2">
-                                        <a href="{{ route('post-images.edit', $postImage) }}"
-                                            class="text-blue-600 hover:text-blue-900 p-1 rounded-md hover:bg-blue-50 transition-colors"
-                                            title="Chỉnh sửa">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                            </svg>
-                                        </a>
-                                        <button onclick="openDeleteModal({{ $postImage->id }}, '{{ $postImage->post->title ?? 'hình ảnh' }}')"
-                                            class="text-red-600 hover:text-red-900 p-1 rounded-md hover:bg-red-50 transition-colors"
-                                            title="Xóa">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
+                    <tbody id="postImageTableBody" class="bg-white divide-y divide-gray-200 text-black">
+                        <!-- Data will be loaded via AJAX -->
                     </tbody>
                 </table>
             </div>
@@ -105,12 +82,14 @@
                         <option value="20" {{ request('limit') == 20 ? 'selected' : '' }}>20</option>
                     </select>
                     <span class="hidden sm:inline">
-                        dòng trên tổng số <span class="font-medium text-indigo-600" id="pageTotal">{{ $postImages->total() }}</span> dòng
+                        dòng trên tổng số <span class="font-medium text-indigo-600"
+                            id="pageTotal">{{ $postImages->total() }}</span> dòng
                     </span>
                 </div>
 
                 <div class="flex items-center gap-1">
-                    {{ $postImages->appends(request()->query())->links() }}
+                    <nav class="isolate inline-flex gap-1" aria-label="Pagination" id="paginationControls">
+                    </nav>
                 </div>
             </div>
         </div>
@@ -135,9 +114,11 @@
                             </svg>
                         </div>
                         <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                            <h3 class="text-lg leading-6 font-bold text-gray-900" id="deleteModalTitle">Xác nhận xóa hình ảnh</h3>
+                            <h3 class="text-lg leading-6 font-bold text-gray-900" id="deleteModalTitle">Xác nhận xóa hình
+                                ảnh</h3>
                             <div class="mt-2">
-                                <p class="text-sm text-gray-500" id="deleteModalMessage">Dữ liệu hình ảnh sẽ bị xóa vĩnh viễn. Bạn có chắc chắn muốn tiếp tục?</p>
+                                <p class="text-sm text-gray-500" id="deleteModalMessage">Dữ liệu hình ảnh sẽ bị xóa vĩnh
+                                    viễn. Bạn có chắc chắn muốn tiếp tục?</p>
                             </div>
                         </div>
                     </div>
@@ -161,49 +142,19 @@
     </div>
 
     <script>
-        function openDeleteModal(id, title) {
-            document.getElementById('deleteModalTitle').textContent = `Xác nhận xóa hình ảnh của "${title}"`;
-            document.getElementById('deleteModalMessage').textContent = 'Dữ liệu hình ảnh sẽ bị xóa vĩnh viễn. Bạn có chắc chắn muốn tiếp tục?';
-            document.getElementById('deleteForm').action = `/admin/post-images/${id}`;
-            toggleModal('deleteModal');
-        }
-
-        function toggleModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.toggle('hidden');
-        }
-
-        function changeLimit(limit) {
-            const url = new URL(window.location);
-            url.searchParams.set('limit', limit);
-            window.location.href = url.toString();
-        }
-
-        // Search functionality
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const searchTerm = this.value.trim();
-            const url = new URL(window.location);
-            
-            if (searchTerm) {
-                url.searchParams.set('search', searchTerm);
-            } else {
-                url.searchParams.delete('search');
-            }
-            
-            // Debounce search
-            clearTimeout(window.searchTimeout);
-            window.searchTimeout = setTimeout(() => {
-                window.location.href = url.toString();
-            }, 500);
-        });
-
-        // Focus at end of text if value exists
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('searchInput');
-            if (searchInput.value) {
-                searchInput.focus();
-                searchInput.setSelectionRange(searchInput.value.length, searchInput.value.length);
-            }
-        });
+        window.postImageConfig = {
+            indexUrl: "{{ route('post-images.index') }}",
+            destroyUrl: "{{ route('post-images.destroy', ':id') }}",
+            editUrl: "{{ route('post-images.edit', ':id') }}",
+            assetUrl: "{{ asset('storage') }}",
+            currentPage: {{ $postImages->currentPage() }},
+            currentLimit: {{ request('limit', 10) }},
+            currentSearch: "{{ request('search') }}",
+            initialData: @json($postImages->items()),
+            pagination: @json($postImages)
+        };
     </script>
+
+    <script src="{{ asset('js/postimages.js') }}"></script>
+
 @endsection
