@@ -183,7 +183,7 @@ body {
     top: 70px;
     left: -100%;
     /* Ẩn sang trái */
-    width: 50%;
+    width: 70%;
     max-width: 400px;
     height: 100vh;
     background: var(--white);
@@ -283,7 +283,7 @@ body {
 }
 
 /* Ẩn mobile search trên màn hình lớn */
-@media (min-width: 769px) {
+@media (min-width: 1130px) {
     .mobile-search {
         display: none !important;
     }
@@ -335,11 +335,11 @@ body {
 /* ==================== RESPONSIVE HEADER ==================== */
 @media (max-width: 1024px) {
     .header {
-        padding: 16px 30px;
+        padding: 12px 20px;
     }
 
     .header.scrolled {
-        padding: 12px 30px;
+        padding: 12px 20px;
     }
 }
 

@@ -18,11 +18,12 @@
 .breadcrumb {
     font-size: 0.9rem;
     margin-bottom: 24px;
-    color: var(--bg);
+    color: var(--text);
+    margin-top: 20px;
 }
 
 .breadcrumb a {
-    color: var(--bg);
+    color: var(--text);
     text-decoration: none;
 }
 
@@ -168,7 +169,6 @@
 
 .page-single .header {
     background: #ffffff;
-    padding: 14px 60px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, .08);
 }
 

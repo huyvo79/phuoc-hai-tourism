@@ -54,9 +54,18 @@
                     <span>Địa điểm / Bài viết</span>
                 </a>
 
+                {{-- 4. QUẢN LÝ HÌNH ẢNH BÀI VIẾT --}}
+                <a href="{{ route('post-images.index') }}"
+                class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg transition-all
+                {{ request()->routeIs('post-images.index') ? 'active bg-slate-700/50 text-white shadow-lg shadow-purple-500/10' : 'text-gray-400 hover:text-white' }}">
+                    
+                    <i class="fas fa-images w-5 {{ request()->routeIs('post-images.index') ? 'text-purple-400' : '' }}"></i>
+                    <span>Bài viết Nổi Bật</span>
+                </a>
+
                 <div class="border-t border-white/10 my-4"></div>
 
-                {{-- 4. TÀI KHOẢN ADMIN (Phần bạn đang làm) --}}
+                {{-- 5. TÀI KHOẢN ADMIN (Phần bạn đang làm) --}}
                 <a href="{{ route('user.list') }}"
                 class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg transition-all
                 {{ request()->routeIs('user.list') || request()->routeIs('user.*') ? 'active bg-slate-700/50 text-white shadow-lg shadow-purple-500/10' : 'text-gray-400 hover:text-white' }}">
