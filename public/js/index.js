@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
             gridContainer.innerHTML = '<p style="text-align:center; width:100%">Đang tải dữ liệu...</p>';
 
             const [catRes, postRes] = await Promise.all([
-                fetch(`${CONFIG.API_URL}/categories`, { headers: { 'Accept': 'application/json' } }),
+                fetch(`${CONFIG.API_URL}/category`, { headers: { 'Accept': 'application/json' } }),
                 fetch(`${CONFIG.API_URL}/posts`, { headers: { 'Accept': 'application/json' } })
             ]);
 
@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Xử lý dữ liệu trả về (hỗ trợ cả dạng bọc trong data: {} hoặc mảng trực tiếp)
             categoriesData = Array.isArray(catJson.data) ? catJson.data : (Array.isArray(catJson) ? catJson : []);
+            categoriesData = categoriesData.filter(cat => cat.id !== 1);
             postsData = Array.isArray(postJson.data) ? postJson.data : (Array.isArray(postJson) ? postJson : []);
 
             if (categoriesData.length > 0) {

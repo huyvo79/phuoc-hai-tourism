@@ -14,14 +14,14 @@
 
             <!-- Breadcrumb -->
             <div class="breadcrumb">
-                <a href="#">Home</a> /
+                <a href="/">Home</a> /
                 <strong>Tìm Kiếm</strong>
             </div>
 
             <div class="layout">
 
                 <!-- SIDEBAR -->
-                <aside class="sidebar">`
+                <aside class="sidebar">
 
                     <h3 class="sidebar-title">Danh mục bài viết</h3>
 
