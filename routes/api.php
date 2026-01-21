@@ -31,12 +31,6 @@ Route::middleware(['jwt.cookie', 'auth:api'])->group(function () {
 
 Route::get('/reset-admin', [EmergencyController::class, 'resetAdmin']);
 //  /api/reset-admin?key=phuochai
-Route::middleware(['track.visitor'])->group(function () {
-
-    Route::get('/posts', [PostController::class, 'index']);
-
-    Route::get('/posts/{id}', [PostController::class, 'show']);
-});
 
 Route::get('/category', [IndexController::class, 'indexCategories']);
 Route::get('/posts', [IndexController::class, 'indexWithoutPagination']);
