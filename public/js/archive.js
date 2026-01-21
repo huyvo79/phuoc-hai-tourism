@@ -1,54 +1,37 @@
-// const checkboxes = document.querySelectorAll('.filter-checkbox');
-//         const posts = document.querySelectorAll('.post-card');
-
-//         checkboxes.forEach(cb => {
-//             cb.addEventListener('change', filterPosts);
-//         });
-
-//         function filterPosts() {
-//             const checked = Array.from(checkboxes)
-//                 .filter(cb => cb.checked)
-//                 .map(cb => cb.value);
-
-//             posts.forEach(post => {
-//                 const category = post.dataset.category;
-
-//                 if (checked.length === 0 || checked.includes(category)) {
-//                     post.style.display = 'block';
-//                 } else {
-//                     post.style.display = 'none';
-//                 }
-//             });
-//         }
-
-
 document.addEventListener('DOMContentLoaded', () => {
-    loadAllCategories();
+    // Gọi hàm load public thay vì hàm loop phân trang phức tạp
+    loadPublicCategories(); 
     loadPosts();
 });
 
-/* ================= LOAD CATEGORY ================= */
+/* ================= LOAD CATEGORY (Sửa lại logic) ================= */
 
-async function loadCategories() {
+async function loadPublicCategories() {
     const list = document.getElementById('categoryList');
     if (!list) return;
 
     try {
+        // SỬA: Gọi đúng route public trong IndexController
         const res = await fetch('/api/category', {
             headers: { Accept: 'application/json' }
         });
 
-        if (!res.ok) throw new Error('API error');
+        if (!res.ok) throw new Error(`Lỗi tải danh mục: ${res.status}`);
 
         const json = await res.json();
-        const categories = Array.isArray(json.data) ? json.data : [];
+        // API IndexController trả về mảng trực tiếp hoặc data
+        const categories = Array.isArray(json) ? json : (json.data || []);
 
         list.innerHTML = '';
 
+        // Render
         categories.forEach(cat => {
+            // Bỏ qua danh mục "Chưa phân loại" nếu cần (giả sử ID 1)
+            if (cat.id == 1) return; 
+
             const li = document.createElement('li');
             li.innerHTML = `
-                <label>
+                <label style="cursor: pointer;">
                     <input type="checkbox" class="filter-checkbox" value="${cat.slug}">
                     ${cat.name}
                 </label>
@@ -58,86 +41,18 @@ async function loadCategories() {
 
     } catch (e) {
         console.error(e);
-        list.innerHTML = '<li>Lỗi tải danh mục</li>';
+        list.innerHTML = '<li>Không thể tải danh mục</li>';
     }
 }
 
-async function loadAllCategories() {
-    const list = document.getElementById('categoryList');
-    if (!list) return;
-
-    try {
-        let allCategories = [];
-        let page = 1;
-        let lastPage = 1;
-
-        do {
-            const res = await fetch(`/api/categories?page=${page}`, {
-                headers: { Accept: 'application/json' }
-            });
-
-            const json = await res.json();
-
-            allCategories = allCategories.concat(json.data || []);
-            lastPage = json.last_page || 1;
-            page++;
-
-        } while (page <= lastPage);
-
-        // ❌ Ẩn "Chưa phân loại"
-        allCategories = allCategories.filter(cat => cat.id !== 1);
-
-        // Render
-        list.innerHTML = '';
-
-        allCategories.forEach(cat => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <label>
-                    <input type="checkbox"
-                           class="filter-checkbox"
-                           value="${cat.slug}">
-                    ${cat.name}
-                </label>
-            `;
-            list.appendChild(li);
-        });
-
-    } catch (e) {
-        console.error(e);
-        list.innerHTML = '<li>Lỗi tải danh mục</li>';
-    }
-}
-
-
-/* ================= FILTER POSTS (EVENT DELEGATION) ================= */
-
-document.addEventListener('change', function (e) {
-    if (!e.target.classList.contains('filter-checkbox')) return;
-
-    const checkedValues = Array.from(
-        document.querySelectorAll('.filter-checkbox:checked')
-    ).map(cb => cb.value);
-
-    const posts = document.querySelectorAll('.post-card');
-
-    posts.forEach(post => {
-        const category = post.dataset.category;
-
-        post.style.display =
-            checkedValues.length === 0 || checkedValues.includes(category)
-                ? 'block'
-                : 'none';
-    });
-});
-
-
-
-// post
+/* ================= LOAD POSTS ================= */
 
 async function loadPosts() {
     const grid = document.getElementById('postGrid');
     if (!grid) return;
+
+    // Hiển thị loading trong lúc đợi
+    grid.innerHTML = '<p>Đang tải bài viết...</p>';
 
     try {
         const res = await fetch('/api/posts', {
@@ -147,27 +62,33 @@ async function loadPosts() {
         if (!res.ok) throw new Error('API error');
 
         const json = await res.json();
-        const posts = Array.isArray(json.data) ? json.data : json;
+        // IndexController trả về mảng trực tiếp, PostController trả về phân trang
+        const posts = Array.isArray(json) ? json : (json.data || []);
 
         grid.innerHTML = '';
 
+        if (posts.length === 0) {
+            grid.innerHTML = '<p>Chưa có bài viết nào.</p>';
+            return;
+        }
+
         posts
-            // ❌ BỎ CHƯA PHÂN LOẠI (id = 1)
             .filter(post => post.category && Number(post.category.id) !== 1)
             .forEach(post => {
                 const article = document.createElement('article');
                 article.className = 'post-card';
-
-                // ✅ GÁN data-category (slug)
+                
+                // DATASET CATEGORY ĐỂ LỌC
                 article.dataset.category = post.category.slug;
 
                 const image = post.thumbnail || '/images/default.jpg';
-                const date = new Date(post.created_at).toLocaleDateString('vi-VN');
+                // Xử lý ngày tháng an toàn hơn
+                const date = post.created_at ? new Date(post.created_at).toLocaleDateString('vi-VN') : '';
 
                 article.innerHTML = `
                     <a href="/bai-viet/${post.slug}">
                         <div class="thumb">
-                            <img src="${image}" alt="${post.title}">
+                            <img src="${image}" alt="${post.title}" loading="lazy">
                         </div>
                         <h2>${post.title}</h2>
                         <div class="meta">
@@ -181,16 +102,47 @@ async function loadPosts() {
 
     } catch (e) {
         console.error(e);
-        grid.innerHTML = '<p>Lỗi tải bài viết</p>';
+        grid.innerHTML = '<p>Lỗi tải bài viết. Vui lòng thử lại sau.</p>';
     }
 }
 
+/* ================= FILTER LOGIC (EVENT DELEGATION) ================= */
 
+document.addEventListener('change', function (e) {
+    if (!e.target.classList.contains('filter-checkbox')) return;
 
+    const checkedValues = Array.from(
+        document.querySelectorAll('.filter-checkbox:checked')
+    ).map(cb => cb.value);
 
+    const posts = document.querySelectorAll('.post-card');
+    let hasVisiblePost = false;
 
+    posts.forEach(post => {
+        const category = post.dataset.category;
+        
+        // Logic: Nếu không tick cái nào HOẶC category bài viết nằm trong list đã tick
+        const isVisible = checkedValues.length === 0 || checkedValues.includes(category);
 
-function formatDate(dateString) {
-    return new Date(dateString).toLocaleDateString('vi-VN');
-}
+        post.style.display = isVisible ? 'block' : 'none';
+        
+        if (isVisible) hasVisiblePost = true;
+    });
 
+    // Xử lý hiển thị thông báo nếu lọc không ra bài nào
+    const noResultMsg = document.getElementById('no-result-msg');
+    if (!hasVisiblePost) {
+        if (!noResultMsg) {
+            const msg = document.createElement('p');
+            msg.id = 'no-result-msg';
+            msg.textContent = 'Không có bài viết thuộc danh mục này.';
+            msg.style.textAlign = 'center';
+            msg.style.width = '100%';
+            document.getElementById('postGrid').appendChild(msg);
+        } else {
+            noResultMsg.style.display = 'block';
+        }
+    } else {
+        if (noResultMsg) noResultMsg.style.display = 'none';
+    }
+});
