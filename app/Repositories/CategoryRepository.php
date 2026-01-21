@@ -4,6 +4,7 @@ namespace App\Repositories;
 use App\Interfaces\CategoryRepositoryInterface;
 use App\Models\Category;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Str;
 
 class CategoryRepository implements CategoryRepositoryInterface{
     public function getAll()
@@ -11,30 +12,52 @@ class CategoryRepository implements CategoryRepositoryInterface{
         return Category::all();
     }
 
-    public function paginate(array $filters = [], int $perPage = 5): LengthAwarePaginator
+
+    public function paginate(array $filters = [], int $perPage = 5)
     {
-        $query = Category::where('id', '!=', 1);
+        $query = Category::where('id', '!=', 1)
+            ->orderBy('id', 'desc');
 
-         // 🔍 SEARCH: theo ID hoặc Name
+        $categories = $query->get();
+
         if (!empty($filters['search'])) {
-            $search = trim($filters['search']);
 
-            $query->where(function ($q) use ($search) {
+            $searchRaw = mb_strtolower(trim($filters['search']), 'UTF-8');
+            $searchAscii = Str::ascii($searchRaw);
+            $hasAccent   = $searchRaw !== $searchAscii;
 
-                // Nếu là số → tìm theo ID
-                if (is_numeric($search)) {
-                    $q->where('id', $search);
+            $categories = $categories->filter(function ($item) use ($searchRaw, $searchAscii, $hasAccent) {
+
+                $nameRaw   = mb_strtolower($item->name, 'UTF-8');
+                $nameAscii = Str::ascii($nameRaw);
+
+                // ✅ nếu user gõ CÓ DẤU → chỉ match raw
+                if ($hasAccent) {
+                    return str_contains($nameRaw, $searchRaw);
                 }
 
-                // Luôn tìm theo name
-                $q->orWhere('name', 'like', '%' . $search . '%');
+                // ✅ nếu user gõ KHÔNG DẤU → match cả 2
+                return str_contains($nameRaw, $searchRaw)
+                    || str_contains($nameAscii, $searchAscii);
             });
         }
 
-        return $query
-            ->orderBy('id', 'desc')
-            ->paginate($perPage)
-            ->withQueryString(); // ⭐ giữ search + per_page khi chuyển trang
+
+        // paginate collection thủ công
+        $page = request('page', 1);
+        $total = $categories->count();
+
+        $items = $categories
+            ->slice(($page - 1) * $perPage, $perPage)
+            ->values();
+
+        return new \Illuminate\Pagination\LengthAwarePaginator(
+            $items,
+            $total,
+            $perPage,
+            $page,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
     }
 
     public function find(int $id): ?Category
