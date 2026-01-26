@@ -74,7 +74,7 @@
                         <div class="slide-item">
                             <img src="{{ asset('storage/' . $image->image) }}" alt="{{ $image->post->title ?? 'Post Image' }}">
                             <div class="slide-overlay">
-                                <h3>{{ $image->post->title ?? 'Post' }}</h3>
+                                <h3><a href="/bai-viet/{{ $image->post->slug }}">{{ $image->post->title ?? 'Post' }}</a></h3>
                             </div>
                         </div>
                     @endforeach
