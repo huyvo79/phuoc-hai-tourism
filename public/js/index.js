@@ -284,6 +284,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const walk = (x - startX) * 2;
         sliderContainer.scrollLeft = scrollLeft - walk;
 
+        // Loop logic
+        const maxScroll = sliderTrack.scrollWidth - sliderContainer.clientWidth;
+        if (sliderContainer.scrollLeft <= 0) {
+            sliderContainer.scrollLeft = maxScroll;
+        } else if (sliderContainer.scrollLeft >= maxScroll) {
+            sliderContainer.scrollLeft = 0;
+        }
+
         const now = Date.now();
         const deltaX = e.touches[0].pageX - lastX;
         const deltaTime = now - lastTime;
@@ -335,11 +343,11 @@ document.addEventListener('DOMContentLoaded', () => {
             let secondsPerSlide;
 
             if (w <= 480) {
-                secondsPerSlide = 2;   // 📱 mobile rất nhanh
+                secondsPerSlide = 5;   // 📱 mobile rất nhanh
             } else if (w <= 768) {
-                secondsPerSlide = 1.3;   // 📱 tablet / mobile lớn
+                secondsPerSlide = 5;   // 📱 tablet / mobile lớn
             } else {
-                secondsPerSlide = 2.2;     // 🖥 desktop (nhanh hơn trước)
+                secondsPerSlide = 5;     // 🖥 desktop (nhanh hơn trước)
             }
 
             track.style.animationDuration = `${originalCount * secondsPerSlide}s`;
