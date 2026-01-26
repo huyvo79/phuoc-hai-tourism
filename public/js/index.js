@@ -258,69 +258,89 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ==================== 3. SLIDER TƯƠNG TÁC KÉO THẢ ==================== */
     const sliderContainer = document.querySelector('.slider-container');
     const sliderTrack = document.querySelector('.slider-track');
+
     if (!sliderContainer || !sliderTrack) return;
 
+    /* ===== CLONE để vô hạn ===== */
+    const slides = Array.from(sliderTrack.children);
+    slides.forEach(slide => {
+        sliderTrack.appendChild(slide.cloneNode(true));
+    });
+
+    /* ===== BIẾN ===== */
     let isDown = false;
-    let startX;
-    let scrollLeft;
+    let startX = 0;
+    let scrollLeft = 0;
     let velocity = 0;
     let lastX = 0;
     let lastTime = 0;
 
+    const originalWidth = sliderTrack.scrollWidth / 2;
 
+    /* ===== SET vị trí ban đầu ===== */
+    sliderContainer.scrollLeft = originalWidth / 2;
+
+    /* ===== TOUCH START ===== */
     sliderContainer.addEventListener('touchstart', (e) => {
         isDown = true;
         sliderTrack.style.animationPlayState = 'paused';
-        startX = e.touches[0].pageX - sliderContainer.offsetLeft;
+
+        startX = e.touches[0].pageX;
         scrollLeft = sliderContainer.scrollLeft;
-        lastX = e.touches[0].pageX;
+
+        lastX = startX;
         lastTime = Date.now();
     });
 
+    /* ===== TOUCH MOVE ===== */
     sliderContainer.addEventListener('touchmove', (e) => {
         if (!isDown) return;
         e.preventDefault();
-        const x = e.touches[0].pageX - sliderContainer.offsetLeft;
-        const walk = (x - startX) * 2;
+
+        const x = e.touches[0].pageX;
+        const walk = (x - startX) * 1.2;
         sliderContainer.scrollLeft = scrollLeft - walk;
 
-        // Loop logic
-        const maxScroll = sliderTrack.scrollWidth - sliderContainer.clientWidth;
+        /* loop vô hạn */
         if (sliderContainer.scrollLeft <= 0) {
-            sliderContainer.scrollLeft = maxScroll;
-        } else if (sliderContainer.scrollLeft >= maxScroll) {
-            sliderContainer.scrollLeft = 0;
+            sliderContainer.scrollLeft += originalWidth;
+        } else if (sliderContainer.scrollLeft >= originalWidth) {
+            sliderContainer.scrollLeft -= originalWidth;
         }
 
+        /* velocity */
         const now = Date.now();
-        const deltaX = e.touches[0].pageX - lastX;
-        const deltaTime = now - lastTime;
-        velocity = deltaX / deltaTime;
-        lastX = e.touches[0].pageX;
+        velocity = (x - lastX) / (now - lastTime);
+        lastX = x;
         lastTime = now;
     });
 
+    /* ===== TOUCH END (momentum) ===== */
     sliderContainer.addEventListener('touchend', () => {
         isDown = false;
-        if (Math.abs(velocity) > 0.5) {
-            const momentumScroll = () => {
-                sliderContainer.scrollLeft -= velocity * 10;
-                velocity *= 0.95;
 
-                if (Math.abs(velocity) > 0.1) {
-                    requestAnimationFrame(momentumScroll);
-                } else {
-                    setTimeout(() => {
-                        sliderTrack.style.animationPlayState = 'running';
-                    }, 1000);
-                }
-            };
-            momentumScroll();
-        } else {
-            sliderTrack.style.animationPlayState = 'running';
-        }
+        const momentumScroll = () => {
+            sliderContainer.scrollLeft -= velocity * 18;
+            velocity *= 0.95;
+
+            /* loop trong momentum */
+            if (sliderContainer.scrollLeft <= 0) {
+                sliderContainer.scrollLeft += originalWidth;
+            } else if (sliderContainer.scrollLeft >= originalWidth) {
+                sliderContainer.scrollLeft -= originalWidth;
+            }
+
+            if (Math.abs(velocity) > 0.05) {
+                requestAnimationFrame(momentumScroll);
+            } else {
+                sliderTrack.style.animationPlayState = 'running';
+            }
+        };
+
+        momentumScroll();
     });
 
+    /* ===== DESKTOP HOVER ===== */
     sliderTrack.addEventListener('mouseenter', () => {
         sliderTrack.style.animationPlayState = 'paused';
     });
@@ -329,32 +349,16 @@ document.addEventListener('DOMContentLoaded', () => {
         sliderTrack.style.animationPlayState = 'running';
     });
 
-    const track = document.querySelector('.slider-track');
-
-    if (track) {
-        const originalCount = track.children.length;
-
-        // nhân đôi để chạy vô hạn
-        track.innerHTML += track.innerHTML;
-
-        function setSpeed() {
-            const w = window.innerWidth;
-
-            let secondsPerSlide;
-
-            if (w <= 480) {
-                secondsPerSlide = 5;   // 📱 mobile rất nhanh
-            } else if (w <= 768) {
-                secondsPerSlide = 5;   // 📱 tablet / mobile lớn
-            } else {
-                secondsPerSlide = 5;     // 🖥 desktop (nhanh hơn trước)
-            }
-
-            track.style.animationDuration = `${originalCount * secondsPerSlide}s`;
-        }
-
-        setSpeed();
-        window.addEventListener('resize', setSpeed);
+    /* ===== SPEED THEO MÀN HÌNH ===== */
+    function setSpeed() {
+        const count = slides.length;
+        const w = window.innerWidth;
+        let secondsPerSlide = w <= 768 ? 4.5 : 6;
+        sliderTrack.style.animationDuration = `${count * secondsPerSlide}s`;
     }
+
+    setSpeed();
+    window.addEventListener('resize', setSpeed);
+
 
 });
