@@ -134,38 +134,93 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderTabs() {
         if (!tabsContainer) return;
 
-        // Dùng Fragment để tối ưu DOM
         const tabFragment = document.createDocumentFragment();
-        const selectFragment = document.createDocumentFragment();
 
-        categoriesData.forEach((cat, index) => {
+        // 1. Render Tabs cho Desktop (Giữ nguyên)
+        categoriesData.forEach((cat) => {
             const catId = parseInt(cat.id);
-
-            // 1. Desktop Buttons
             const btn = document.createElement('button');
-            btn.className = 'category-tab'; // Bỏ active lúc đầu, sẽ set sau
+            btn.className = 'category-tab';
             btn.textContent = cat.name;
             btn.dataset.id = catId;
             btn.onclick = () => handleCategoryChange(catId);
             tabFragment.appendChild(btn);
-
-            // 2. Mobile Options
-            const option = document.createElement('option');
-            option.value = catId;
-            option.textContent = cat.name;
-            selectFragment.appendChild(option);
         });
-
         tabsContainer.innerHTML = '';
         tabsContainer.appendChild(tabFragment);
 
-        if (selectContainer) {
-            selectContainer.innerHTML = '';
-            selectContainer.appendChild(selectFragment);
+        // 2. Render Custom Dropdown cho Mobile (Thay đổi hoàn toàn mới)
+        if (selectContainer && selectContainer.parentElement) {
+            const wrapper = selectContainer.parentElement; // Lấy thẻ div .category-select-wrapper
 
-            // Sự kiện change cho Mobile
-            selectContainer.addEventListener('change', function () {
-                handleCategoryChange(parseInt(this.value));
+            // Xóa select cũ đi nếu cần, hoặc ẩn nó đi
+            selectContainer.style.display = 'none';
+
+            // Kiểm tra xem đã render dropdown custom chưa để tránh duplicate
+            let customDropdown = wrapper.querySelector('.custom-dropdown');
+            if (!customDropdown) {
+                customDropdown = document.createElement('div');
+                customDropdown.className = 'custom-dropdown';
+                wrapper.appendChild(customDropdown);
+            }
+
+            // Tạo HTML cho Dropdown
+            const firstCat = categoriesData[0];
+            const optionsHTML = categoriesData.map(cat =>
+                `<div class="dropdown-item ${cat.id == firstCat.id ? 'selected' : ''}" data-value="${cat.id}">
+                ${cat.name}
+            </div>`
+            ).join('');
+
+            customDropdown.innerHTML = `
+            <div class="custom-dropdown-header">
+                <span class="selected-text">${firstCat ? firstCat.name : 'Chọn danh mục'}</span>
+                <svg class="dropdown-arrow" viewBox="0 0 24 24">
+                    <path d="M6 9l6 6 6-6"></path>
+                </svg>
+            </div>
+            <div class="custom-dropdown-list">
+                ${optionsHTML}
+            </div>
+        `;
+
+            // --- Xử lý sự kiện Click cho Dropdown ---
+            const header = customDropdown.querySelector('.custom-dropdown-header');
+            const list = customDropdown.querySelector('.custom-dropdown-list');
+            const items = customDropdown.querySelectorAll('.dropdown-item');
+            const selectedText = customDropdown.querySelector('.selected-text');
+
+            // 1. Bấm vào header -> Mở/Đóng
+            header.onclick = (e) => {
+                e.stopPropagation(); // Ngăn sự kiện lan ra ngoài
+                customDropdown.classList.toggle('open');
+            };
+
+            // 2. Bấm vào item -> Chọn
+            items.forEach(item => {
+                item.onclick = (e) => {
+                    e.stopPropagation();
+
+                    // Active class visual
+                    items.forEach(i => i.classList.remove('selected'));
+                    item.classList.add('selected');
+
+                    // Cập nhật text hiển thị
+                    selectedText.textContent = item.textContent.trim();
+
+                    // Đóng dropdown
+                    customDropdown.classList.remove('open');
+
+                    // Gọi hàm xử lý dữ liệu chính
+                    handleCategoryChange(parseInt(item.dataset.value));
+                };
+            });
+
+            // 3. Bấm ra ngoài -> Đóng dropdown
+            document.addEventListener('click', (e) => {
+                if (!customDropdown.contains(e.target)) {
+                    customDropdown.classList.remove('open');
+                }
             });
         }
     }
@@ -177,19 +232,29 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.toggle('active', parseInt(btn.dataset.id) === catId);
         });
 
-        // 2. Sync Mobile Dropdown
-        if (selectContainer) selectContainer.value = catId;
+        // 2. Sync Mobile Custom Dropdown (MỚI)
+        const customDropdown = document.querySelector('.custom-dropdown');
+        if (customDropdown) {
+            // Cập nhật text ở header
+            const currentCat = categoriesData.find(c => parseInt(c.id) === catId);
+            const selectedText = customDropdown.querySelector('.selected-text');
+            if (selectedText && currentCat) selectedText.textContent = currentCat.name;
 
-        // 3. Render Intro
+            // Cập nhật dấu tick trong list
+            const items = customDropdown.querySelectorAll('.dropdown-item');
+            items.forEach(item => {
+                item.classList.toggle('selected', parseInt(item.dataset.value) === catId);
+            });
+        }
+
+        // 3. Render Intro & 4. Render Grid Posts (Giữ nguyên code cũ của bạn)
         const currentCat = categoriesData.find(c => parseInt(c.id) === catId);
         if (introContainer && currentCat) {
             introContainer.innerHTML = `
-                <h3>${currentCat.name}</h3>
-                <p>${currentCat.description || 'Khám phá những điều tuyệt vời nhất.'}</p>
-            `;
+            <h3>${currentCat.name}</h3>
+            <p>${currentCat.description || 'Khám phá những điều tuyệt vời nhất.'}</p>
+        `;
         }
-
-        // 4. Render Grid Posts
         renderPosts(catId);
     }
 
