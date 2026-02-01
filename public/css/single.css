@@ -151,3 +151,11 @@
   .page-single .page-content {
       padding-top: 100px;
   }
+
+  .related-item h4 {
+    word-wrap: break-word;      
+    overflow-wrap: break-word;  
+    word-break: break-all;    
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
