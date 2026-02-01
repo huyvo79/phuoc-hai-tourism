@@ -7,7 +7,11 @@ use App\Http\Controllers\Frontend\PostController as FrontendPostController;
 use App\Http\Controllers\IndexController;
 
 Route::get('/', function () {
-    $postImages = \App\Models\PostImage::with('post')->get();
+    $postImages = \App\Models\PostImage::with('post')
+        ->latest()
+        ->take(8)
+        ->get();
+    ;
     return view('ui-index.index', compact('postImages'));
 })->middleware('track.visitor');
 
