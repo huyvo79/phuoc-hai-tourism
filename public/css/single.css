@@ -192,9 +192,22 @@ body {
     }
 
     .sidebar .related-item h4 {
-        white-space: normal; /* Cho phép xuống dòng */
-        font-size: 1.05rem;
-    }
+    font-size: 1.1rem;
+    line-height: 1.4;
+    color: #0f766e;
+    font-weight: 600;
+
+    /* GIỚI HẠN 2 DÒNG + DẤU ... */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Số dòng muốn hiển thị */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    /* CHỐNG TRÀN VỚI CHUỖI DÀI KHÔNG DẤU CÁCH (như FFFFF...) */
+    word-break: break-word; 
+    white-space: normal; 
+}
     
     .sidebar .related-list::-webkit-scrollbar {
         height: 4px; /* Thanh cuộn mỏng dưới chân slider */
