@@ -258,8 +258,8 @@ body {
 
     /* CARD MOBILE */
     .sidebar .related-list .related-item {
-        flex: 0 0 78%;
-        min-width: 50px;
+        flex: 0 0 70%;
+        min-width: 70%;
         height: auto;
         scroll-snap-align: start;
     }
