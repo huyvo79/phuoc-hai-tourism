@@ -70,7 +70,7 @@
         </div>
         <div class="slider-container">
             <div class="slider-track">
-                    @foreach($postImages->reverse() as $image)
+                    @foreach($postImages as $image)
                         <div class="slide-item">
                             <img src="{{ asset('storage/' . $image->image) }}" alt="{{ $image->post->title ?? 'Post Image' }}">
                             <div class="slide-overlay">
