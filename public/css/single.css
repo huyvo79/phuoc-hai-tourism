@@ -10,11 +10,13 @@ body {
     background: #f5f7fa;
     color: #1e293b;
     line-height: 1.7;
+    overflow-x: hidden; /* CHỐNG TRÀN NGANG */
 }
 
 /* ===== LAYOUT ===== */
 .container {
     max-width: 1200px;
+    margin: 0 auto;
     padding: 24px;
     display: grid;
     grid-template-columns: 2.5fr 1fr;
@@ -50,7 +52,7 @@ body {
 /* ===== SIDEBAR ===== */
 .sidebar {
     background: #ffffff;
-    padding: 32px;
+    padding: 24px;
     border-radius: 16px;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
     height: fit-content;
@@ -61,30 +63,23 @@ body {
     margin-bottom: 16px;
 }
 
-/* ===== RELATED LIST – DESKTOP ===== */
+/* ===== RELATED LIST DESKTOP ===== */
 .sidebar .related-list {
     display: flex;
     flex-direction: column;
     gap: 12px;
-
-    /* hiển thị đúng 5 item */
     max-height: calc(5 * 240px + 12px * 4);
     overflow-y: auto;
     padding-right: 6px;
 }
 
-/* scrollbar */
+/* SCROLLBAR */
 .sidebar .related-list::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
-
 .sidebar .related-list::-webkit-scrollbar-thumb {
-    background: rgba(15, 118, 110, 0.18);
+    background: rgba(15, 118, 110, 0.2);
     border-radius: 8px;
-}
-
-.sidebar .related-list::-webkit-scrollbar-track {
-    background: transparent;
 }
 
 /* ===== RELATED ITEM ===== */
@@ -92,9 +87,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    height: 240px;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease;
 }
 
 .sidebar .related-item:hover {
@@ -106,79 +100,23 @@ body {
     width: 100%;
     height: 160px;
     object-fit: cover;
-    border-radius: 14px;
+    border-radius: 12px;
 }
 
 /* TITLE */
 .sidebar .related-item h4 {
     font-size: 1.15rem;
-
-    .container .content p {
-        font-size: 1.2rem;
-    }
-
-    .sidebar .related-item img {
-        height: 220px;
-    }
-
-    .sidebar .related-item h4 {
-        font-size: 1.5rem;
-        text-align: center;
-    }
-}
-
-/* ===== FIX HEADER CHO TRANG SINGLE ===== */
-.page-single .header {
-    background: #ffffff;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, .08);
-}
-
-.page-single .logo,
-.page-single .nav-menu a,
-.page-single .search-btn,
-.page-single .search-box input::placeholder {
-    color: var(--text-dark);
-
-}
-
-.page-single .search-box {
-    border: 1px solid black;
-    border-radius: 20px;
-}
-
-.page-single .mobile-search-trigger {
-    color: var(--text-dark);
-}
-
-.page-single .menu-toggle span {
-    background: var(--text-dark);
-}
-
-/* Chừa chỗ cho header fixed */
-.page-single .page-content {
-    padding-top: 100px;
-}
-
-.related-item h4 {
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-all;
-
-    margin-top: 10px;
     line-height: 1.4;
     color: #0f766e;
-    font-weight: 500;
+    font-weight: 600;
 
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    /* 👈 số dòng */
-    -webkit-box-orient: vertical;
+    /* CẮT 1 DÒNG + ... */
+    white-space: nowrap;
     overflow: hidden;
-    /* 👈 có ... */
+    text-overflow: ellipsis;
 }
 
-/* ===== PAGE SINGLE HEADER FIX ===== */
+/* ===== HEADER FIX ===== */
 .page-single .header {
     background: #ffffff;
     box-shadow: 0 4px 30px rgba(0, 0, 0, .08);
@@ -204,6 +142,7 @@ body {
     background: var(--text-dark);
 }
 
+/* CHỪA HEADER FIXED */
 .page-single .page-content {
     padding-top: 100px;
 }
@@ -212,13 +151,10 @@ body {
 /* =================== MOBILE ====================== */
 /* ================================================= */
 @media (max-width: 768px) {
-    * {
-        box-sizing: border-box;
-    }
 
     .container {
         grid-template-columns: 1fr;
-        padding: 16px;
+        padding: 12px;
     }
 
     .content h1 {
@@ -229,56 +165,45 @@ body {
         font-size: 1.2rem;
     }
 
-    /* SIDEBAR MOBILE – bỏ padding trái phải */
+    /* SIDEBAR MOBILE */
     .sidebar {
-        padding: 16px 0;
+        padding: 12px 0;
         border-radius: 0;
         box-shadow: none;
         background: transparent;
     }
 
-    /* RELATED LIST – VUỐT NGANG */
+    /* RELATED LIST – SLIDER NGANG */
     .sidebar .related-list {
         flex-direction: row;
         gap: 12px;
-
+        padding: 0 12px;
         max-height: none;
-        padding: 0 16px;
-
         overflow-x: auto;
         overflow-y: hidden;
-
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
     }
 
     .sidebar .related-list::-webkit-scrollbar {
-        height: 8px;
+        height: 6px;
     }
 
     /* CARD MOBILE */
-    .sidebar .related-list .related-item {
+    .sidebar .related-item {
         flex: 0 0 70%;
-        min-width: 70%;
-        height: auto;
+        max-width: 70%;
         scroll-snap-align: start;
     }
 
-    /* IMAGE MOBILE – THU NHỎ */
-    .sidebar .related-list .related-item img {
-        height: 150px;
-        border-radius: 12px;
+    /* IMAGE MOBILE */
+    .sidebar .related-item img {
+        height: 140px;
     }
 
     /* TITLE MOBILE */
     .sidebar .related-item h4 {
-        font-size: 1.1rem;
+        font-size: 1.05rem;
         text-align: left;
     }
-
-    /* Chừa chỗ cho header fixed */
-    .page-single .page-content {
-        padding-top: 100px;
-    }
-
 }
