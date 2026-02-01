@@ -160,7 +160,7 @@ body {
 }
 
 .related-item h4 {
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -172,7 +172,7 @@ body {
     font-weight: 500;
 
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     /* 👈 số dòng */
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -281,11 +281,5 @@ body {
     .page-single .page-content {
         padding-top: 100px;
     }
-
-    .related-item h4 {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 
 }
