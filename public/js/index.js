@@ -262,10 +262,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!sliderContainer || !sliderTrack) return;
 
     /* ===== CLONE để vô hạn ===== */
+    // if (slides.length <= 1) {
+    //     sliderTrack.style.animation = 'none';
+    //     return;
+    // }
     const slides = Array.from(sliderTrack.children);
     slides.forEach(slide => {
         sliderTrack.appendChild(slide.cloneNode(true));
     });
+    // for (let i = 0; i < 3; i++) {
+    //     slides.forEach(slide => {
+    //         sliderTrack.appendChild(slide.cloneNode(true));
+    //     });
+    // }
 
     /* ===== BIẾN ===== */
     let isDown = false;
