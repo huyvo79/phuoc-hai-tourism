@@ -283,15 +283,9 @@ body {
     }
 
     .related-item h4 {
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        word-break: break-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-        margin-top: 10px;
-        line-height: 1.4;
-        height: 2.8em;
-    }
 }
