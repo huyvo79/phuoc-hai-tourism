@@ -145,16 +145,25 @@ tinymce.init({
     selector: '#content-editor',
     license_key: 'gpl',
     height: 500,
-    plugins: 'image link lists table code preview fullscreen wordcount',
-    toolbar: 'undo redo | blocks | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image | code preview fullscreen',
+    plugins: 'image link lists table code preview fullscreen wordcount media', 
+    toolbar: 'undo redo | blocks | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image media | code preview fullscreen',
     branding: false,
     paste_data_images: true,
 
-    file_picker_types: 'image',
+    extended_valid_elements: 'iframe[src|frameborder|style|scrolling|class|width|height|allowfullscreen]',
+    
+    media_live_embeds: true,
+
+    file_picker_types: 'image media', // Thêm 'media' vào đây
     file_picker_callback: function (cb, value, meta) {
         const input = document.createElement('input');
         input.type = 'file';
-        input.accept = 'image/*';
+
+        if (meta.filetype === 'image') {
+            input.accept = 'image/*';
+        } else if (meta.filetype === 'media') {
+            input.accept = 'video/*';
+        }
 
         input.onchange = function () {
             const file = this.files[0];
