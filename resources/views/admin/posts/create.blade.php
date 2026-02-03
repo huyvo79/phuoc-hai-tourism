@@ -142,7 +142,7 @@
 <script src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
 <script>
 tinymce.init({
-    selector: '#content-editor',
+    selector: '#content_editor',
     license_key: 'gpl',
     height: 500,
     plugins: 'image link lists table code preview fullscreen wordcount media', 
