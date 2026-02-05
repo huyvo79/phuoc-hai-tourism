@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Frontend\PostController as FrontendPostController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\Admin\MediaController;
 
 Route::get('/', function () {
     $postImages = \App\Models\PostImage::with('post')
@@ -29,7 +30,8 @@ Route::prefix('admin')->group(function () {
         Route::get('users', fn() => view('crud-user.list'))->name('user.list');
 
         Route::resource('posts', PostController::class);
-
+        Route::post('tinymce/upload-image', [MediaController::class, 'uploadImage'])->name('tinymce.upload.image');
+        Route::post('tinymce/upload-video', [MediaController::class, 'uploadVideo'])->name('tinymce.upload.video');
         Route::resource('post-images', \App\Http\Controllers\PostImageController::class);
 
         //category

@@ -11,12 +11,10 @@ use Illuminate\Support\Facades\DB;
 
 class PostService implements PostServiceInterface
 {
-    protected $postRepository;
+    public function __construct(
+        protected PostRepositoryInterface $postRepository
+    ) {}
 
-    public function __construct(PostRepositoryInterface $postRepository)
-    {
-        $this->postRepository = $postRepository;
-    }
 
     public function getAllPosts()
     {
@@ -33,145 +31,9 @@ class PostService implements PostServiceInterface
         return $this->postRepository->find($id);
     }
 
-    public function createPost(array $data)
+    public function getPostBySlug($slug)
     {
-        return DB::transaction(function () use ($data) {
-            if (isset($data['title'])) {
-                $data['slug'] = Str::slug($data['title']) . '-' . time();
-            }
-
-            if (empty($data['category_id'])) {
-                $data['category_id'] = 1;
-            }
-
-            if (isset($data['thumbnail']) && $data['thumbnail'] instanceof UploadedFile) {
-                $file = $data['thumbnail'];
-                $filename = time() . '_' . $file->getClientOriginalName();
-                $path = $file->storeAs('uploads/thumbnails', $filename, 'public');
-                $data['thumbnail'] = '/storage/' . $path;
-            }
-
-            if (isset($data['content'])) {
-                $data['content'] = $this->processContentImages($data['content']);
-            }
-
-            $post = $this->postRepository->create($data);
-
-            if (isset($data['related_ids'])) {
-                $post->relatedPosts()->sync($data['related_ids']);
-            }
-
-            return $post;
-        });
-    }
-
-    public function updatePost($id, array $data)
-    {
-        return DB::transaction(function () use ($id, $data) {
-            $post = $this->postRepository->find($id);
-            if (!$post) {
-                return null;
-            }
-
-            if (array_key_exists('category_id', $data) && empty($data['category_id'])) {
-                $data['category_id'] = 1;
-            }
-
-            if (isset($data['thumbnail']) && $data['thumbnail'] instanceof UploadedFile) {
-                if ($post->thumbnail) {
-                    $oldPath = str_replace('/storage/', '', $post->thumbnail);
-                    if (Storage::disk('public')->exists($oldPath)) {
-                        Storage::disk('public')->delete($oldPath);
-                    }
-                }
-
-                $file = $data['thumbnail'];
-                $filename = time() . '_' . $file->getClientOriginalName();
-                $path = $file->storeAs('uploads/thumbnails', $filename, 'public');
-                $data['thumbnail'] = '/storage/' . $path;
-            }
-
-            if (isset($data['content'])) {
-                $data['content'] = $this->processContentImages($data['content']);
-            }
-
-            $updatedPost = $this->postRepository->update($id, $data);
-
-            if (isset($data['related_ids'])) {
-                $updatedPost->relatedPosts()->sync($data['related_ids']);
-            }
-
-            return $updatedPost;
-        });
-    }
-
-    public function deletePost($id)
-    {
-        $post = $this->postRepository->find($id);
-
-        if (!$post) {
-            return false;
-        }
-
-        if ($post->thumbnail) {
-            $thumbnailPath = str_replace('/storage/', '', $post->thumbnail);
-            if (Storage::disk('public')->exists($thumbnailPath)) {
-                Storage::disk('public')->delete($thumbnailPath);
-            }
-        }
-
-        $this->deleteImagesInContent($post->content);
-
-        return $this->postRepository->delete($id);
-    }
-
-    private function deleteImagesInContent($content)
-    {
-        if (!$content) {
-            return;
-        }
-
-        preg_match_all('/src="\/storage\/([^"]+)"/', $content, $matches);
-
-        if (!empty($matches[1])) {
-            foreach ($matches[1] as $path) {
-                if (Storage::disk('public')->exists($path)) {
-                    Storage::disk('public')->delete($path);
-                }
-            }
-        }
-    }
-
-    private function processContentImages($content)
-    {
-        if (strpos($content, '<img') === false) {
-            return $content;
-        }
-
-        $dom = new \DOMDocument();
-        libxml_use_internal_errors(true);
-        $dom->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        libxml_clear_errors();
-
-        $images = $dom->getElementsByTagName('img');
-
-        foreach ($images as $img) {
-            $src = $img->getAttribute('src');
-            if (preg_match('/data:image\/(\w+);base64,/', $src, $type)) {
-                $data = substr($src, strpos($src, ',') + 1);
-                $data = base64_decode($data);
-
-                if ($data === false)
-                    continue;
-
-                $imageName = 'content_' . time() . '_' . Str::random(10) . '.' . strtolower($type[1]);
-                $path = 'uploads/content/' . $imageName;
-                Storage::disk('public')->put($path, $data);
-
-                $img->setAttribute('src', '/storage/' . $path);
-            }
-        }
-        return $dom->saveHTML();
+        return $this->postRepository->findBySlug($slug);
     }
 
     public function searchPosts($keyword)
@@ -179,8 +41,128 @@ class PostService implements PostServiceInterface
         return $this->postRepository->search($keyword);
     }
 
-    public function getPostBySlug($slug)
+
+    public function createPost(array $data)
     {
-        return $this->postRepository->findBySlug($slug);
+        return DB::transaction(function () use ($data) {
+
+            $data = $this->preparePostData($data);
+
+            if ($this->hasFile($data, 'thumbnail')) {
+                $data['thumbnail'] = $this->uploadFile($data['thumbnail'], 'uploads/thumbnails');
+            }
+
+            $post = $this->postRepository->create($data);
+            $this->syncRelated($post, $data);
+
+            return $post;
+        });
+    }
+
+
+    public function updatePost($id, array $data)
+    {
+        return DB::transaction(function () use ($id, $data) {
+
+            $post = $this->postRepository->find($id);
+            if (!$post) return null;
+
+            if ($this->contentChanged($post, $data)) {
+                $this->cleanupRemovedMedia($post->content, $data['content']);
+            }
+
+            if ($this->hasFile($data, 'thumbnail')) {
+                $this->deleteFile($post->thumbnail);
+                $data['thumbnail'] = $this->uploadFile($data['thumbnail'], 'uploads/thumbnails');
+            }
+
+            $data = $this->preparePostData($data);
+
+            $post = $this->postRepository->update($id, $data);
+            $this->syncRelated($post, $data);
+
+            return $post;
+        });
+    }
+
+
+    public function deletePost($id)
+    {
+        $post = $this->postRepository->find($id);
+        if (!$post) return false;
+
+        $this->deleteFile($post->thumbnail);
+        $this->deleteMediaInContent($post->content);
+
+        return $this->postRepository->delete($id);
+    }
+
+
+    private function preparePostData(array $data): array
+    {
+        $data['slug'] = $data['slug'] ?? Str::slug($data['title']) . '-' . time();
+        $data['category_id'] = $data['category_id'] ?: 1;
+        return $data;
+    }
+
+    private function syncRelated($post, array $data): void
+    {
+        if (!empty($data['related_ids'])) {
+            $post->relatedPosts()->sync($data['related_ids']);
+        }
+    }
+
+    private function hasFile(array $data, string $key): bool
+    {
+        return isset($data[$key]) && $data[$key] instanceof UploadedFile;
+    }
+
+    private function contentChanged($post, array $data): bool
+    {
+        return isset($data['content']) && $data['content'] !== $post->content;
+    }
+
+
+    private function uploadFile(UploadedFile $file, string $folder): string
+    {
+        $filename = now()->timestamp . '_' . $file->getClientOriginalName();
+        $path = $file->storeAs($folder, $filename, 'public');
+        return Storage::url($path);
+    }
+
+    private function deleteFile(?string $url): void
+    {
+        if (!$url) return;
+
+        $path = str_replace('/storage/', '', $url);
+        Storage::disk('public')->delete($path);
+    }
+
+
+    private function deleteMediaInContent(?string $content): void
+    {
+        foreach ($this->extractMediaPaths($content) as $path) {
+            Storage::disk('public')->delete($path);
+        }
+    }
+
+    private function cleanupRemovedMedia(string $old, string $new): void
+    {
+        $removed = array_diff(
+            $this->extractMediaPaths($old),
+            $this->extractMediaPaths($new)
+        );
+
+        foreach ($removed as $path) {
+            Storage::disk('public')->delete($path);
+        }
+    }
+
+    private function extractMediaPaths(?string $content): array
+    {
+        if (!$content) return [];
+
+        preg_match_all('#/storage/(uploads/[^"\']+)#', $content, $matches);
+        return $matches[1] ?? [];
     }
 }

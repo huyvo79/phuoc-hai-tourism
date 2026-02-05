@@ -140,42 +140,117 @@
 
 @push('scripts')
 <script src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
+<style>
+    @keyframes tiny-spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    .tiny-loading-overlay {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(255, 255, 255, 0.7); 
+        display: flex; align-items: center; justify-content: center; 
+        z-index: 9999; border-radius: 10px;
+    }
+    .tiny-spinner {
+        width: 40px; height: 40px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #22c55e; /* Màu xanh lá của bạn */
+        border-radius: 50%;
+        animation: tiny-spin 0.8s linear infinite;
+    }
+</style>
+
 <script>
 tinymce.init({
     selector: '#content-editor',
-    license_key: 'gpl',
-    height: 500,
-    plugins: 'image link lists table code preview fullscreen wordcount media', 
-    toolbar: 'undo redo | blocks | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image media | code preview fullscreen',
-    branding: false,
-    paste_data_images: true,
+    license_key: 'gpl', 
+    height: 600,
+    statusbar: false, 
+    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed pagebreak advlist',
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+    file_picker_types: 'image media',
 
-    extended_valid_elements: 'iframe[src|frameborder|style|scrolling|class|width|height|allowfullscreen]',
-    
-    media_live_embeds: true,
+    // Không cần setup hàm showLoading/hideLoading thủ công nữa
+    setup: function (editor) {
+        // Bạn có thể giữ lại các logic khác ở đây nếu cần
+    },
 
-    file_picker_types: 'image media', // Thêm 'media' vào đây
     file_picker_callback: function (cb, value, meta) {
         const input = document.createElement('input');
         input.type = 'file';
 
+        let uploadUrl = '/admin/tinymce/upload-image';
         if (meta.filetype === 'image') {
             input.accept = 'image/*';
-        } else if (meta.filetype === 'media') {
+        } else {
             input.accept = 'video/*';
+            uploadUrl = '/admin/tinymce/upload-video';
         }
 
         input.onchange = function () {
             const file = this.files[0];
-            const reader = new FileReader();
+            const formData = new FormData();
+            formData.append('file', file);
 
-            reader.onload = function () {
-                cb(reader.result, {
-                    title: file.name
-                });
+            const editor = tinymce.activeEditor;
+
+            const notification = editor.notificationManager.open({
+                text: 'Đang tải tệp lên: ' + file.name,
+                type: 'info',
+                progressbar: true 
+            });
+
+            const submitBtn = document.querySelector('button[type="submit"]') || document.querySelector('.bg-indigo-600');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.5';
+            }
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', uploadUrl);
+
+            xhr.upload.onprogress = function (e) {
+                if (e.lengthComputable) {
+                    const percent = Math.round((e.loaded / e.total) * 100);
+                    notification.progressBar.value(percent); 
+                }
             };
 
-            reader.readAsDataURL(file);
+            xhr.onload = function () {
+                notification.close();
+
+                try {
+                    const res = JSON.parse(xhr.responseText);
+                    cb(res.location, { title: file.name });
+                    
+                    editor.notificationManager.open({
+                        text: 'Tải lên thành công!',
+                        type: 'success',
+                        timeout: 2000 
+                    });
+                } catch (e) {
+                    alert('Lỗi phản hồi từ server');
+                } finally {
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.style.opacity = '1';
+                    }
+                }
+            };
+
+            xhr.onerror = function () {
+                notification.close();
+                editor.notificationManager.open({
+                    text: 'Lỗi trong quá trình tải lên!',
+                    type: 'error'
+                });
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                }
+            };
+
+            xhr.send(formData);
         };
 
         input.click();
@@ -187,8 +262,10 @@ function previewImage(input) {
         const reader = new FileReader();
         reader.onload = e => {
             const img = document.getElementById('preview-img');
-            img.src = e.target.result;
-            img.classList.remove('hidden');
+            if(img) {
+                img.src = e.target.result;
+                img.classList.remove('hidden');
+            }
         };
         reader.readAsDataURL(input.files[0]);
     }
