@@ -200,7 +200,7 @@ body {
 /* ==================== MOBILE MENU (TRƯỢT TRÁI) ==================== */
 .mobile-menu {
     position: fixed;
-    top: 70px;
+    top: 80px;
     left: -100%;
     /* Ẩn sang trái */
     width: 70%;
@@ -252,7 +252,7 @@ body {
 /* ==================== MOBILE SEARCH BAR (FIX LỖI DÒNG TRẮNG) ==================== */
 .mobile-search {
     position: fixed;
-    top: 70px;
+    top: 80px;
     /* Cách đỉnh trang một khoảng bằng chiều cao header */
     left: 0;
     width: 100%;
