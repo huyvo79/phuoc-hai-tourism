@@ -41,25 +41,24 @@
             </div>
 
             <!-- ===== BÀI VIẾT LIÊN QUAN ===== -->
+            <aside class="sidebar">
+                <h2>Bài viết liên quan</h2>
 
+                <div class="related-list">
+                    @forelse($post->relatedPosts as $related)
+                        <a href="{{ route('posts.show', $related->slug) }}" class="related-item">
+                            @if(!empty($related->thumbnail))
+                                <img src="{{ $related->thumbnail }}" alt="{{ $related->title }}">
+                            @endif
+                            <h4>{{ $related->title }}</h4>
+                        </a>
+                    @empty
+                        <p>Chưa có bài viết liên quan</p>
+                    @endforelse
+                </div>
+
+            </aside>
         </div>
     </div>
-    <aside class="sidebar">
-        <h2>Bài viết liên quan</h2>
-
-        <div class="related-list">
-            @forelse($post->relatedPosts as $related)
-                <a href="{{ route('posts.show', $related->slug) }}" class="related-item">
-                    @if(!empty($related->thumbnail))
-                        <img src="{{ $related->thumbnail }}" alt="{{ $related->title }}">
-                    @endif
-                    <h4>{{ $related->title }}</h4>
-                </a>
-            @empty
-                <p>Chưa có bài viết liên quan</p>
-            @endforelse
-        </div>
-
-    </aside>
 
 @endsection
