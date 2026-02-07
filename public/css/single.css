@@ -112,60 +112,59 @@ body {
 /* TITLE */
 .sidebar .related-item h4 {
     font-size: 1.15rem;
+      .container .content p {
+          font-size: 1.2rem;
+      }
 
-    .container .content p {
-        font-size: 1.2rem;
-    }
+      .sidebar .related-item img {
+          height: 220px;
+      }
 
-    .sidebar .related-item img {
-        height: 220px;
-    }
+      .sidebar .related-item h4 {
+          font-size: 1.5rem;
+          text-align: center;
+      }
+  }
 
-    .sidebar .related-item h4 {
-        font-size: 1.5rem;
-        text-align: center;
-    }
-}
+  /* ===== FIX HEADER CHO TRANG SINGLE ===== */
+  .page-single .header {
+      background: #ffffff;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, .08);
+  }
 
-/* ===== FIX HEADER CHO TRANG SINGLE ===== */
-.page-single .header {
-    background: #ffffff;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, .08);
-}
+  .page-single .logo,
+  .page-single .nav-menu a,
+  .page-single .search-btn,
+  .page-single .search-box input::placeholder {
+      color: var(--text-dark);
 
-.page-single .logo,
-.page-single .nav-menu a,
-.page-single .search-btn,
-.page-single .search-box input::placeholder {
-    color: var(--text-dark);
+  }
 
-}
+  .page-single .search-box {
+      border: 1px solid black;
+      border-radius: 20px;
+  }
 
-.page-single .search-box {
-    border: 1px solid black;
-    border-radius: 20px;
-}
+  .page-single .mobile-search-trigger {
+      color: var(--text-dark);
+  }
 
-.page-single .mobile-search-trigger {
-    color: var(--text-dark);
-}
+  .page-single .menu-toggle span {
+      background: var(--text-dark);
+  }
 
-.page-single .menu-toggle span {
-    background: var(--text-dark);
-}
-
-/* Chừa chỗ cho header fixed */
-.page-single .page-content {
-    padding-top: 100px;
-}
+  /* Chừa chỗ cho header fixed */
+  .page-single .page-content {
+      padding-top: 100px;
+  }
 
 .related-item h4 {
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-all;
-
+    -webkit-line-clamp: 2;        
+    -webkit-box-orient: vertical;  
+    overflow: hidden;             
+    text-overflow: ellipsis;       
+    word-break: break-all;        
+    
     margin-top: 10px;
     line-height: 1.4;
     color: #0f766e;
@@ -292,15 +291,7 @@ body {
         height: 2.8em;
     }
 
-    .content img {
-        max-width: 768px;
-        height: auto;
+    .content{
+        max-width: 77%;
     }
-
-    .content iframe {
-        max-width: 768px;
-        border-radius: 12px;
-    }
-
-
 }
