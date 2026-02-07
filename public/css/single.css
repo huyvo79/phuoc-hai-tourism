@@ -291,7 +291,7 @@ body {
         height: 2.8em;
     }
 
-    .content{
-        max-width: 70%;
+    .page-content{
+        max-width: 100%;
     }
 }
