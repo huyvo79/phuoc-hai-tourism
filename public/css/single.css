@@ -241,7 +241,7 @@ body {
 
         max-height: none;
         padding: 0 ;
-        max-width: 70%;
+        max-width: 90%;
 
         overflow-x: auto;
         overflow-y: hidden;
@@ -294,5 +294,8 @@ body {
 
     .page-content{
         max-width: 100%;
+    }
+    .container {
+        width: 100vw;
     }
 }
