@@ -319,4 +319,8 @@ body {
         flex-direction: column;
     }
 
+    .sidebar .related-item:last-of-type {
+        padding-right: 10px;
+    }
+
 }
