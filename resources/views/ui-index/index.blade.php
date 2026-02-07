@@ -18,10 +18,6 @@
                 phú</p>
             <a href="#explore" class="hero-btn">Bắt đầu hành trình</a>
         </div>
-        <div class="scroll-indicator">
-            <div class="mouse"></div>
-            <span>Cuộn xuống</span>
-        </div>
     </section>
 
     <section class="intro-section" id="explore">

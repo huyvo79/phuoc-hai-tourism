@@ -8,8 +8,10 @@
     </div>
 
     <div class="logo-group">
-        <img src="{{ asset('images/doan.png') }}" alt="Logo phụ 1" class="extra-logo1">
-        <img src="{{ asset('images/tnvn.png') }}" alt="Logo phụ 2" class="extra-logo2">
+        <div class="logo-images">
+            <img src="{{ asset('images/doan.png') }}" alt="Logo phụ 1" class="extra-logo1">
+            <img src="{{ asset('images/tnvn.png') }}" alt="Logo phụ 2" class="extra-logo2">
+        </div>
         <a href="/" class="logo">Phước Hải</a>
     </div>
 

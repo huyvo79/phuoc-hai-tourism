@@ -27,33 +27,53 @@ body {
 }
 
 /* --- LOGO --- */
-.logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 30px;
-    font-weight: 900;
-    color: var(--white);
-    text-decoration: none;
-    transition: color 0.3s ease;
-    white-space: nowrap;
-}
+/* --- SỬA ĐOẠN NÀY --- */
 
-/* Gom nhóm các logo để chúng nằm ngang hàng */
+/* 1. Canh chỉnh khối lớn: Xếp dọc (Cụm ảnh nằm trên, Chữ nằm dưới) */
 .logo-group {
     display: flex;
+    flex-direction: column;
+    /* Quan trọng: Xếp dọc */
     align-items: center;
-    /* Canh giữa theo chiều dọc */
+    /* Căn giữa */
+    justify-content: center;
     gap: 5px;
+    /* Khoảng cách giữa cụm ảnh và chữ */
 }
+
+/* 2. Canh chỉnh cụm ảnh: Xếp ngang (2 ảnh nằm cạnh nhau) */
+.logo-images {
+    display: flex;
+    /* Quan trọng: Để 2 ảnh nằm ngang */
+    align-items: center;
+    gap: 10px;
+    /* Khoảng cách giữa 2 ảnh */
+}
+
+/* 3. Chỉnh lại chữ cho nhỏ và đẹp hơn */
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    /* Giảm size chữ (trước là 30px) */
+    font-weight: 700;
+    color: var(--white);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1;
+}
+
+/* --- KẾT THÚC ĐOẠN SỬA --- */
 
 /* Chỉnh kích thước cho 2 logo nhỏ */
 .extra-logo1 {
-    height: 40px;
+    height: 60px;
     width: auto;
     object-fit: contain;
 }
 
 .extra-logo2 {
-    height: 35px;
+    height: 55px;
     width: auto;
     object-fit: contain;
 }
@@ -361,15 +381,18 @@ body {
 }
 
 /* --- RESPONSIVE MOBILE FIX (Quan trọng) --- */
+/* ==================== RESPONSIVE MOBILE FIX ==================== */
 @media (max-width: 1130px) {
     .header {
         display: grid;
-        /* Chia 3 cột: 50px (Menu) - Tự động (Logo) - 50px (Search) */
+        /* Chia 3 cột: Menu - Logo ở giữa - Search */
         grid-template-columns: 50px 1fr 50px;
         align-items: center;
         padding: 10px 20px;
-        height: 70px;
-        /* Cố định chiều cao */
+
+        /* QUAN TRỌNG: Đổi height cố định thành auto để header tự giãn khi logo và chữ xếp chồng */
+        height: auto;
+        min-height: 70px;
     }
 
     /* 1. Menu Toggle -> Cột 1 (Trái) */
@@ -378,29 +401,53 @@ body {
         grid-column: 1;
         justify-self: start;
         margin-right: 0;
-        /* Reset margin nếu có */
     }
 
-    /* 2. Logo -> Cột 2 (Giữa) */
+    /* 2. Logo Group -> Cột 2 (Giữa) */
     .logo-group {
         grid-column: 2;
         justify-self: center;
-        font-size: 24px;
+
+        /* Đảm bảo vẫn giữ flex column như PC */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+        /* Khoảng cách giữa ảnh và chữ hẹp hơn trên mobile cho gọn */
+    }
+
+    /* --- CHỈNH LOGO NHỎ LẠI TRÊN MOBILE --- */
+    /* Ghi đè kích thước ảnh cho mobile */
+    .extra-logo1 {
+        height: 40px;
+        /* PC là 60px, Mobile giảm còn 40px */
+    }
+
+    .extra-logo2 {
+        height: 35px;
+        /* PC là 55px, Mobile giảm còn 35px */
+    }
+
+    .logo-images {
+        gap: 8px;
+        /* Giảm khoảng cách giữa 2 ảnh */
+    }
+
+    /* Chữ Phước Hải trên mobile */
+    .logo {
+        font-size: 13px;
+        /* Giảm nhẹ chữ (PC 14px -> Mobile 13px) */
         white-space: nowrap;
-        position: static;
-        transform: none;
-        left: auto;
     }
 
     /* 3. Search Trigger -> Cột 3 (Phải) */
     .mobile-search-trigger {
         display: block;
-        /* Hiện nút này lên */
         grid-column: 3;
         justify-self: end;
     }
 
-    /* 4. Ẩn hoàn toàn Menu & Search của Desktop */
+    /* 4. Ẩn Menu & Search của Desktop */
     .nav-container,
     .search-box {
         display: none !important;
