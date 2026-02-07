@@ -70,7 +70,7 @@ body {
     /* hiển thị đúng 5 item */
     max-height: calc(5 * 240px + 12px * 4);
     overflow-y: auto;
-    padding-right: 6px;
+    padding: 0 16px;
 }
 
 /* scrollbar */
@@ -95,6 +95,9 @@ body {
     height: 240px;
     cursor: pointer;
     transition: transform 0.3s ease;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
 }
 
 .sidebar .related-item:hover {
@@ -106,7 +109,7 @@ body {
     width: 100%;
     height: 160px;
     object-fit: cover;
-    border-radius: 14px;
+    border-radius: 0px;
 }
 
 /* TITLE */
@@ -258,7 +261,7 @@ body {
 
     /* CARD MOBILE */
     .sidebar .related-list .related-item {
-        flex: 0 0 78%;
+        flex: 0 0 70%;
         min-width: 50px;
         height: auto;
         scroll-snap-align: start;
@@ -310,11 +313,4 @@ body {
         align-items: center;
     }
 
-    .container {
-        padding: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-    }
 }
