@@ -96,9 +96,6 @@ body {
     cursor: pointer;
     transition: transform 0.3s ease;
 }
-.sidebar .related-item:last-of-type {
-   padding-right: 50px;
-}
 
 .sidebar .related-item:hover {
     transform: translateY(-4px);
@@ -320,4 +317,9 @@ body {
         justify-content: center;
         flex-direction: column;
     }
+
+    .sidebar .related-item:last-of-type {
+        padding-right: 50px;
+    }
+
 }
