@@ -234,6 +234,7 @@ body {
         box-shadow: none;
         background: transparent;
         margin: auto;
+        width: 100vw;
     }
 
     /* RELATED LIST – VUỐT NGANG */
@@ -243,7 +244,7 @@ body {
 
         max-height: none;
         padding: 0;
-        max-width: 90%;
+        max-width: 100%;
 
         overflow-x: auto;
         overflow-y: hidden;
@@ -258,7 +259,7 @@ body {
 
     /* CARD MOBILE */
     .sidebar .related-list .related-item {
-        flex: 0 0 78%;
+        flex: 0 0 93%;
         min-width: 50px;
         height: auto;
         scroll-snap-align: start;
@@ -317,4 +318,9 @@ body {
         justify-content: center;
         flex-direction: column;
     }
+
+    .sidebar .related-item:last-of-type {
+        padding-right: 25px;
+    }
+
 }
