@@ -1,5 +1,5 @@
 let currentPage = window.postImageConfig.currentPage;
-let currentLimit = window.postImageConfig.currentLimit;
+let currentLimit = 5;
 let currentSearch = window.postImageConfig.currentSearch;
 
 document.addEventListener('DOMContentLoaded', () => {

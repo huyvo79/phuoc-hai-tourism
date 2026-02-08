@@ -12,7 +12,7 @@ class PostImageController extends Controller
 {
     public function index()
     {
-        $postImages = PostImage::with('post')->paginate(10);
+        $postImages = PostImage::with('post')->paginate(5);
         return response()->json($postImages);
     }
 

@@ -8,22 +8,23 @@ use Illuminate\Support\Facades\Storage;
 
 class PostImageController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $limit = request('limit', 5);
-        $search = request('search');
+        $limit = $request->input('limit') ? (int) $request->input('limit') : 5;
 
-        $query = PostImage::with('post');
+        $search = trim($request->input('search'));
+
+        $query = PostImage::query()->with('post');
 
         if ($search) {
-            $query->whereHas('post', function($q) use ($search) {
-                $q->where('title', 'like', '%' . $search . '%');
+            $query->whereHas('post', function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%");
             });
         }
 
-        $postImages = $query->paginate($limit)->appends(request()->query());
-
-        if (request()->ajax()) {
+        $query->latest();
+        $postImages = $query->paginate($limit)->withQueryString();
+        if ($request->ajax()) {
             return response()->json($postImages);
         }
 
