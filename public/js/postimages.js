@@ -73,13 +73,13 @@ function renderTable(postImages) {
 
         tbody.insertAdjacentHTML('beforeend', `
             <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4">${item.id}</td>
-                <td class="px-6 py-4">${item.post?.title ?? 'N/A'}</td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-1">${item.id}</td>
+                <td class="px-6 py-1">${item.post?.title ?? 'N/A'}</td>
+                <td class="px-6 py-1">
                     <img src="${window.postImageConfig.assetUrl}/${item.image}"
                          class="w-16 h-16 rounded object-cover">
                 </td>
-                <td class="px-6 py-4 text-right">
+                <td class="px-6 py-1 text-right">
                     <a href="${editUrl}" class="text-blue-600">Sửa</a>
                     <button onclick="openDeleteModal(${item.id}, '${item.post?.title ?? 'hình ảnh'}')"
                             class="text-red-600 ml-2">

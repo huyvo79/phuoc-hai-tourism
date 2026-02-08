@@ -1,23 +1,28 @@
-console.log('CATEGORY JS LOADED');
-
-
-
 const API_URL = window.CategoryConfig.apiUrl;
 const CSRF_TOKEN = window.CategoryConfig.csrfToken;
 
 let currentPage = 1;
-let perPage = 10;
-let search = '';
+let perPage = 5; // Lưu ý: Default API Controller nhận 5, JS nên khớp
+// let search = ''; // XÓA dòng này, gây nhầm lẫn
+let currentSearch = ''; // Chỉ dùng biến này
 let deleteId = null;
+let searchTimeout = null; // Khai báo searchTimeout ở đây để dùng chung
 
 document.addEventListener('DOMContentLoaded', () => {
     loadCategories();
 
+    // --- SỬA ĐOẠN NÀY ---
+    // Xóa đoạn searchInput.addEventListener('keyup'...) cũ ở đây đi
+    // để tránh xung đột với đoạn xử lý debounce bên dưới.
+    
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
-        searchInput.addEventListener('keyup', e => {
-            search = e.target.value;
-            loadCategories(1);
+        searchInput.addEventListener('input', function () {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                currentSearch = this.value.trim();
+                loadCategories(1); // Reset về trang 1 khi tìm kiếm
+            }, 400); // Debounce 400ms
         });
     }
 });
@@ -25,33 +30,33 @@ document.addEventListener('DOMContentLoaded', () => {
 function loadCategories(page = 1) {
     currentPage = page;
 
-    //search
     const params = new URLSearchParams({
         page: currentPage,
         per_page: perPage,
-        search: currentSearch
+        search: currentSearch // Biến này giờ đã được cập nhật đúng
     });
 
-    //
-    fetch(`${CategoryConfig.apiUrl}?${params.toString()}`)
+    fetch(`${API_URL}?${params.toString()}`) // Sửa CategoryConfig.apiUrl thành biến const đã khai báo cho ngắn gọn
         .then(async res => {
-            // 👇 nếu API trả lỗi (422, 400, 500…)
             if (!res.ok) {
                 const error = await res.json();
                 throw error;
             }
             return res.json();
         })
-
         .then(res => {
-            console.log('API RESPONSE:', res); // 👈 debug
-
-            // API trả về array => truyền thẳng
-            renderTable(res.data);
-
+            // API của bạn (Laravel Paginate Resource) thường trả về cấu trúc:
+            // { data: [...], current_page: 1, last_page: 5, total: 100, ... }
+            // Kiểm tra lại xem Controller trả về res hay res.data
+            
+            // Nếu Controller trả: return response()->json($paginator);
+            // Thì res.data là mảng categories.
+            renderTable(res.data); 
             renderPagination(res);
-
-            document.getElementById('pageTotal').innerText = res.total;
+            
+            if(document.getElementById('pageTotal')) {
+                document.getElementById('pageTotal').innerText = res.total;
+            }
         })
         .catch(err => console.error(err));
 }
@@ -365,21 +370,6 @@ function changePerPage(value) {
     perPage = value;
     loadCategories(1);
 }
-
-//search
-const searchInput = document.getElementById('searchInput');
-
-let searchTimeout = null;
-let currentSearch = '';
-
-searchInput.addEventListener('input', function () {
-    clearTimeout(searchTimeout);
-
-    searchTimeout = setTimeout(() => {
-        currentSearch = this.value.trim();
-        loadCategories(1); // search là về trang 1
-    }, 400); // debounce 400ms
-});
 
 /* Modal helper */
 function toggleModal(modalID) {

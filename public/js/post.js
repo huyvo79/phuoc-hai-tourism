@@ -1,5 +1,5 @@
 let currentPage = 1;
-let currentLimit = 10;
+let currentLimit = 5;
 let currentSearch = '';
 
 document.addEventListener('DOMContentLoaded', function() {

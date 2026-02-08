@@ -6,7 +6,8 @@ use App\Models\Category;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 
-class CategoryRepository implements CategoryRepositoryInterface{
+class CategoryRepository implements CategoryRepositoryInterface
+{
     public function getAll()
     {
         return Category::all();
@@ -15,49 +16,24 @@ class CategoryRepository implements CategoryRepositoryInterface{
 
     public function paginate(array $filters = [], int $perPage = 5)
     {
-        $query = Category::where('id', '!=', 1)
-            ->orderBy('id', 'desc');
+        return Category::query()
+            // 1. Giữ điều kiện loại trừ ID = 1
+            ->where('id', '!=', 1)
 
-        $categories = $query->get();
+            // 2. Áp dụng tìm kiếm trực tiếp trong SQL (tương tự hàm User)
+            ->when($filters['search'] ?? null, function ($query, $search) {
+                $search = trim($search);
+                // Lưu ý: Hầu hết các collation trong MySQL (như utf8_unicode_ci) 
+                // đều tự động hỗ trợ tìm kiếm không dấu (gõ 'a' tìm được cả 'á').
+                $query->where('name', 'LIKE', "%{$search}%");
+            })
 
-        if (!empty($filters['search'])) {
+            // 3. Sắp xếp
+            ->orderBy('id', 'desc')
 
-            $searchRaw = mb_strtolower(trim($filters['search']), 'UTF-8');
-            $searchAscii = Str::ascii($searchRaw);
-            $hasAccent   = $searchRaw !== $searchAscii;
-
-            $categories = $categories->filter(function ($item) use ($searchRaw, $searchAscii, $hasAccent) {
-
-                $nameRaw   = mb_strtolower($item->name, 'UTF-8');
-                $nameAscii = Str::ascii($nameRaw);
-
-                // ✅ nếu user gõ CÓ DẤU → chỉ match raw
-                if ($hasAccent) {
-                    return str_contains($nameRaw, $searchRaw);
-                }
-
-                // ✅ nếu user gõ KHÔNG DẤU → match cả 2
-                return str_contains($nameRaw, $searchRaw)
-                    || str_contains($nameAscii, $searchAscii);
-            });
-        }
-
-
-        // paginate collection thủ công
-        $page = request('page', 1);
-        $total = $categories->count();
-
-        $items = $categories
-            ->slice(($page - 1) * $perPage, $perPage)
-            ->values();
-
-        return new \Illuminate\Pagination\LengthAwarePaginator(
-            $items,
-            $total,
-            $perPage,
-            $page,
-            ['path' => request()->url(), 'query' => request()->query()]
-        );
+            // 4. Phân trang trực tiếp từ Database
+            ->paginate($perPage)
+            ->withQueryString(); // Giữ lại các tham số trên URL (như ?search=...) khi chuyển trang
     }
 
     public function find(int $id): ?Category
@@ -74,7 +50,8 @@ class CategoryRepository implements CategoryRepositoryInterface{
     {
         $category = Category::find($id);
 
-        if(!$category) return false;
+        if (!$category)
+            return false;
 
         return $category->update($data);
     }
@@ -83,7 +60,8 @@ class CategoryRepository implements CategoryRepositoryInterface{
     {
         $category = Category::find($id);
 
-        if(!$category) return false;
+        if (!$category)
+            return false;
 
         return $category->delete($id);
     }

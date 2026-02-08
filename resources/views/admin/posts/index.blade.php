@@ -66,8 +66,8 @@
                     <span class="hidden sm:inline">Hiển thị</span>
                     <select onchange="changeLimit(this.value)"
                         class="block w-14 rounded-lg border-gray-300 py-1.5 text-sm text-indigo-600 font-medium shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white border cursor-pointer">
-                        <option value="5">5</option>
-                        <option value="10" selected>10</option>
+                        <option value="5" selected>5</option>
+                        <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
                     </select>
