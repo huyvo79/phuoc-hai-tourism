@@ -22,7 +22,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $limit = $request->input('limit', 10);
+        $limit = $request->input('limit', 5);
 
         $query = Post::with('category')
             ->when($search, function ($q) use ($search) {

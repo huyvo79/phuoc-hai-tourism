@@ -10,7 +10,7 @@ class PostImageController extends Controller
 {
     public function index()
     {
-        $limit = request('limit', 10);
+        $limit = request('limit', 5);
         $search = request('search');
 
         $query = PostImage::with('post');

@@ -32,7 +32,7 @@
                     </div>
                     <input type="text" id="searchInput"
                         class="block w-full p-2.5 pl-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-white focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
-                        placeholder="Tìm theo tên hoặc username...">
+                        placeholder="Tìm theo tên hoặc tên đăng nhập...">
                 </div>
 
                 {{-- Nút Thêm mới --}}
