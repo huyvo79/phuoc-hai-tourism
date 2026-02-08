@@ -28,6 +28,10 @@ Route::prefix('admin')->group(function () {
 
         Route::get('users', fn() => view('crud-user.list'))->name('user.list');
 
+        Route::get('/chat', function () {
+            return view('chat.chat');
+        })->name('admin.chat');
+
         Route::resource('posts', PostController::class);
 
         Route::resource('post-images', \App\Http\Controllers\PostImageController::class);
