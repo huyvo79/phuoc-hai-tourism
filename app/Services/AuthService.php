@@ -16,6 +16,8 @@ class AuthService implements AuthServiceInterface
 
     public function login(array $credentials): array
     {
+        $this->guard()->factory()->setTTL(1440);
+
         if (!$token = $this->guard()->attempt($credentials)) {
             throw new AuthenticationException('Tài khoản hoặc mật khẩu không chính xác.');
         }
