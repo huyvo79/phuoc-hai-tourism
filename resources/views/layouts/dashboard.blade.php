@@ -14,7 +14,7 @@
 
 <body class="bg-slate-900 text-white">
     <div class="flex min-h-screen">
-        <aside class="w-64 bg-slate-800/50 backdrop-blur-xl border-r border-white/10 flex flex-col">
+        <aside class="w-55 bg-slate-800/50 backdrop-blur-xl border-r border-white/10 flex flex-col">
             <div class="p-6 text-center border-b border-white/10">
                 <a href="/"
                     class="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg shadow-purple-500/30">
@@ -79,12 +79,10 @@
                     <span class="flex-1">Tin nhắn khách</span>
 
                     {{-- Badge thông báo (Có thể ẩn hiện bằng JS sau này) --}}
-                    {{-- <span
-                        class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg shadow-red-500/30">Mới</span>
-                    --}}
-                </a>
+                    <!-- <span
+                        class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg shadow-red-500/30">Mới</span> -->
 
-                <div class="border-t border-white/10 my-4"></div>
+                </a>
 
                 {{-- 5. TÀI KHOẢN ADMIN (Phần bạn đang làm) --}}
                 <a href="{{ route('user.list') }}"
@@ -116,7 +114,7 @@
         </aside>
 
         <main class="flex-1 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-            <div class="p-8 flex-1">
+            <div class="p-1 flex-1">
                 @yield('content')
             </div>
         </main>
