@@ -72,17 +72,18 @@
 
             <div class="border-t border-slate-800 pt-8 text-center">
                 <p class="text-sm text-slate-500">
-                    &copy; 2026 PhuocHai. Tất cả quyền được bảo lưu.
+                    &copy; 2026 PhuocHai & TDC
                 </p>
             </div>
         </div>
     </footer>
-    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-4 font-sans">
 
+    <div class="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[9999] flex flex-col items-end space-y-2 font-sans">
         <div id="chat-box"
-            class="hidden w-[350px] h-[450px] bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl flex flex-col overflow-hidden ring-1 ring-white/10 transition-all duration-300 transform origin-bottom-right">
-
-            <div class="bg-gradient-to-r from-blue-600 to-cyan-500 p-4 flex justify-between items-center shadow-lg">
+            class="hidden w-[calc(100vw-32px)] h-[80vh] md:w-[350px] md:h-[450px] bg-slate-900 border border-slate-700
+         rounded-2xl shadow-2xl flex flex-col overflow-hidden ring-1 ring-white/10 transition-all duration-300 transform origin-bottom-right">
+            <div
+                class="bg-gradient-to-r from-blue-600 to-cyan-500 p-2 flex justify-between items-center shadow-lg shrink-0">
                 <div class="flex items-center gap-3">
                     <div class="relative">
                         <div
@@ -93,7 +94,7 @@
                             class="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-blue-600 rounded-full"></span>
                     </div>
                     <div>
-                        <h4 class="font-bold text-white text-sm">Hỗ trợ Phước Hải</h4>
+                        <h4 class="font-bold text-white text-sm">Admin hỗ trợ</h4>
                         <p class="text-xs text-blue-100">Chúng tôi đang online</p>
                     </div>
                 </div>
@@ -105,149 +106,34 @@
 
             <div class="flex-1 bg-slate-800 p-4 overflow-y-auto space-y-4 scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-transparent"
                 id="chat-messages">
-
-                <div class="flex items-end gap-2">
-                    <div
-                        class="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 text-xs shrink-0">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <div
-                        class="bg-slate-700/50 text-slate-200 px-4 py-2 rounded-2xl rounded-bl-none max-w-[80%] text-sm border border-white/5">
-                        Xin chào! Tôi có thể giúp gì cho bạn khi đến tham quan Phước Hải ạ?
-                    </div>
-                </div>
-
-                <div class="flex items-end gap-2 justify-end">
-                    <div
-                        class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-2xl rounded-br-none max-w-[80%] text-sm shadow-lg shadow-blue-500/20">
-                        Cho mình hỏi đường đến chợ hải sản với?
-                    </div>
-                </div>
+                <!-- Tin nhắn sẽ hiển thị ở đây -->
             </div>
 
-            <div class="p-3 bg-slate-900 border-t border-slate-700">
+            <div class="p-2 bg-slate-900 border-t border-slate-700 shrink-0">
                 <form id="chat-form" class="flex gap-2">
                     <input type="text" placeholder="Nhập tin nhắn..."
                         class="flex-1 bg-slate-800 text-slate-200 text-sm rounded-xl px-4 py-3 focus:outline-none focus:ring-1 focus:ring-cyan-500 border border-slate-700 placeholder-slate-500">
-                    <button type="button"
+                    <button type="submit"
                         class="bg-cyan-500 hover:bg-cyan-400 text-white w-12 rounded-xl flex items-center justify-center transition-all shadow-lg shadow-cyan-500/20">
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </form>
-                <div class="text-center mt-2">
-                    <p class="text-[10px] text-slate-500">Được hỗ trợ bởi Phước Hải Travel</p>
-                </div>
             </div>
         </div>
 
         <button onclick="toggleChat()" id="chat-toggle-btn"
-            class="group w-14 h-14 bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/40 hover:scale-110 transition-all duration-300 ring-4 ring-slate-900 relative">
-            <i class="fas fa-comment-dots text-2xl text-white group-hover:rotate-12 transition-transform"></i>
+            class="group w-10 h-10 md:w-14 md:h-14 bg-gradient-to-r from-cyan-400 to-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/40 hover:scale-110 transition-all duration-300 ring-4 ring-slate-900 relative z-50">
 
-            <span
-                class="absolute top-0 right-0 w-4 h-4 bg-red-500 border-2 border-slate-900 rounded-full animate-bounce"></span>
+            <i
+                class="fas fa-comment-dots text-xl md:text-2xl text-white group-hover:rotate-12 transition-transform"></i>
+
+            <span id="chat-notification"
+                class="hidden absolute top-0 right-0 w-3 h-3 md:w-4 md:h-4 bg-red-500 border-2 border-slate-900 rounded-full animate-bounce">
+            </span>
         </button>
     </div>
 
-    <script type="module">
-        document.addEventListener('DOMContentLoaded', function () {
-            // 1. Định danh Khách (Tạo UUID nếu chưa có)
-            let guestId = localStorage.getItem('chat_session_id');
-            if (!guestId) {
-                guestId = crypto.randomUUID();
-                localStorage.setItem('chat_session_id', guestId);
-            }
-
-            // 2. Load lịch sử chat cũ (nếu khách F5 trang)
-            const chatContainer = document.getElementById('chat-messages');
-            fetch(`/api/chat/history/${guestId}`)
-                .then(res => res.json())
-                .then(messages => {
-                    chatContainer.innerHTML = ''; // Clear mẫu
-                    messages.forEach(msg => {
-                        appendClientMessage(msg.message, msg.is_admin ? 'admin' : 'guest');
-                    });
-                });
-
-            // 3. Lắng nghe tin nhắn từ Admin (Reverb)
-            window.Echo.channel(`chat.${guestId}`)
-                .listen('MessageSent', (e) => {
-                    console.log('Tin mới:', e);
-                    // Nếu tin nhắn là của admin thì hiển thị
-                    if (e.is_admin) {
-                        appendClientMessage(e.message, 'admin');
-                        // Mở box chat lên nếu đang đóng và có tin nhắn tới
-                        const chatBox = document.getElementById('chat-box');
-                        if (chatBox.classList.contains('hidden')) {
-                            toggleChat();
-                        }
-                    }
-                });
-
-            // 4. Xử lý gửi tin nhắn
-            const form = document.getElementById('chat-form');
-            const input = form.querySelector('input');
-
-            form.addEventListener('submit', function (e) {
-                e.preventDefault(); // Chặn load lại trang
-                const message = input.value.trim();
-                if (!message) return;
-
-                // Hiển thị ngay lên giao diện
-                appendClientMessage(message, 'guest');
-                input.value = '';
-
-                // Gửi API lên Server
-                fetch('/api/chat/guest-send', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        session_id: guestId,
-                        message: message
-                    })
-                })
-                    .catch(error => console.error('Lỗi:', error));
-            });
-        });
-
-        // Hàm Toggle Box Chat
-        window.toggleChat = function () {
-            const chatBox = document.getElementById('chat-box');
-            chatBox.classList.toggle('hidden');
-        }
-
-        // Hàm vẽ tin nhắn cho Client
-        function appendClientMessage(text, sender) {
-            const container = document.getElementById('chat-messages');
-            let html = '';
-
-            if (sender === 'admin') {
-                html = `
-                <div class="flex items-end gap-2">
-                    <div class="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 text-xs shrink-0">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <div class="bg-slate-700/50 text-slate-200 px-4 py-2 rounded-2xl rounded-bl-none max-w-[80%] text-sm border border-white/5">
-                        ${text}
-                    </div>
-                </div>`;
-            } else {
-                html = `
-                <div class="flex items-end gap-2 justify-end">
-                    <div class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-2xl rounded-br-none max-w-[80%] text-sm shadow-lg shadow-blue-500/20">
-                        ${text}
-                    </div>
-                </div>`;
-            }
-
-            container.insertAdjacentHTML('beforeend', html);
-            container.scrollTop = container.scrollHeight;
-        }
-    </script>
-
+    <script type="module" src="/js/chat-widget.js"></script>
 </body>
 
 </html>
