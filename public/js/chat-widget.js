@@ -14,7 +14,10 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(messages => {
                 chatContainer.innerHTML = '';
                 messages.forEach(msg => {
-                    appendClientMessage(msg.message, msg.is_admin ? 'admin' : 'guest');
+                    // --- SỬA Ở ĐÂY: Ép kiểu để nhận diện đúng Admin/Guest ---
+                    const isAdmin = (msg.is_admin == 1 || msg.is_admin === 'true' || msg.is_admin === true);
+
+                    appendClientMessage(msg.message, isAdmin ? 'admin' : 'guest');
                 });
             })
             .catch(err => console.error("Lỗi tải lịch sử:", err));
@@ -26,32 +29,46 @@ document.addEventListener('DOMContentLoaded', function () {
             .listen('MessageSent', (e) => {
                 console.log('Tin mới:', e);
 
-                if (e.is_admin) {
+                // --- SỬA Ở ĐÂY: Kiểm tra kỹ lưỡng biến is_admin ---
+                const isAdmin = (e.is_admin == 1 || e.is_admin === 'true' || e.is_admin === true);
+
+                // Chỉ hiện thông báo/append tin nhắn NẾU ĐÚNG LÀ ADMIN
+                if (isAdmin) {
                     appendClientMessage(e.message, 'admin');
 
                     // Lấy element khung chat và chấm đỏ
                     const chatBox = document.getElementById('chat-box');
                     const notificationDot = document.getElementById('chat-notification');
 
-                    // Logic mới: Nếu chat đang đóng thì hiện chấm đỏ
+                    // Logic: Nếu chat đang đóng thì hiện chấm đỏ
                     if (chatBox && chatBox.classList.contains('hidden')) {
                         if (notificationDot) {
                             notificationDot.classList.remove('hidden'); // HIỆN chấm đỏ
                         }
                     }
                 }
+                // Nếu không phải admin (tức là tin của chính mình gửi từ tab khác), 
+                // bạn có thể handle thêm ở đây nếu muốn, nhưng thường thì không cần 
+                // vì form submit đã append rồi.
             });
     }
 
-    // ... (Phần 4: Xử lý gửi tin - Giữ nguyên) ...
+    // 4. Xử lý gửi tin (Không đổi)
     const form = document.getElementById('chat-form');
     if (form) {
-        const input = form.querySelector('input');
+        // Tìm input bên trong form (đề phòng form không có id input cụ thể)
+        const input = form.querySelector('input') || document.getElementById('chat-input');
+
         form.addEventListener('submit', function (e) {
             e.preventDefault();
+
+            // Nếu không tìm thấy input thì return
+            if (!input) return;
+
             const message = input.value.trim();
             if (!message) return;
 
+            // Tin mình gửi thì luôn là 'guest'
             appendClientMessage(message, 'guest');
             input.value = '';
 
@@ -70,47 +87,37 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// Hàm Toggle Box Chat
+// Hàm Toggle Box Chat (Giữ nguyên)
 window.toggleChat = function () {
     const chatBox = document.getElementById('chat-box');
-    const chatMessages = document.getElementById('chat-messages'); // Lấy khung chứa tin nhắn
-    const notificationDot = document.getElementById('chat-notification'); // Lấy chấm đỏ
+    const chatMessages = document.getElementById('chat-messages');
+    const notificationDot = document.getElementById('chat-notification');
 
     if (chatBox) {
-        // Kiểm tra xem hiện tại đang ẩn hay hiện
         const isHidden = chatBox.classList.contains('hidden');
 
         if (isHidden) {
-            // 1. Mở Chat
             chatBox.classList.remove('hidden');
-
-            // 2. Ẩn chấm đỏ thông báo (nếu có)
-            if (notificationDot) {
-                notificationDot.classList.add('hidden');
-            }
-
-            // 3. Cuộn xuống dưới cùng
-            // Dùng setTimeout để đảm bảo DOM đã hiển thị xong chiều cao mới cuộn được
+            if (notificationDot) notificationDot.classList.add('hidden');
             if (chatMessages) {
                 setTimeout(() => {
                     chatMessages.scrollTop = chatMessages.scrollHeight;
                 }, 0);
             }
-
         } else {
-            // Đóng Chat
             chatBox.classList.add('hidden');
         }
     }
 }
 
-// ... (Hàm appendClientMessage - Giữ nguyên) ...
+// Hàm appendClientMessage (Giữ nguyên logic render)
 function appendClientMessage(text, sender) {
     const container = document.getElementById('chat-messages');
     if (!container) return;
 
     let html = '';
     if (sender === 'admin') {
+        // ADMIN: Bên trái, màu xám/tối
         html = `
         <div class="flex items-end gap-2">
             <div class="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 text-xs shrink-0">
@@ -121,6 +128,7 @@ function appendClientMessage(text, sender) {
             </div>
         </div>`;
     } else {
+        // GUEST (Mình): Bên phải, màu xanh
         html = `
         <div class="flex items-end gap-2 justify-end">
             <div class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-2xl rounded-br-none max-w-[80%] text-sm shadow-lg shadow-blue-500/20">
