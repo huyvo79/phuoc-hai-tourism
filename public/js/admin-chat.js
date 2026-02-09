@@ -131,7 +131,13 @@ window.selectGuest = function (id, name) {
         .then(msgs => {
             if (bodyEl) {
                 bodyEl.innerHTML = '';
-                msgs.forEach(msg => appendMessage(msg.message, msg.is_admin ? 'admin' : 'guest'));
+                msgs.forEach(msg => {
+                    // Ép kiểu: So sánh lỏng (==) với 1 để bắt cả số 1 và chuỗi "1"
+                    // Hoặc kiểm tra true/false rõ ràng
+                    const isAdmin = (msg.is_admin == 1 || msg.is_admin === 'true' || msg.is_admin === true);
+
+                    appendMessage(msg.message, isAdmin ? 'admin' : 'guest');
+                });
                 bodyEl.scrollTop = bodyEl.scrollHeight;
             }
         });
@@ -140,7 +146,13 @@ window.selectGuest = function (id, name) {
         window.Echo.leaveAllChannels();
         window.Echo.channel(`chat.${id}`)
             .listen('MessageSent', (e) => {
-                if (!e.is_admin) appendMessage(e.message, 'guest');
+                // Ép kiểu tương tự
+                const isAdmin = (e.is_admin == 1 || e.is_admin === 'true' || e.is_admin === true);
+
+                // Nếu KHÔNG phải admin thì mới append vào bên khách (hoặc logic tùy bạn)
+                if (!isAdmin) {
+                    appendMessage(e.message, 'guest');
+                }
                 loadSessions();
             });
     }
