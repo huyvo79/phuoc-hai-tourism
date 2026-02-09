@@ -20,23 +20,34 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(err => console.error("Lỗi tải lịch sử:", err));
     }
 
-    // 3. Lắng nghe tin nhắn từ Admin (Reverb)
+    // 3. Lắng nghe tin nhắn từ Admin (Pusher)
     if (window.Echo) {
+        // Lưu ý: Đảm bảo guestId đã được lấy ở Bước 1 trong code của bạn
         window.Echo.channel(`chat.${guestId}`)
-            .listen('MessageSent', (e) => {
-                console.log('Tin mới:', e);
+            .listen('.MessageSent', (e) => { // Thêm dấu "." trước MessageSent
+                console.log('Dữ liệu nhận được:', e);
 
-                if (e.is_admin) {
-                    appendClientMessage(e.message, 'admin');
+                // Kiểm tra cấu trúc: e.message hoặc e.content tùy theo Event Laravel của bạn
+                // Ở đây tôi dùng e.message theo code cũ của bạn
+                const messageText = e.message;
+                const isAdmin = e.is_admin;
 
-                    // Lấy element khung chat và chấm đỏ
+                if (isAdmin) {
+                    appendClientMessage(messageText, 'admin');
+
+                    // Tự động cuộn xuống khi có tin mới
+                    const chatContainer = document.getElementById('chat-messages');
+                    if (chatContainer) {
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                    }
+
+                    // Logic hiện chấm đỏ nếu đang đóng
                     const chatBox = document.getElementById('chat-box');
                     const notificationDot = document.getElementById('chat-notification');
 
-                    // Logic mới: Nếu chat đang đóng thì hiện chấm đỏ
                     if (chatBox && chatBox.classList.contains('hidden')) {
                         if (notificationDot) {
-                            notificationDot.classList.remove('hidden'); // HIỆN chấm đỏ
+                            notificationDot.classList.remove('hidden');
                         }
                     }
                 }
