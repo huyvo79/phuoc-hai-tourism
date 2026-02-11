@@ -4,46 +4,53 @@
 @section('body_class', 'page-single')
 
 @section('content')
-
     <link rel="stylesheet" href="{{ asset('css/single.css') }}">
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
+    <style>
+        /* CSS bổ sung để đảm bảo video luôn responsive */
+        .post-main-content iframe {
+            max-width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+        }
+    </style>
+
     <div class="page-content">
         <div class="container">
-
-            <!-- ===== BÀI VIẾT CHÍNH ===== -->
-            <div class="content">
-
+            <div class="content post-main-content">
                 {{-- Title --}}
                 <h1>{{ $post->title }}</h1>
 
                 {{-- Thumbnail --}}
                 @if(!empty($post->thumbnail))
-                    <img src="{{ $post->thumbnail }}" alt="{{ $post->title }}">
+                    <div class="main-thumbnail">
+                        <img src="{{ $post->thumbnail }}" alt="{{ $post->title }}" style="width: 100%; height: auto;">
+                    </div>
                 @endif
 
-                {{-- Nội dung bài viết (HTML từ CKEditor) --}}
-                @if(!empty($post->content))
-                    {!! $post->content !!}
-                @else
-                    <p>Nội dung đang được cập nhật.</p>
-                @endif
+                {{-- Nội dung bài viết: Render video/HTML từ TinyMCE --}}
+                <div class="article-body">
+                    @if(!empty($post->content))
+                        {!! $post->content !!}
+                    @else
+                        <p>Nội dung đang được cập nhật.</p>
+                    @endif
+                </div>
 
-                {{-- Google Map (nếu có iframe lưu trong DB) --}}
+                {{-- Google Map --}}
                 @if(!empty($post->latitude) && !empty($post->longitude))
-                    <iframe width="100%" height="400" style="border:0" loading="lazy" allowfullscreen
-                        src="https://www.google.com/maps?q={{ $post->latitude }},{{ $post->longitude }}&output=embed">
-                    </iframe>
+                    <div class="map-container" style="margin-top: 30px;">
+                        <iframe width="100%" height="400" style="border:0" loading="lazy" allowfullscreen
+                            src="https://maps.google.com/maps?q={{ $post->latitude }},{{ $post->longitude }}&hl=vi&z=14&output=embed">
+                        </iframe>
+                    </div>
                 @endif
-
-
             </div>
 
-            <!-- ===== BÀI VIẾT LIÊN QUAN ===== -->
             <aside class="sidebar">
                 <h2>Bài viết liên quan</h2>
-
                 <div class="related-list">
                     @forelse($post->relatedPosts as $related)
                         <a href="{{ route('posts.show', $related->slug) }}" class="related-item">
@@ -56,9 +63,7 @@
                         <p>Chưa có bài viết liên quan</p>
                     @endforelse
                 </div>
-
             </aside>
         </div>
     </div>
-
 @endsection
