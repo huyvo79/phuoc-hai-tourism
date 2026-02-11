@@ -17,7 +17,7 @@ class StorePostRequest extends FormRequest
             'title' => 'required|string|max:255',
             'summary' => 'nullable|string|max:500',
             'content' => 'required|string',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10048',
             'priority' => 'nullable|integer|min:0',
             'category_id' => 'required|exists:categories,id',
             'latitude' => 'nullable|numeric|between:-90,90',
@@ -43,7 +43,7 @@ class StorePostRequest extends FormRequest
 
             'thumbnail.image' => 'File tải lên phải là định dạng hình ảnh.',
             'thumbnail.mimes' => 'Ảnh bìa chỉ hỗ trợ các định dạng: jpeg, png, jpg, gif.',
-            'thumbnail.max' => 'Dung lượng ảnh bìa không được vượt quá 2MB.',
+            'thumbnail.max' => 'Dung lượng ảnh bìa không được vượt quá 10MB.',
 
             'priority.integer' => 'Độ ưu tiên phải là một số nguyên.',
             'priority.min' => 'Độ ưu tiên không được là số âm.',
