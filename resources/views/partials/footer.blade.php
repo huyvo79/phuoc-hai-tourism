@@ -52,7 +52,7 @@
                     </p>
 
                     <div class="flex gap-4">
-                        <a href="#"
+                        <a href="https://www.facebook.com/profile.php?id=100089265742458"
                             class="group w-10 h-10 flex items-center justify-center rounded-lg bg-slate-800 text-slate-400 hover:bg-blue-600 hover:text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/30 ring-1 ring-white/5">
                             <i class="fa-brands fa-facebook-f text-xl"></i>
                         </a>
