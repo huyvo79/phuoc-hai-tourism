@@ -20,7 +20,7 @@
             <li><a href="/#location-highlights">Điểm đến nổi bật</a></li>
             <li><a href="/#categories">khám phá</a></li>
             <li><a href="/#contact">Liên hệ</a></li>
-            <li><a href="{{ asset('archive') }}">Danh Mục</a></li>
+            <li><a href="{{ asset('archive') }}">Danh mục</a></li>
         </ul>
     </nav>
 
