@@ -28,7 +28,7 @@
 
                 <div class="flex flex-col justify-start">
                     <h3 class="text-white text-2xl font-bold mb-6 tracking-tight">
-                        Chào mừng bạn đến với xã Phước Hải!
+                        Chào mừng bạn đến với xã Phước Hải 
                         <span class="text-cyan-400">.</span>
                     </h3>
                     <p class="text-base leading-relaxed text-slate-400 max-w-md border-l-2 border-cyan-500/30 pl-4">
@@ -43,12 +43,12 @@
                     </h3>
 
                     <p class="text-base leading-relaxed text-slate-400 mb-6 max-w-lg">
-                        Mọi thông tin góp ý liên hệ qua Đoàn cơ sở xã Phước Hải, hoặc qua sdt
-                        <a href="tel:0962110192"
+                        Mọi thông tin góp ý, liên hệ qua Đoàn Thanh niên xã Phước Hải <br>
+                        qua đồng chí Trần Văn Trung - Phó Bí thư Đoàn xã,
+                        <a href="tel:0962 110 192"
                             class="text-cyan-400 font-bold hover:text-cyan-300 transition-colors inline-block border-b border-transparent hover:border-cyan-300">
                             0962 110 192
                         </a>
-                        (Trung – Chuyên viên MTTQ)
                     </p>
 
                     <div class="flex gap-4">

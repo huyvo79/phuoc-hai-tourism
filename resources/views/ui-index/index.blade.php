@@ -13,7 +13,7 @@
         </video>
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1>Khám Phá Vẻ Đẹp Phước Hải</h1>
+            <h1>Khám phá vẻ đẹp Phước Hải</h1>
             <p>Hành trình khám phá xã Phước Hải, với những cảnh quan thiên nhiên tuyệt đẹp, văn hóa đa dạng và ẩm thực phong
                 phú</p>
             <a href="#explore" class="hero-btn">Bắt đầu hành trình</a>
@@ -31,7 +31,7 @@
             <div class="intro-content">
                 <span class="intro-label">Về Phước Hải</span>
 
-                <h2>Viên ngọc thô của <span>Bà Rịa - Vũng Tàu</span></h2>
+                <h2>Viên ngọc thô của <span>Thành phố Hồ Chí Minh</span></h2>
 
                 <p>
                     Không ồn ào như Vũng Tàu, Phước Hải mang vẻ đẹp bình dị của một làng chài có tuổi đời hơn trăm năm.
