@@ -33,7 +33,7 @@
 
                 <h2>Viên ngọc thô của <span>Thành phố Hồ Chí Minh</span></h2>
 
-                <p>
+                <p class="text-justify text-base leading-relaxed text-slate-700" >
                     Không ồn ào như Vũng Tàu, Phước Hải mang vẻ đẹp bình dị của một làng chài có tuổi đời hơn trăm năm.
                     Nơi đây được mệnh danh là "thủ phủ cá khô", sở hữu cung đường biển đẹp như mơ và những bờ kè chắn sóng
                     đầy chất thơ, thu hút hàng triệu tín đồ du lịch bụi mỗi năm.

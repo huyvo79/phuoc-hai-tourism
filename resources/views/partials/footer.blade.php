@@ -43,11 +43,11 @@
                     </h3>
 
                     <p class="text-base leading-relaxed text-slate-400 mb-6 max-w-lg">
-                        Mọi thông tin góp ý, liên hệ qua Đoàn Thanh niên xã Phước Hải <br>
+                        Mọi thông tin góp ý, liên hệ qua Đoàn Thanh niên xã Phước Hải
                         qua đồng chí Trần Văn Trung - Phó Bí thư Đoàn xã,
                         <a href="tel:0962 110 192"
                             class="text-cyan-400 font-bold hover:text-cyan-300 transition-colors inline-block border-b border-transparent hover:border-cyan-300">
-                            0962 110 192
+                            Số điện thoại: 0962 110 192
                         </a>
                     </p>
 
