@@ -62,7 +62,7 @@
                             <i class="fa-brands fa-instagram text-xl"></i>
                         </a>
 
-                        <a href="#"
+                        <a href="https://www.tiktok.com/@ctytnhh_nature_me?_r=1&_t=ZS-94lW2T0Hm44"
                             class="group w-10 h-10 flex items-center justify-center rounded-lg bg-slate-800 text-slate-400 hover:bg-black hover:text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-gray-900/30 ring-1 ring-white/5">
                             <i class="fa-brands fa-tiktok text-xl"></i>
                         </a>
