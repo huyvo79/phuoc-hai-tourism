@@ -23,9 +23,9 @@
     <section class="intro-section" id="explore">
         <div class="intro-container">
             <div class="intro-images">
-                <img src="{{ asset('images/du-lich-phuoc-hai-vung-tau.jpg') }}" alt="Du Lịch Phước Hải"
+                <img src="{{ asset('images/phuochaimain.jpg') }}" alt="Du Lịch Phước Hải"
                     class="intro-img-main">
-                <img src="{{ asset('images/phuot-phuoc-hai-vung-tau.jpg') }}" alt="Du Lịch Phước Hải"
+                <img src="{{ asset('images/phuochaisub.jpg') }}" alt="Du Lịch Phước Hải"
                     class="intro-img-secondary">
             </div>
             <div class="intro-content">
