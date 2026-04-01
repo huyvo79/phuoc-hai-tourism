@@ -152,12 +152,15 @@
 <script>
 tinymce.init({
     selector: '#content-editor',
-    license_key: 'gpl',
+    license_key: 'gpl', 
     height: 500,
-    plugins: 'image link lists table code preview fullscreen wordcount',
-    toolbar: 'undo redo | blocks | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image | code preview fullscreen',
+    plugins: 'image link lists table code preview fullscreen wordcount media', 
+    toolbar: 'undo redo | blocks | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image media | code preview fullscreen',
     branding: false,
     paste_data_images: true,
+
+    media_live_embeds: true,
+    extended_valid_elements: 'iframe[src|frameborder|style|scrolling|key|width|height|allowfullscreen]',
 
     file_picker_types: 'image',
     file_picker_callback: function (cb, value, meta) {

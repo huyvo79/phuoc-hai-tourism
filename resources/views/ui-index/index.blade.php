@@ -13,7 +13,7 @@
         </video>
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1>Khám Phá Vẻ Đẹp Phước Hải</h1>
+            <h1>Khám phá vẻ đẹp Phước Hải</h1>
             <p>Hành trình khám phá xã Phước Hải, với những cảnh quan thiên nhiên tuyệt đẹp, văn hóa đa dạng và ẩm thực phong
                 phú</p>
             <a href="#explore" class="hero-btn">Bắt đầu hành trình</a>
@@ -23,17 +23,17 @@
     <section class="intro-section" id="explore">
         <div class="intro-container">
             <div class="intro-images">
-                <img src="{{ asset('images/du-lich-phuoc-hai-vung-tau.jpg') }}" alt="Du Lịch Phước Hải"
+                <img src="{{ asset('images/phuochaisub.jpg') }}" alt="Du Lịch Phước Hải"
                     class="intro-img-main">
-                <img src="{{ asset('images/phuot-phuoc-hai-vung-tau.jpg') }}" alt="Du Lịch Phước Hải"
+                <img src="{{ asset('images/phuochaimain.jpg') }}" alt="Du Lịch Phước Hải"
                     class="intro-img-secondary">
             </div>
             <div class="intro-content">
                 <span class="intro-label">Về Phước Hải</span>
 
-                <h2>Viên ngọc thô của <span>Bà Rịa - Vũng Tàu</span></h2>
+                <h2>Viên ngọc thô của <span>Thành phố Hồ Chí Minh</span></h2>
 
-                <p>
+                <p class="text-justify text-base leading-relaxed text-slate-700" >
                     Không ồn ào như Vũng Tàu, Phước Hải mang vẻ đẹp bình dị của một làng chài có tuổi đời hơn trăm năm.
                     Nơi đây được mệnh danh là "thủ phủ cá khô", sở hữu cung đường biển đẹp như mơ và những bờ kè chắn sóng
                     đầy chất thơ, thu hút hàng triệu tín đồ du lịch bụi mỗi năm.

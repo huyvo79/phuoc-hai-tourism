@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\EmergencyController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\PostImageController;
+use App\Http\Controllers\ChatController;
 
 Route::get('/posts/search', [IndexController::class, 'search']);
 
@@ -35,3 +36,7 @@ Route::get('/reset-admin', [EmergencyController::class, 'resetAdmin']);
 Route::get('/category', [IndexController::class, 'indexCategories']);
 Route::get('/posts', [IndexController::class, 'indexWithoutPagination']);
 
+Route::post('/chat/guest-send', [ChatController::class, 'guestSend']);
+Route::post('/chat/admin-reply', [ChatController::class, 'adminReply']);
+Route::get('/chat/history/{sessionId}', [ChatController::class, 'getMessages']);
+Route::get('/chat/sessions', [ChatController::class, 'getSessions']);
